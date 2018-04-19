@@ -45,7 +45,21 @@ export const createNewChannel = async payload => {
     return mamData
 }
 
-export const appentToChannel = async (payload, mamState) => {
+export const appentToChannel = async (payload, savedMamData) => {
+    const mamState = {
+      subscribed: [],
+      channel: {
+        side_key: config.secretKey,
+        mode: 'restricted',
+        next_root: savedMamData.next,
+        security: 2,
+        start: savedMamData.start,
+        count: 1,
+        next_count: 1,
+        index: 0
+      },
+      seed: savedMamData.seed
+    }
     updateMamState(mamState)
     const mamData = await publish(payload)
     return mamData
