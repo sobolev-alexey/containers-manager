@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import upperFirst from 'lodash-es/upperFirst'
+import { FilePond, File, registerPlugin } from 'react-filepond';
+import FilePondImagePreview from 'filepond-plugin-image-preview';
 import { createNewChannel, appentToChannel, fetchChannel } from './mamFunctions.js';
 import config from './config.json';
 import './App.css';
+import 'filepond/dist/filepond.min.css';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+
+registerPlugin(FilePondImagePreview);
 
 class App extends Component {
+  state = {
+    files: [],
+  }
+
   componentDidMount() {
     firebase.initializeApp(config);
   }
@@ -187,6 +197,35 @@ class App extends Component {
     return promise
   }
 
+  handleProcess = (fieldName, file, metadata, load, error, progress, abort) => {
+    const storageRef = firebase.storage().ref(`containers/${file.name}`);
+    const task = storageRef.put(file)
+
+    task.on('state_changed', snapshot => {
+      progress(true, snapshot.bytesTransferred, snapshot.totalBytes);
+    }, error => {
+      error('Upload error')
+    }, () => {
+      // Success
+      const { state, metadata, downloadURL } = task.snapshot
+      // Get metadata
+      const metadataFile = {
+          name: metadata.name,
+          size: metadata.size,
+          contentType: metadata.contentType,
+          fullPath: metadata.fullPath,
+          downloadURLs: metadata.downloadURLs[0],
+          md5Hash: metadata.md5Hash,
+          timestamp: metadata.generation,
+          created: metadata.timeCreated,
+          updated: metadata.updated,
+      }
+
+      console.log(metadataFile);
+      load(metadata.name)
+    })
+  }
+
   render() {
     return (
       <div className="App">
@@ -197,6 +236,20 @@ class App extends Component {
           <br />
           <button onClick={this.appenContainerQuery}>Append</button>
         </p>
+        {/* Pass FilePond properties as attributes */}
+        <FilePond
+          allowMultiple={true}
+          maxFiles={5}
+          server={{
+            process: this.handleProcess,
+            revert: this.handleRevert,
+          }}
+        >
+          {/* Set current files using the <File/> component */}
+          {this.state.files.map(file => (
+             <File key={file} source={file} />
+          ))}
+        </FilePond>
       </div>
     );
   }
