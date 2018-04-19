@@ -1,2 +1,1 @@
-# containers-manager
-IOCA containers manager DEMO App
+## IOTA Containers Manager
