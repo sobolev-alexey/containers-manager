@@ -1,7 +1,8 @@
 # dependencies
 /node_modules
 
-# production
+# build artifacts
+/src/*.css
 /build
 
 # misc

@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
-import upperFirst from 'lodash-es/upperFirst'
-import { FilePond, File, registerPlugin } from 'react-filepond';
-import FilePondImagePreview from 'filepond-plugin-image-preview';
+import { Switch } from 'react-md';
+// import upperFirst from 'lodash-es/upperFirst';
 import { createNewChannel, appentToChannel, fetchChannel } from './mamFunctions.js';
+import FilesUpload from './FilesUpload';
+import FilesList from './FilesList';
 import config from './config.json';
 import './App.css';
-import 'filepond/dist/filepond.min.css';
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-
-registerPlugin(FilePondImagePreview);
 
 class App extends Component {
   state = {
-    files: [],
-  }
+    metadata: [],
+    fileUploadEnabled: false,
+  };
 
   componentDidMount() {
     firebase.initializeApp(config);
@@ -22,67 +20,75 @@ class App extends Component {
 
   createContainerQuery = async () => {
     try {
-      const containerId = '12300024'
+      const containerId = '12300024';
       // create reference
       const containersRef = firebase.database().ref(`Rotterdam/containers/${containerId}`);
 
-      containersRef.once('value').then(snapshot => {
-        if (snapshot.val() === null) {
-          console.log(2222);
-          this.createContainerChannel(containerId, containersRef)
-        } else {
-          console.log(2222, snapshot.val());
-        }
-      }).catch((error) => {
-        console.log('Error getting message details', error);
-      });
+      containersRef
+        .once('value')
+        .then(snapshot => {
+          if (snapshot.val() === null) {
+            console.log(2222);
+            this.createContainerChannel(containerId, containersRef);
+          } else {
+            console.log(2222, snapshot.val());
+          }
+        })
+        .catch(error => {
+          console.log('Error getting message details', error);
+        });
       console.log(1111);
     } catch (err) {
       console.log(333, err);
     }
-  }
+  };
 
   appenContainerQuery = async () => {
     try {
-      const containerId = '12300024'
+      const containerId = '12300024';
       // create reference
       const containersRef = firebase.database().ref(`Rotterdam/containers/${containerId}`);
 
-      containersRef.once('value').then(snapshot => {
-        if (snapshot.val() === null) {
-          console.log(9999);
-          return
-        } else {
-          console.log(2222, snapshot.val());
-          this.appendContainerChannel(snapshot.val().mam, containersRef)
-        }
-      }).catch((error) => {
-        console.log('Error getting message details', error);
-      });
+      containersRef
+        .once('value')
+        .then(snapshot => {
+          if (snapshot.val() === null) {
+            console.log(9999);
+            return;
+          } else {
+            console.log(2222, snapshot.val());
+            this.appendContainerChannel(snapshot.val().mam, containersRef);
+          }
+        })
+        .catch(error => {
+          console.log('Error getting message details', error);
+        });
       console.log(1111);
     } catch (err) {
       console.log(333, err);
     }
-  }
+  };
 
   retrieveContainerQuery = async () => {
     try {
-      const containerId = '12300024'
-      firebase.database().ref(`Rotterdam/containers/${containerId}`).on('value', snapshot => {
-        const val = snapshot.val();
-        if (val) {
-          console.log(2222, val.mam);
-          this.retrieveContainerChannel(val.mam.root)
-        } else {
-          return console.log('Something wrong')
-        }
-      })
+      const containerId = '12300024';
+      firebase
+        .database()
+        .ref(`Rotterdam/containers/${containerId}`)
+        .on('value', snapshot => {
+          const val = snapshot.val();
+          if (val) {
+            console.log(2222, val.mam);
+            this.retrieveContainerChannel(val.mam.root);
+          } else {
+            return console.log('Something wrong');
+          }
+        });
       console.log(1111);
-
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   createContainerChannel = (containerId, containersRef) => {
     const req = {
@@ -92,14 +98,14 @@ class App extends Component {
       type: 'Refer',
       shipper: 'Mr. D',
       status: 'Container announced',
-      temperature: 23
-    }
+      temperature: 23,
+    };
     const promise = new Promise(async (resolve, reject) => {
       try {
         const { departure, destination, load, type, shipper, status, temperature } = req;
         // Format the container ID to remove dashes and parens
         console.log(3333);
-        const timestamp = Date.now()
+        const timestamp = Date.now();
         const channel = await createNewChannel({
           containerId,
           departure,
@@ -109,7 +115,7 @@ class App extends Component {
           type,
           timestamp,
           status,
-          temperature
+          temperature,
         });
 
         console.log(4444);
@@ -121,8 +127,8 @@ class App extends Component {
             root: channel.root,
             seed: channel.state.seed,
             next: channel.state.channel.next_root,
-            start: channel.state.channel.start
-          }
+            start: channel.state.channel.start,
+          },
         });
         console.log(5555, channel);
         return resolve(channel);
@@ -131,8 +137,8 @@ class App extends Component {
       }
     });
 
-    return promise
-  }
+    return promise;
+  };
 
   appendContainerChannel = (mam, containersRef) => {
     const promise = new Promise(async (resolve, reject) => {
@@ -141,22 +147,25 @@ class App extends Component {
         console.log(3333, containerData);
 
         if (containerData && containerData.length > 0) {
-          const timestamp = Date.now()
-          const status = 'Container loaded on vessel'
-          const temperature = 25
+          const timestamp = Date.now();
+          const status = 'Container loaded on vessel 1';
+          const temperature = 25;
           const { containerId, departure, destination, load, shipper, type } = containerData[0];
           console.log(4444, mam);
-          const newContainerData = await appentToChannel({
-            containerId,
-            departure,
-            destination,
-            load,
-            shipper,
-            type,
-            timestamp,
-            status,
-            temperature
-          }, mam);
+          const newContainerData = await appentToChannel(
+            {
+              containerId,
+              departure,
+              destination,
+              load,
+              shipper,
+              type,
+              timestamp,
+              status,
+              temperature,
+            },
+            mam
+          );
 
           console.log(4444);
           // Create a new container entry using that container ID
@@ -167,66 +176,48 @@ class App extends Component {
               root: mam.root,
               seed: newContainerData.state.seed,
               next: newContainerData.state.channel.next_root,
-              start: newContainerData.state.channel.start
-            }
+              start: newContainerData.state.channel.start,
+            },
           });
           console.log(5555, newContainerData);
           return resolve(containerData);
         }
-        return reject(containerData)
+        return reject(containerData);
       } catch (error) {
         return reject(error);
       }
     });
 
-    return promise
-  }
+    return promise;
+  };
 
-  retrieveContainerChannel = (root) => {
+  retrieveContainerChannel = root => {
     const promise = new Promise(async (resolve, reject) => {
       try {
         console.log(3333);
         const channel = await fetchChannel(root);
         console.log(4444);
-        return resolve(console.log( 'success', channel ));
+        return resolve(console.log('success', channel));
       } catch (error) {
         return reject(console.log(error, root));
       }
     });
 
-    return promise
-  }
+    return promise;
+  };
 
-  handleProcess = (fieldName, file, metadata, load, error, progress, abort) => {
-    const storageRef = firebase.storage().ref(`containers/${file.name}`);
-    const task = storageRef.put(file)
+  onUploadComplete = metadata => {
+    metadata.map(file => console.log(100, file));
+    this.setState({ metadata, fileUploadEnabled: false });
+  };
 
-    task.on('state_changed', snapshot => {
-      progress(true, snapshot.bytesTransferred, snapshot.totalBytes);
-    }, error => {
-      error('Upload error')
-    }, () => {
-      // Success
-      const { state, metadata, downloadURL } = task.snapshot
-      // Get metadata
-      const metadataFile = {
-          name: metadata.name,
-          size: metadata.size,
-          contentType: metadata.contentType,
-          fullPath: metadata.fullPath,
-          downloadURLs: metadata.downloadURLs[0],
-          md5Hash: metadata.md5Hash,
-          timestamp: metadata.generation,
-          created: metadata.timeCreated,
-          updated: metadata.updated,
-      }
-
-      console.log(metadataFile);
-      load(metadata.name)
-    })
-  }
+  onSwitchFileUpload = changeEvent => {
+    this.setState({ fileUploadEnabled: changeEvent });
+  };
 
   render() {
+    const { metadata, fileUploadEnabled } = this.state;
+
     return (
       <div className="App">
         <p className="App-intro">
@@ -236,20 +227,18 @@ class App extends Component {
           <br />
           <button onClick={this.appenContainerQuery}>Append</button>
         </p>
-        {/* Pass FilePond properties as attributes */}
-        <FilePond
-          allowMultiple={true}
-          maxFiles={5}
-          server={{
-            process: this.handleProcess,
-            revert: this.handleRevert,
-          }}
-        >
-          {/* Set current files using the <File/> component */}
-          {this.state.files.map(file => (
-             <File key={file} source={file} />
-          ))}
-        </FilePond>
+        <FilesList metadata={metadata} />
+        <Switch
+          id="fileUpload"
+          type="switch"
+          label="Enable file upload"
+          name="fileUpload"
+          checked={fileUploadEnabled}
+          onChange={this.onSwitchFileUpload}
+        />
+        {fileUploadEnabled ? (
+          <FilesUpload uploadComplete={this.onUploadComplete} pathTofile={'Rotterdam/containers'} />
+        ) : null}
       </div>
     );
   }
