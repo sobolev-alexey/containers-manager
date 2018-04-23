@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import { Switch } from 'react-md';
+import { ToastContainer, toast } from 'react-toastify';
+import { sha256 } from 'js-sha256'; // sha256('password')
 // import upperFirst from 'lodash-es/upperFirst';
 import { createNewChannel, appentToChannel, fetchChannel } from './mamFunctions.js';
 import FilesUpload from './FilesUpload';
 import FilesList from './FilesList';
 import config from './config.json';
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 class App extends Component {
   state = {
@@ -18,9 +21,13 @@ class App extends Component {
     firebase.initializeApp(config);
   }
 
+  notifySuccess = message => toast.success(message);
+  notifyWarning = message => toast.warn(message);
+  notifyError = message => toast.error(message);
+
   createContainerQuery = async () => {
     try {
-      const containerId = '12300024';
+      const containerId = '12300025';
       // create reference
       const containersRef = firebase.database().ref(`Rotterdam/containers/${containerId}`);
 
@@ -28,24 +35,22 @@ class App extends Component {
         .once('value')
         .then(snapshot => {
           if (snapshot.val() === null) {
-            console.log(2222);
             this.createContainerChannel(containerId, containersRef);
           } else {
-            console.log(2222, snapshot.val());
+            this.notifyWarning('Container exists');
           }
         })
         .catch(error => {
-          console.log('Error getting message details', error);
+          this.notifyError(error);
         });
-      console.log(1111);
     } catch (err) {
-      console.log(333, err);
+      this.notifyError(err);
     }
   };
 
-  appenContainerQuery = async () => {
+  appendContainerQuery = async () => {
     try {
-      const containerId = '12300024';
+      const containerId = '12300025';
       // create reference
       const containersRef = firebase.database().ref(`Rotterdam/containers/${containerId}`);
 
@@ -53,25 +58,23 @@ class App extends Component {
         .once('value')
         .then(snapshot => {
           if (snapshot.val() === null) {
-            console.log(9999);
+            this.notifyWarning("Container doesn't exist");
             return;
           } else {
-            console.log(2222, snapshot.val());
             this.appendContainerChannel(snapshot.val().mam, containersRef);
           }
         })
         .catch(error => {
-          console.log('Error getting message details', error);
+          this.notifyError(error);
         });
-      console.log(1111);
     } catch (err) {
-      console.log(333, err);
+      this.notifyError(err);
     }
   };
 
   retrieveContainerQuery = async () => {
     try {
-      const containerId = '12300024';
+      const containerId = '12300025';
       firebase
         .database()
         .ref(`Rotterdam/containers/${containerId}`)
@@ -81,12 +84,12 @@ class App extends Component {
             console.log(2222, val.mam);
             this.retrieveContainerChannel(val.mam.root);
           } else {
-            return console.log('Something wrong');
+            this.notifyError('Something wrong');
+            return;
           }
         });
-      console.log(1111);
     } catch (err) {
-      console.log(err);
+      this.notifyError(err);
     }
   };
 
@@ -209,6 +212,7 @@ class App extends Component {
   onUploadComplete = metadata => {
     metadata.map(file => console.log(100, file));
     this.setState({ metadata, fileUploadEnabled: false });
+    this.notifySuccess('File upload complete!');
   };
 
   onSwitchFileUpload = changeEvent => {
@@ -225,7 +229,7 @@ class App extends Component {
           <br />
           <button onClick={this.retrieveContainerQuery}>Retrieve</button>
           <br />
-          <button onClick={this.appenContainerQuery}>Append</button>
+          <button onClick={this.appendContainerQuery}>Append</button>
         </p>
         <FilesList metadata={metadata} />
         <Switch
@@ -239,6 +243,19 @@ class App extends Component {
         {fileUploadEnabled ? (
           <FilesUpload uploadComplete={this.onUploadComplete} pathTofile={'Rotterdam/containers'} />
         ) : null}
+        {
+          // https://fkhadra.github.io/react-toastify/
+        }
+        <ToastContainer
+          className="toast-container"
+          bodyClassName="toast-body"
+          autoClose={1000000}
+          hideProgressBar
+          closeOnClick
+          pauseOnVisibilityChange
+          draggable
+          pauseOnHover
+        />
       </div>
     );
   }
