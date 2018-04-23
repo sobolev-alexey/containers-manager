@@ -29,7 +29,7 @@ class FileUpload extends Component {
       },
       () => {
         // Success
-        const { state, metadata, downloadURL } = task.snapshot;
+        const { metadata } = task.snapshot;
 
         // Call the load method when done and pass the returned server file id
         // The file is then marked as complete
