@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Button, List, ListItem, Subheader } from 'react-md';
@@ -16,14 +15,11 @@ class MainPage extends Component {
   };
 
   componentDidMount() {
-    const { auth, containers, history } = this.props;
+    const { auth, history } = this.props;
     if (isEmpty(auth)) {
       history.push('/login');
-    } else {
-      if (isEmpty(containers)) {
-        this.getContainers();
-      }
     }
+    this.getContainers();
   }
 
   notifySuccess = message => toast.success(message);
@@ -69,18 +65,20 @@ class MainPage extends Component {
               primaryText={auth.name ? `Containers of ${auth.name}` : 'Available containers'}
               primary
             />
-            {containers.map(container => (
+            {containers.map(({ containerId, departure, destination, status }) => (
               <ListItem
-                primaryText={container.containerId}
+                key={containerId}
+                primaryText={containerId}
                 secondaryText={
                   <div>
                     <div>
-                      {container.departure} &rarr; {container.destination}
+                      {departure} &rarr; {destination}
                     </div>
-                    <div>{container.status}</div>
+                    <div>{status}</div>
                   </div>
                 }
                 threeLines
+                onClick={() => history.push(`/details/${containerId}`)}
               />
             ))}
           </List>
