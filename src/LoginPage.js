@@ -10,51 +10,35 @@ import config from './config.json';
 
 const ROLES = ['Shipper', 'Customs', 'Port', 'Observer'];
 
-const testData = {
-  role: 'shipper',
-  name: 'Mr. John Doe',
-  canAppendToStream: false,
-  canCreateStream: true,
-  canUploadDocuments: true,
-  eventOnArrival: 'Container delivered',
-  eventOnDeparture: 'Container announced',
-  previousEvents: ['Container announced'],
-  mam: {
-    secret_key: "TESTTESTTEST"
-  }
-}
-
 class LoginPage extends Component {
-
   state = {
-    showLoader: false
-  }
-
-  notifySuccess = message => toast.success(message);
-  notifyError = message => toast.error(message);
+    showLoader: false,
+  };
 
   login = event => {
     event.preventDefault();
-    const role = this.role.value;
-    const password = sha256(this.password.value);
+    const username = this.username.value.toLowerCase();
+    const password = sha256(this.password.value.toLowerCase());
 
-    this.setState({ showLoader: true })
+    this.setState({ showLoader: true });
 
-    api.post(`${config.rootURL}/login`, { role, password })
-       .then(response => {
-         console.log('Response', response.data)
-         this.notifySuccess('Successfully authenticated')
-         this.props.storeCredentials(response.data)
-         this.props.history.push('/')
-       })
-       .catch(response => {
-         // console.log(response)
-         // this.setState({ showLoader: false })
-         // this.notifyError('Authentication error')
-         this.props.storeCredentials(testData)
-         this.props.history.push('/')
-       });
-  }
+    api
+      .post(`${config.rootURL}/login`, { username, password })
+      .then(response => {
+        console.log('Response success', response.data);
+        this.props.storeCredentials(response.data);
+        this.props.history.push('/');
+      })
+      .catch(error => {
+        console.log('Response error', error.response);
+        this.setState({ showLoader: false });
+        toast.error(
+          error.response.data && error.response.data.error
+            ? error.response.data.error
+            : 'Authentication error'
+        );
+      });
+  };
 
   render() {
     const { showLoader } = this.state;
@@ -63,8 +47,8 @@ class LoginPage extends Component {
         <h3>Login</h3>
         <div className="md-grid">
           <SelectField
-            ref={role => (this.role = role)}
-            id="role"
+            ref={username => (this.username = username)}
+            id="username"
             required
             placeholder="Select role"
             className="md-cell"
@@ -82,15 +66,19 @@ class LoginPage extends Component {
         </div>
         <div>
           <div className={`bouncing-loader ${showLoader ? 'visible' : ''}`}>
-            <div /><div /><div />
+            <div />
+            <div />
+            <div />
           </div>
-          <Button raised onClick={this.login}>Login</Button>
+          <Button raised onClick={this.login} className={showLoader ? 'hidden' : ''}>
+            Login
+          </Button>
         </div>
         <Notification />
       </form>
-    )
+    );
   }
-};
+}
 
 const mapDispatchToProps = dispatch => ({
   storeCredentials: credentials => dispatch(storeCredentials(credentials)),
