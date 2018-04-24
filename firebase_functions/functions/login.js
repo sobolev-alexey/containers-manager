@@ -12,6 +12,7 @@ module.exports = function(req, res) {
     .then(snapshot => {
       const val = snapshot.val();
       if (val.password === req.body.password) {
+        delete val.password;
         return res.send(val);
       } else {
         return res.status(403).send({ error: 'Wrong password' });
