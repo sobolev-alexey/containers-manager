@@ -1,11 +1,5 @@
 const admin = require('firebase-admin');
 
-// To test this locally, run
-// > firebase functions:shell
-
-// Then call a funcion with parameters
-// > login.post('/login').form( {username: 'user123', password: 'password123' })
-
 module.exports = function(req, res) {
   if (!req.body.username || !req.body.password) {
     return res.send({ error: 'Bad Input' });
