@@ -58,7 +58,8 @@ class ContainerPage extends Component {
       !this.containerDeparture.value ||
       !this.containerDestination.value ||
       !this.containerCargo.value ||
-      !this.containerType.value
+      !this.containerType.value ||
+      this.containerDeparture.value === this.containerDestination.value
     );
   };
 
@@ -81,7 +82,7 @@ class ContainerPage extends Component {
               this.setState({ showLoader: true });
               this.createContainerChannel(containerId, containersRef);
             } else {
-              this.notifyWarning('Container exists');
+              this.notifyError('Container exists');
             }
           })
           .catch(error => {
@@ -92,6 +93,8 @@ class ContainerPage extends Component {
         this.setState({ showLoader: false });
         this.notifyError(error);
       }
+    } else {
+      this.notifyError('Error with some of the input fields');
     }
   };
 
