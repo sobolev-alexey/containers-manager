@@ -1,6 +1,6 @@
-import * as types from '../../actionTypes';
+import { AUTH } from '../../actionTypes';
 
 export const storeCredentials = data => ({
-  type: types.AUTH,
+  type: AUTH,
   payload: data,
 });
