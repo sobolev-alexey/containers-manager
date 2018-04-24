@@ -17,6 +17,8 @@ class LoginPage extends Component {
 
   login = event => {
     event.preventDefault();
+    if (!this.username.value || !this.password.value) return;
+
     const username = this.username.value.toLowerCase();
     const password = sha256(this.password.value.toLowerCase());
 
@@ -33,7 +35,7 @@ class LoginPage extends Component {
         console.log('Response error', error.response);
         this.setState({ showLoader: false });
         toast.error(
-          error.response.data && error.response.data.error
+          error.response && error.response.data && error.response.data.error
             ? error.response.data.error
             : 'Authentication error'
         );
