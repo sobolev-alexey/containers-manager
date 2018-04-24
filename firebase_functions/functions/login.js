@@ -5,6 +5,9 @@ module.exports = function(req, res) {
     return res.send({ error: 'Bad Input' });
   }
 
+  let response = {};
+
+  // Retrieve user data
   admin
     .database()
     .ref(`users/${req.body.username}`)
@@ -13,12 +16,25 @@ module.exports = function(req, res) {
       const val = snapshot.val();
       if (val.password === req.body.password) {
         delete val.password;
-        return res.send(val);
+        response = val;
+
+        // Retrieve MAM data
+        admin
+          .database()
+          .ref('mam')
+          .once('value')
+          .then(snapshot => {
+            response = Object.assign({}, response, { mam: snapshot.val() });
+            return res.send(response);
+          })
+          .catch(error => {
+            return res.status(500).send({ error: 'MAM data not found' });
+          });
       } else {
         return res.status(403).send({ error: 'Wrong password' });
       }
     })
     .catch(error => {
-      res.status(500).send({ error: 'User not found' });
+      return res.status(500).send({ error: 'User not found' });
     });
 };
