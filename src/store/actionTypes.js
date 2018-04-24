@@ -1,2 +1,3 @@
 export const AUTH = 'AUTH';
+export const STORE_CONTAINER = 'STORE_CONTAINER';
 export const STORE_CONTAINERS = 'STORE_CONTAINERS';
