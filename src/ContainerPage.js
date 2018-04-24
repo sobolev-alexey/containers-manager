@@ -14,7 +14,6 @@ const CARGO = ['Car', 'Consumer Goods', 'Heavy Machinery'];
 const TYPE = ['Dry storage', 'Refrigerated'];
 
 class ContainerPage extends Component {
-
   state = {
     showLoader: false,
     showTemperatureInput: false,
@@ -24,7 +23,7 @@ class ContainerPage extends Component {
     cargoError: false,
     typeError: false,
     metadata: [],
-  }
+  };
 
   componentDidMount() {
     const { auth, history } = this.props;
@@ -39,11 +38,11 @@ class ContainerPage extends Component {
 
   changeContainerType = value => {
     if (value === 'Refrigerated' && !this.state.showTemperatureInput) {
-      this.setState({ showTemperatureInput: true })
+      this.setState({ showTemperatureInput: true });
     } else if (this.state.showTemperatureInput) {
-      this.setState({ showTemperatureInput: false })
+      this.setState({ showTemperatureInput: false });
     }
-  }
+  };
 
   validate = () => {
     this.setState({
@@ -51,30 +50,29 @@ class ContainerPage extends Component {
       departureError: !this.containerDeparture.value,
       destinationError: !this.containerDestination.value,
       cargoError: !this.containerCargo.value,
-      typeError: !this.containerType.value
-    })
+      typeError: !this.containerType.value,
+    });
 
-    return !this.containerIMO.value ||
+    return (
+      !this.containerIMO.value ||
       !this.containerDeparture.value ||
       !this.containerDestination.value ||
       !this.containerCargo.value ||
-      !this.containerType.value;
-  }
+      !this.containerType.value
+    );
+  };
 
   createContainer = async event => {
-    console.log(111);
     event.preventDefault();
     const formError = this.validate();
 
     if (!formError) {
       try {
-        console.log(111222);
         // Format the container ID to remove dashes and parens
-        const containerId = this.containerIMO.value;
-        const departure = this.containerDeparture.value;
+        const containerId = this.containerIMO.value.replace(/[^0-9a-zA-Z_-]/g, '');
 
         // Create reference
-        const containersRef = firebase.database().ref(`${departure}/containers/${containerId}`);
+        const containersRef = firebase.database().ref(`containers/${containerId}`);
 
         containersRef
           .once('value')
@@ -88,11 +86,11 @@ class ContainerPage extends Component {
           })
           .catch(error => {
             this.setState({ showLoader: false });
-            this.notifyError(error);
+            this.notifyError('Something went wrong');
           });
-      } catch (err) {
+      } catch (error) {
         this.setState({ showLoader: false });
-        this.notifyError(err);
+        this.notifyError(error);
       }
     }
   };
@@ -106,24 +104,29 @@ class ContainerPage extends Component {
       type: this.containerType.value,
       shipper: name,
       status: eventOnDeparture,
-      temperature: (this.containerTemperature && this.containerTemperature.value) || null,
+      temperature: (this.containerTemperature && this.containerTemperature.value) || null,
     };
     const promise = new Promise(async (resolve, reject) => {
       try {
         const { departure, destination, load, type, shipper, status, temperature } = request;
 
         const timestamp = Date.now();
-        const channel = await createNewChannel({
-          containerId,
-          departure,
-          destination,
-          load,
-          shipper,
-          type,
-          timestamp,
-          status,
-          temperature,
-        }, mam.secret_key);
+        const channel = await createNewChannel(
+          {
+            containerId,
+            departure,
+            destination,
+            load,
+            shipper,
+            type,
+            timestamp,
+            status,
+            temperature,
+          },
+          mam.secret_key
+        );
+
+        this.notifySuccess('New container created');
 
         // Create a new container entry using that container ID
         await containersRef.set({
@@ -141,7 +144,6 @@ class ContainerPage extends Component {
           },
         });
 
-        this.notifySuccess('New container created');
         return resolve(this.props.history.push('/'));
       } catch (error) {
         return reject(error);
@@ -157,7 +159,15 @@ class ContainerPage extends Component {
   };
 
   render() {
-    const { metadata, showLoader, imoError, departureError, destinationError, cargoError, typeError } = this.state;
+    const {
+      metadata,
+      showLoader,
+      imoError,
+      departureError,
+      destinationError,
+      cargoError,
+      typeError,
+    } = this.state;
     return (
       <div>
         <FocusContainer
@@ -225,34 +235,39 @@ class ContainerPage extends Component {
               error={typeError}
               errorText="This field is required."
             />
-            { this.state.showTemperatureInput ?
-                (<TextField
-                  ref={temperature => (this.containerTemperature = temperature)}
-                  id="containerTemperature"
-                  label="Container temperature"
-                  type="number"
-                  className="md-cell md-cell--bottom"
-                />)
-              : null
-            }
+            {this.state.showTemperatureInput ? (
+              <TextField
+                ref={temperature => (this.containerTemperature = temperature)}
+                id="containerTemperature"
+                label="Container temperature"
+                type="number"
+                className="md-cell md-cell--bottom"
+              />
+            ) : null}
           </div>
         </FocusContainer>
         <Notification />
         <FilesList metadata={metadata} />
-        <FilesUpload uploadComplete={this.onUploadComplete} pathTofile={'Rotterdam/containers'} />
+        <FilesUpload uploadComplete={this.onUploadComplete} pathTofile={'containers'} />
         <div>
           <div className={`bouncing-loader ${showLoader ? 'visible' : ''}`}>
-            <div /><div /><div />
+            <div />
+            <div />
+            <div />
           </div>
           <CardActions className={`md-cell md-cell--12 ${showLoader ? 'hidden' : ''}`}>
-            <Button raised primary onClick={this.createContainer} className="md-cell--right">Submit</Button>
-            <Button flat onClick={() => this.props.history.push('/')}>Cancel</Button>
+            <Button raised primary onClick={this.createContainer} className="md-cell--right">
+              Submit
+            </Button>
+            <Button flat onClick={() => this.props.history.push('/')}>
+              Cancel
+            </Button>
           </CardActions>
         </div>
       </div>
-    )
+    );
   }
-};
+}
 
 const mapStateToProps = state => ({
   auth: state.auth,
