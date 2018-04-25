@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Switch } from 'react-md';
 import isEmpty from 'lodash-es/isEmpty';
 import find from 'lodash-es/find';
+import last from 'lodash-es/last';
 import { toast } from 'react-toastify';
 import { appentToChannel, fetchChannel } from './mamFunctions.js';
 import { storeContainer } from './store/container/actions';
@@ -45,9 +46,15 @@ class DetailsPage extends Component {
 
         if (container && container.length > 0) {
           const timestamp = Date.now();
-          const status = 'Container loaded on vessel';
+          const status =
+            auth.nextEvents[
+              last(container)
+                .status.toLowerCase()
+                .replace(/[-\ ]/g, '')
+            ];
           const temperature = 25;
-          const { containerId, departure, destination, load, shipper, type } = container[0];
+          const { containerId, departure, destination, load, shipper, type } = last(container);
+
           const newContainerData = await appentToChannel(
             {
               containerId,
@@ -124,11 +131,13 @@ class DetailsPage extends Component {
 
   render() {
     const { metadata, fileUploadEnabled } = this.state;
-    const { container } = this.props;
+    const { container, auth } = this.props;
 
     return (
       <div className="App">
-        {!isEmpty(container) ? <button onClick={this.appendContainerChannel}>Append</button> : null}
+        {!isEmpty(container) && auth.canAppendToStream ? (
+          <button onClick={this.appendContainerChannel}>Append</button>
+        ) : null}
         <FilesList metadata={metadata} />
         <Switch
           id="fileUpload"

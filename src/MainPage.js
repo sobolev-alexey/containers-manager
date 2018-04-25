@@ -18,11 +18,13 @@ class MainPage extends Component {
     const { auth, history } = this.props;
     if (isEmpty(auth)) {
       history.push('/login');
+    } else {
+      this.getContainers();
     }
-    this.getContainers();
   }
 
   notifySuccess = message => toast.success(message);
+  notifyWarning = message => toast.warn(message);
   notifyError = message => toast.error(message);
 
   getContainers = () => {
@@ -34,15 +36,17 @@ class MainPage extends Component {
       .post(`${config.rootURL}/list`, { statuses })
       .then(response => {
         this.setState({ showLoader: false });
+        console.log(response.data);
         if (response.data && response.data.length > 0) {
           this.notifySuccess('Loaded containers');
-          this.props.storeContainers(response.data[0]);
+          this.props.storeContainers(response.data);
+        } else {
+          this.notifyError('Error loading containers');
         }
       })
       .catch(error => {
-        console.log('Response error', error.response);
         this.setState({ showLoader: false });
-        this.notifyError('Error loading containers');
+        this.notifyWarning('No containers available');
       });
   };
 

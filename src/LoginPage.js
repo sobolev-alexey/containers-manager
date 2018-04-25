@@ -8,7 +8,7 @@ import Notification from './Notification';
 import api from './api';
 import config from './config.json';
 
-const ROLES = ['Shipper', 'Customs', 'Port', 'Observer'];
+const ROLES = ['Shipper', 'Forwarder', 'Customs', 'Port', 'Observer'];
 
 class LoginPage extends Component {
   state = {

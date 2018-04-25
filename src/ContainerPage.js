@@ -99,14 +99,14 @@ class ContainerPage extends Component {
   };
 
   createContainerChannel = (containerId, containersRef) => {
-    const { name, eventOnDeparture, mam } = this.props.auth;
+    const { name, previousEvent, mam } = this.props.auth;
     const request = {
       departure: this.containerDeparture.value,
       destination: this.containerDestination.value,
       load: this.containerCargo.value,
       type: this.containerType.value,
       shipper: name,
-      status: eventOnDeparture,
+      status: previousEvent[0],
       temperature: (this.containerTemperature && this.containerTemperature.value) || null,
     };
     const promise = new Promise(async (resolve, reject) => {
