@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
-import { Switch } from 'react-md';
+import { Button, Switch, List, ListItem, Subheader } from 'react-md';
 import isEmpty from 'lodash-es/isEmpty';
 import find from 'lodash-es/find';
 import last from 'lodash-es/last';
@@ -146,6 +146,7 @@ class DetailsPage extends Component {
   render() {
     const { metadata, fileUploadEnabled, showLoader, statusUpdated } = this.state;
     const { container, auth } = this.props;
+    const nextStatus = !isEmpty(container) ? auth.nextEvents[last(container).status.toLowerCase().replace(/[-\ ]/g, '')] : '';
 
     return (
       <div className="App">
@@ -155,8 +156,28 @@ class DetailsPage extends Component {
           <div />
         </div>
         <div className={`md-block-centered ${showLoader ? 'hidden' : ''}`}>
+          <List className="md-cell md-paper md-paper--1">
+            <Subheader
+              primaryText="Container data"
+              primary
+            />
+            {!isEmpty(container) ? (
+              <div>
+                <p>ContainerId: {last(container).containerId}</p>
+                <p>Last changed: {last(container).timestamp}</p>
+                <p>Shipper: {last(container).shipper}</p>
+                <p>Load: {last(container).load}</p>
+                <p>Type: {last(container).type}</p>
+                <p>Status: {last(container).status}</p>
+                <p>Route: {last(container).departure} --> {last(container).destination}</p>
+                <div>Documents: {last(container).documents.map(document => (
+                  <p key={document.name}><a href={document.downloadURL} target="_blank">{document.name}</a></p>
+                ))}</div>
+              </div>
+              ) : null }
+          </List>
           {!isEmpty(container) && auth.canAppendToStream && !statusUpdated ? (
-            <button onClick={this.appendContainerChannel}>Append</button>
+            <Button raised onClick={this.appendContainerChannel}>Confirm {nextStatus}</Button>
           ) : null}
           <FilesList metadata={metadata} />
           {auth.canUploadDocuments ? (
