@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Button, List, ListItem, Subheader } from 'react-md';
 import isEmpty from 'lodash-es/isEmpty';
-import api from './api';
+// import api from './api';
 import config from './config.json';
 import { storeContainers } from './store/containers/actions';
 import Notification from './Notification';
@@ -32,22 +33,56 @@ class MainPage extends Component {
 
     this.setState({ showLoader: true });
 
-    api
-      .post(`${config.rootURL}/list`, { statuses })
-      .then(response => {
+    const promises = [];
+    const ref = firebase
+      .database()
+      .ref('containers')
+      .orderByChild('status');
+
+    statuses.forEach(status => {
+      const query = ref.equalTo(status);
+      promises.push(query.once('value'));
+    });
+
+    Promise.all(promises)
+      .then(snapshots => {
+        const results = [];
+        snapshots.forEach(snapshot => {
+          const val = snapshot.val();
+          if (val) {
+            results.push(...Object.values(val));
+          }
+        });
         this.setState({ showLoader: false });
-        console.log(response.data);
-        if (response.data && response.data.length > 0) {
+        if (results.length > 0) {
           this.notifySuccess('Loaded containers');
-          this.props.storeContainers(response.data);
+          this.props.storeContainers(results);
         } else {
           this.notifyError('Error loading containers');
         }
       })
       .catch(error => {
+        console.log(666, error);
         this.setState({ showLoader: false });
-        this.notifyWarning('No containers available');
+        this.notifyError('Error loading containers');
       });
+
+    // api
+    //   .post(`${config.rootURL}/list`, { statuses })
+    //   .then(response => {
+    //     this.setState({ showLoader: false });
+    //     console.log(response.data);
+    //     if (response.data && response.data.length > 0) {
+    //       this.notifySuccess('Loaded containers');
+    //       this.props.storeContainers(response.data);
+    //     } else {
+    //       this.notifyError('Error loading containers');
+    //     }
+    //   })
+    //   .catch(error => {
+    //     this.setState({ showLoader: false });
+    //     this.notifyWarning('No containers available');
+    //   });
   };
 
   render() {
@@ -55,9 +90,11 @@ class MainPage extends Component {
     const { showLoader } = this.state;
     return (
       <div className="App">
-        <Button raised onClick={() => history.push('/new')}>
-          Create new container
-        </Button>
+        { auth.canCreateStream ?
+          (<Button raised onClick={() => history.push('/new')}>
+            Create new container
+            </Button>)
+          : null }
         <div className={`bouncing-loader ${showLoader ? 'visible' : ''}`}>
           <div />
           <div />
