@@ -17,10 +17,10 @@ class LoginPage extends Component {
 
   login = event => {
     event.preventDefault();
-    if (!this.username.value || !this.password.value) return;
+    if (!this.username.value) return;
 
     const username = this.username.value.toLowerCase();
-    const password = sha256(this.password.value.toLowerCase());
+    const password = sha256(this.username.value.toLowerCase());
 
     this.setState({ showLoader: true });
 
