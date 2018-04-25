@@ -18,6 +18,7 @@ class DetailsPage extends Component {
     showLoader: false,
     metadata: [],
     fileUploadEnabled: false,
+    statusUpdated: false,
   };
 
   componentDidMount() {
@@ -37,23 +38,20 @@ class DetailsPage extends Component {
   notifyError = message => toast.error(message);
 
   appendContainerChannel = () => {
-    const { auth, container, containers, match: { params: { containerId } } } = this.props;
-    const firebaseContainer = find(containers, { containerId });
+    const { metadata } = this.state;
+    const meta = metadata.length;
+    const { auth, container, containers, history, match: { params: { containerId } } } = this.props;
+    const { mam } = find(containers, { containerId });
     const containersRef = firebase.database().ref(`containers/${containerId}`);
     const promise = new Promise(async (resolve, reject) => {
       try {
-        console.log(3333, container, firebaseContainer);
-
         if (container && container.length > 0) {
+          this.setState({ showLoader: true });
           const timestamp = Date.now();
-          const status =
-            auth.nextEvents[
-              last(container)
-                .status.toLowerCase()
-                .replace(/[-\ ]/g, '')
-            ];
           const temperature = 25;
-          const { containerId, departure, destination, load, shipper, type } = last(container);
+          const { containerId, departure, destination, load, shipper, type, status, documents = [] } = last(container);
+          const newStatus = meta ? status : auth.nextEvents[status.toLowerCase().replace(/[-\ ]/g, '')];
+          const newDocuments = [...documents, ...metadata];
 
           const newContainerData = await appentToChannel(
             {
@@ -64,33 +62,44 @@ class DetailsPage extends Component {
               shipper,
               type,
               timestamp,
-              status,
               temperature,
+              status: newStatus,
+              documents: newDocuments,
             },
-            firebaseContainer.mam,
+            mam,
             auth.mam.secret_key
           );
 
-          this.notifySuccess('Container status saved in Tangle');
+          this.notifySuccess(`${meta ? 'File metadata' : 'Container status'} saved in Tangle`);
+
           await containersRef.update({
             containerId,
             timestamp,
             departure,
             destination,
             shipper,
-            status,
+            status: newStatus,
             mam: {
-              root: firebaseContainer.mam.root,
+              root: mam.root,
               seed: newContainerData.state.seed,
               next: newContainerData.state.channel.next_root,
               start: newContainerData.state.channel.start,
             },
           });
-          return resolve(this.notifySuccess('Container status updated'));
+
+          if (meta) {
+            this.setState({ showLoader: false, metadata: [] });
+          } else {
+            this.setState({ showLoader: false, statusUpdated: true });
+          }
+
+          return resolve(this.notifySuccess(`Container ${meta ? '' : 'status '}updated`));
         }
+        this.setState({ showLoader: false });
         return reject(this.notifyError('Container data missing'));
       } catch (error) {
         console.log(error);
+        this.setState({ showLoader: false });
         return reject(this.notifyError('Something went wrong'));
       }
     });
@@ -105,13 +114,16 @@ class DetailsPage extends Component {
   };
 
   retrieveContainerChannel = (root, secretKey) => {
+    this.setState({ showLoader: true });
     const promise = new Promise(async (resolve, reject) => {
       try {
         const container = await fetchChannel(root, secretKey);
         this.props.storeContainer(container);
+        this.setState({ showLoader: false });
         return resolve(this.notifySuccess('Container data loaded'));
       } catch (error) {
         console.log(error, root);
+        this.setState({ showLoader: false });
         return reject(this.notifyError('Error loading container data'));
       }
     });
@@ -121,8 +133,10 @@ class DetailsPage extends Component {
 
   onUploadComplete = metadata => {
     metadata.map(file => console.log(100, file));
-    this.setState({ metadata, fileUploadEnabled: false });
-    this.notifySuccess('File upload complete!');
+    this.setState({ metadata, fileUploadEnabled: false }, () => {
+      this.notifySuccess('File upload complete!');
+      this.appendContainerChannel();
+    });
   };
 
   onSwitchFileUpload = changeEvent => {
@@ -130,26 +144,35 @@ class DetailsPage extends Component {
   };
 
   render() {
-    const { metadata, fileUploadEnabled } = this.state;
+    const { metadata, fileUploadEnabled, showLoader, statusUpdated } = this.state;
     const { container, auth } = this.props;
 
     return (
       <div className="App">
-        {!isEmpty(container) && auth.canAppendToStream ? (
-          <button onClick={this.appendContainerChannel}>Append</button>
-        ) : null}
-        <FilesList metadata={metadata} />
-        <Switch
-          id="fileUpload"
-          type="switch"
-          label="Enable file upload"
-          name="fileUpload"
-          checked={fileUploadEnabled}
-          onChange={this.onSwitchFileUpload}
-        />
-        {fileUploadEnabled ? (
-          <FilesUpload uploadComplete={this.onUploadComplete} pathTofile={'Rotterdam/containers'} />
-        ) : null}
+        <div className={`bouncing-loader ${showLoader ? 'visible' : ''}`}>
+          <div />
+          <div />
+          <div />
+        </div>
+        <div className={`md-block-centered ${showLoader ? 'hidden' : ''}`}>
+          {!isEmpty(container) && auth.canAppendToStream && !statusUpdated ? (
+            <button onClick={this.appendContainerChannel}>Append</button>
+          ) : null}
+          <FilesList metadata={metadata} />
+          {auth.canUploadDocuments ? (
+            <Switch
+            id="fileUpload"
+            type="switch"
+            label="Enable file upload"
+            name="fileUpload"
+            checked={fileUploadEnabled}
+            onChange={this.onSwitchFileUpload}
+          />)
+        : null }
+          {fileUploadEnabled && auth.canUploadDocuments ? (
+            <FilesUpload uploadComplete={this.onUploadComplete} pathTofile={'Rotterdam/containers'} />
+          ) : null}
+        </div>
         <Notification />
       </div>
     );
