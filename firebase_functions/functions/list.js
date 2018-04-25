@@ -22,7 +22,9 @@ module.exports = function(req, res) {
       const results = [];
       snapshots.forEach(snapshot => {
         const val = snapshot.val();
-        results.push(val);
+        if (val) {
+          results.push(Object.values(val)[0]);
+        }
       });
       return res.send(results);
     })
