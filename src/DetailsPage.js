@@ -5,6 +5,7 @@ import { Button, Switch, List, ListItem, Subheader } from 'react-md';
 import isEmpty from 'lodash-es/isEmpty';
 import find from 'lodash-es/find';
 import last from 'lodash-es/last';
+import * as moment from 'moment';
 import { toast } from 'react-toastify';
 import { appentToChannel, fetchChannel } from './mamFunctions.js';
 import { storeContainer } from './store/container/actions';
@@ -48,7 +49,6 @@ class DetailsPage extends Component {
         if (container && container.length > 0) {
           this.setState({ showLoader: true });
           const timestamp = Date.now();
-          const temperature = 25;
           const {
             containerId,
             departure,
@@ -57,6 +57,7 @@ class DetailsPage extends Component {
             shipper,
             type,
             status,
+            temperature,
             documents = [],
           } = last(container);
           const newStatus = meta
@@ -164,6 +165,9 @@ class DetailsPage extends Component {
             .replace(/[-\ ]/g, '')
         ]
       : '';
+    const updated = !isEmpty(container)
+      ? moment.duration(Date.now() - last(container).timestamp).humanize()
+      : '';
 
     return (
       <div className="App">
@@ -177,14 +181,14 @@ class DetailsPage extends Component {
             <Subheader primaryText="Container data" primary />
             {!isEmpty(container) && last(container) ? (
               <div>
-                <p>ContainerId: {last(container).containerId}</p>
-                <p>Last changed: {last(container).timestamp}</p>
+                <p>Container IMO: {last(container).containerId}</p>
+                <p>Updated: {updated} ago</p>
                 <p>Shipper: {last(container).shipper}</p>
                 <p>Load: {last(container).load}</p>
                 <p>Type: {last(container).type}</p>
                 <p>Status: {last(container).status}</p>
                 <p>
-                  Route: {last(container).departure} --> {last(container).destination}
+                  Route: {last(container).departure} &rarr; {last(container).destination}
                 </p>
                 <div>
                   Documents:{' '}

@@ -5,8 +5,6 @@ import isEmpty from 'lodash-es/isEmpty';
 import { FocusContainer, TextField, SelectField, Button, CardActions } from 'react-md';
 import { toast } from 'react-toastify';
 import Notification from './Notification';
-import FilesUpload from './FilesUpload';
-import FilesList from './FilesList';
 import { createNewChannel } from './mamFunctions.js';
 
 const PORTS = ['Rotterdam', 'Singapore'];
@@ -16,13 +14,11 @@ const TYPE = ['Dry storage', 'Refrigerated'];
 class ContainerPage extends Component {
   state = {
     showLoader: false,
-    showTemperatureInput: false,
     imoError: false,
     destinationError: false,
     departureError: false,
     cargoError: false,
     typeError: false,
-    metadata: [],
   };
 
   componentDidMount() {
@@ -33,16 +29,7 @@ class ContainerPage extends Component {
   }
 
   notifySuccess = message => toast.success(message);
-  notifyWarning = message => toast.warn(message);
   notifyError = message => toast.error(message);
-
-  changeContainerType = value => {
-    if (value === 'Refrigerated' && !this.state.showTemperatureInput) {
-      this.setState({ showTemperatureInput: true });
-    } else if (this.state.showTemperatureInput) {
-      this.setState({ showTemperatureInput: false });
-    }
-  };
 
   validate = () => {
     this.setState({
@@ -107,11 +94,10 @@ class ContainerPage extends Component {
       type: this.containerType.value,
       shipper: name,
       status: previousEvent[0],
-      temperature: (this.containerTemperature && this.containerTemperature.value) || null,
     };
     const promise = new Promise(async (resolve, reject) => {
       try {
-        const { departure, destination, load, type, shipper, status, temperature } = request;
+        const { departure, destination, load, type, shipper, status } = request;
 
         const timestamp = Date.now();
         const channel = await createNewChannel(
@@ -124,7 +110,8 @@ class ContainerPage extends Component {
             type,
             timestamp,
             status,
-            temperature,
+            temperature: null,
+            position: null,
             documents: [],
           },
           mam.secret_key
@@ -157,14 +144,8 @@ class ContainerPage extends Component {
     return promise;
   };
 
-  onUploadComplete = metadata => {
-    this.setState({ metadata });
-    this.notifySuccess('File upload complete!');
-  };
-
   render() {
     const {
-      metadata,
       showLoader,
       imoError,
       departureError,
@@ -235,24 +216,12 @@ class ContainerPage extends Component {
               className="md-cell"
               menuItems={TYPE}
               position={SelectField.Positions.BELOW}
-              onChange={this.changeContainerType}
               error={typeError}
               errorText="This field is required."
             />
-            {this.state.showTemperatureInput ? (
-              <TextField
-                ref={temperature => (this.containerTemperature = temperature)}
-                id="containerTemperature"
-                label="Container temperature"
-                type="number"
-                className="md-cell md-cell--bottom"
-              />
-            ) : null}
           </div>
         </FocusContainer>
         <Notification />
-        <FilesList metadata={metadata} />
-        <FilesUpload uploadComplete={this.onUploadComplete} pathTofile={'containers'} />
         <div>
           <div className={`bouncing-loader ${showLoader ? 'visible' : ''}`}>
             <div />
