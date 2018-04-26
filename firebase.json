@@ -21,7 +21,6 @@
       "node_modules/**",
       "public/**",
       "src/**",
-      "src0/**",
       "firebase_functions/**",
       ".git/**"
     ]
