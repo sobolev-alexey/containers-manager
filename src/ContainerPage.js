@@ -125,6 +125,7 @@ class ContainerPage extends Component {
             timestamp,
             status,
             temperature,
+            documents: [],
           },
           mam.secret_key
         );

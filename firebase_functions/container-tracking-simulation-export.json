@@ -1,0 +1,59 @@
+{
+  "mam": {
+    "secret_key": "TESTTESTTESTTEST"
+  },
+  "users": {
+    "customs": {
+      "canAppendToStream": true,
+      "canCreateStream": false,
+      "canUploadDocuments": true,
+      "nextEvents": {
+        "containerdischarged": "Container cleared for import",
+        "gatein": "Container cleared for export"
+      },
+      "password": "45e285133b891bc3bc022fdd5eda0726b15b609396e5b8e734078ab9f5ccdd6b",
+      "previousEvent": ["Gate-in", "Container discharged"]
+    },
+    "forwarder": {
+      "canAppendToStream": true,
+      "canCreateStream": false,
+      "canUploadDocuments": true,
+      "nextEvents": {
+        "containerannounced": "Gate-in",
+        "containerclearedforimport": "Gate-out"
+      },
+      "password": "b4b3e80b5c6c2e35e8a6c9a2437568ddf4eb4f739bfad8427141261a87cb1868",
+      "previousEvent": ["Container announced", "Container cleared for import"]
+    },
+    "port": {
+      "canAppendToStream": true,
+      "canCreateStream": false,
+      "canUploadDocuments": true,
+      "nextEvents": {
+        "containerclearedforexport": "Container loaded on vessel",
+        "containerloadedonvessel": "Vessel departure",
+        "vesselarrival": "Container discharged",
+        "vesseldeparture": "Vessel arrival"
+      },
+      "password": "f8d397a33fcb9725db96501e653bf3cfa4455c5639482b9936c22b221634d659",
+      "previousEvent": [
+        "Container cleared for export",
+        "Container loaded on vessel",
+        "Vessel departure",
+        "Vessel arrival"
+      ]
+    },
+    "shipper": {
+      "canAppendToStream": false,
+      "canCreateStream": true,
+      "canUploadDocuments": true,
+      "name": "Mr. John Doe",
+      "nextEvents": {
+        "containerannounced": "Container announced",
+        "gateout": "Container delivered"
+      },
+      "password": "8be2e28a473f0bf8203d10896b2f14b5d499369e3f5aa1882c098628b58f41ac",
+      "previousEvent": ["Container announced", "Gate-out"]
+    }
+  }
+}

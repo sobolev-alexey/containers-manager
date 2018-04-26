@@ -49,8 +49,19 @@ class DetailsPage extends Component {
           this.setState({ showLoader: true });
           const timestamp = Date.now();
           const temperature = 25;
-          const { containerId, departure, destination, load, shipper, type, status, documents = [] } = last(container);
-          const newStatus = meta ? status : auth.nextEvents[status.toLowerCase().replace(/[-\ ]/g, '')];
+          const {
+            containerId,
+            departure,
+            destination,
+            load,
+            shipper,
+            type,
+            status,
+            documents = [],
+          } = last(container);
+          const newStatus = meta
+            ? status
+            : auth.nextEvents[status.toLowerCase().replace(/[-\ ]/g, '')];
           const newDocuments = [...documents, ...metadata];
 
           const newContainerData = await appentToChannel(
@@ -146,7 +157,13 @@ class DetailsPage extends Component {
   render() {
     const { metadata, fileUploadEnabled, showLoader, statusUpdated } = this.state;
     const { container, auth } = this.props;
-    const nextStatus = !isEmpty(container) ? auth.nextEvents[last(container).status.toLowerCase().replace(/[-\ ]/g, '')] : '';
+    const nextStatus = !isEmpty(container)
+      ? auth.nextEvents[
+          last(container)
+            .status.toLowerCase()
+            .replace(/[-\ ]/g, '')
+        ]
+      : '';
 
     return (
       <div className="App">
@@ -157,11 +174,8 @@ class DetailsPage extends Component {
         </div>
         <div className={`md-block-centered ${showLoader ? 'hidden' : ''}`}>
           <List className="md-cell md-paper md-paper--1">
-            <Subheader
-              primaryText="Container data"
-              primary
-            />
-            {!isEmpty(container) ? (
+            <Subheader primaryText="Container data" primary />
+            {!isEmpty(container) && last(container) ? (
               <div>
                 <p>ContainerId: {last(container).containerId}</p>
                 <p>Last changed: {last(container).timestamp}</p>
@@ -169,29 +183,43 @@ class DetailsPage extends Component {
                 <p>Load: {last(container).load}</p>
                 <p>Type: {last(container).type}</p>
                 <p>Status: {last(container).status}</p>
-                <p>Route: {last(container).departure} --> {last(container).destination}</p>
-                <div>Documents: {last(container).documents.map(document => (
-                  <p key={document.name}><a href={document.downloadURL} target="_blank">{document.name}</a></p>
-                ))}</div>
+                <p>
+                  Route: {last(container).departure} --> {last(container).destination}
+                </p>
+                <div>
+                  Documents:{' '}
+                  {last(container).documents.map(document => (
+                    <p key={document.name}>
+                      <a href={document.downloadURL} target="_blank">
+                        {document.name}
+                      </a>
+                    </p>
+                  ))}
+                </div>
               </div>
-              ) : null }
+            ) : null}
           </List>
           {!isEmpty(container) && auth.canAppendToStream && !statusUpdated ? (
-            <Button raised onClick={this.appendContainerChannel}>Confirm {nextStatus}</Button>
+            <Button raised onClick={this.appendContainerChannel}>
+              Confirm {nextStatus}
+            </Button>
           ) : null}
           <FilesList metadata={metadata} />
           {auth.canUploadDocuments ? (
             <Switch
-            id="fileUpload"
-            type="switch"
-            label="Enable file upload"
-            name="fileUpload"
-            checked={fileUploadEnabled}
-            onChange={this.onSwitchFileUpload}
-          />)
-        : null }
+              id="fileUpload"
+              type="switch"
+              label="Enable file upload"
+              name="fileUpload"
+              checked={fileUploadEnabled}
+              onChange={this.onSwitchFileUpload}
+            />
+          ) : null}
           {fileUploadEnabled && auth.canUploadDocuments ? (
-            <FilesUpload uploadComplete={this.onUploadComplete} pathTofile={'Rotterdam/containers'} />
+            <FilesUpload
+              uploadComplete={this.onUploadComplete}
+              pathTofile={'Rotterdam/containers'}
+            />
           ) : null}
         </div>
         <Notification />
