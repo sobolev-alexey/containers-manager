@@ -8,6 +8,7 @@ import isEmpty from 'lodash-es/isEmpty';
 import config from './config.json';
 import { storeContainers } from './store/containers/actions';
 import Notification from './Notification';
+import Autosuggest from './Autosuggest';
 import './MainPage.css';
 
 class MainPage extends Component {
@@ -90,11 +91,11 @@ class MainPage extends Component {
     const { showLoader } = this.state;
     return (
       <div className="App">
-        { auth.canCreateStream ?
-          (<Button raised onClick={() => history.push('/new')}>
+        {auth.canCreateStream ? (
+          <Button raised onClick={() => history.push('/new')}>
             Create new container
-            </Button>)
-          : null }
+          </Button>
+        ) : null}
         <div className={`bouncing-loader ${showLoader ? 'visible' : ''}`}>
           <div />
           <div />
@@ -105,6 +106,10 @@ class MainPage extends Component {
             <Subheader
               primaryText={auth.name ? `Containers of ${auth.name}` : 'Available containers'}
               primary
+            />
+            <Autosuggest
+              items={containers}
+              onSelect={container => history.push(`/details/${container.containerId}`)}
             />
             {containers.map(({ containerId, departure, destination, status }) => (
               <ListItem
