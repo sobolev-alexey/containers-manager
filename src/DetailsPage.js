@@ -12,6 +12,7 @@ import { storeContainer } from './store/container/actions';
 import FilesUpload from './FilesUpload';
 import FilesList from './FilesList';
 import Notification from './Notification';
+import DocumentIntegrityValidator from './DocumentIntegrityValidator';
 import './DetailsPage.css';
 
 class DetailsPage extends Component {
@@ -235,6 +236,10 @@ class DetailsPage extends Component {
           ) : null}
         </div>
         <Notification />
+        <DocumentIntegrityValidator
+          metadata={null}
+          path="https://firebasestorage.googleapis.com/v0/b/container-tracking-simulation.appspot.com/o/containers%2F10%2Fpacking-list.pdf?alt=media&token=b07fc135-49a3-4bb8-ab49-5fa471ded5ff"
+        />
       </div>
     );
   }
