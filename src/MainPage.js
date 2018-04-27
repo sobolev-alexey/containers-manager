@@ -21,7 +21,7 @@ class MainPage extends Component {
     if (isEmpty(auth)) {
       history.push('/login');
     } else {
-      this.getContainers();
+      this.getContainers(auth.role);
     }
   }
 
@@ -29,21 +29,35 @@ class MainPage extends Component {
   notifyWarning = message => toast.warn(message);
   notifyError = message => toast.error(message);
 
-  getContainers = () => {
-    const statuses = this.props.auth.previousEvent;
+  getContainers = role => {
+    const promises = [];
+
+    switch (role) {
+      case 'shipper':
+        const queryByShipper = firebase
+          .database()
+          .ref('containers')
+          .orderByChild('shipper')
+          .equalTo(this.props.auth.name);
+        promises.push(queryByShipper.once('value'));
+        break;
+      case 'observer':
+        const queryAll = firebase.database().ref('containers');
+        promises.push(queryAll.once('value'));
+        break;
+      default:
+        const queryByStatus = firebase
+          .database()
+          .ref('containers')
+          .orderByChild('status');
+        this.props.auth.previousEvent.forEach(status => {
+          const query = queryByStatus.equalTo(status);
+          promises.push(query.once('value'));
+        });
+        break;
+    }
 
     this.setState({ showLoader: true });
-
-    const promises = [];
-    const ref = firebase
-      .database()
-      .ref('containers')
-      .orderByChild('status');
-
-    statuses.forEach(status => {
-      const query = ref.equalTo(status);
-      promises.push(query.once('value'));
-    });
 
     Promise.all(promises)
       .then(snapshots => {

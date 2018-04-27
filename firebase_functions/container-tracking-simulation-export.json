@@ -25,6 +25,12 @@
       "password": "b4b3e80b5c6c2e35e8a6c9a2437568ddf4eb4f739bfad8427141261a87cb1868",
       "previousEvent": ["Container announced", "Container cleared for import"]
     },
+    "observer": {
+      "canAppendToStream": false,
+      "canCreateStream": false,
+      "canUploadDocuments": false,
+      "password": "e41f1d834710df8c7bc2befedb7b92339973a92288d8581b3696604c0d04c5f7"
+    },
     "port": {
       "canAppendToStream": true,
       "canCreateStream": false,

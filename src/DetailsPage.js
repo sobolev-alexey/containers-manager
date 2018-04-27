@@ -158,13 +158,14 @@ class DetailsPage extends Component {
   render() {
     const { metadata, fileUploadEnabled, showLoader, statusUpdated } = this.state;
     const { container, auth } = this.props;
-    const nextStatus = !isEmpty(container)
-      ? auth.nextEvents[
-          last(container)
-            .status.toLowerCase()
-            .replace(/[-\ ]/g, '')
-        ]
-      : '';
+    const nextStatus =
+      auth.canAppendToStream && !isEmpty(container)
+        ? auth.nextEvents[
+            last(container)
+              .status.toLowerCase()
+              .replace(/[-\ ]/g, '')
+          ]
+        : '';
     const updated = !isEmpty(container)
       ? moment.duration(Date.now() - last(container).timestamp).humanize()
       : '';
