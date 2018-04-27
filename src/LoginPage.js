@@ -27,12 +27,10 @@ class LoginPage extends Component {
     api
       .post(`${config.rootURL}/login`, { username, password })
       .then(response => {
-        console.log('Response success', response.data);
         this.props.storeCredentials(response.data);
         this.props.history.push('/');
       })
       .catch(error => {
-        console.log('Response error', error.response);
         this.setState({ showLoader: false });
         toast.error(
           error.response && error.response.data && error.response.data.error

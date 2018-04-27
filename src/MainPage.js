@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Button, List, ListItem, Subheader } from 'react-md';
 import isEmpty from 'lodash-es/isEmpty';
-// import api from './api';
-import config from './config.json';
 import { storeContainers } from './store/containers/actions';
 import Notification from './Notification';
 import Autosuggest from './Autosuggest';
@@ -77,27 +75,9 @@ class MainPage extends Component {
         }
       })
       .catch(error => {
-        console.log(666, error);
         this.setState({ showLoader: false });
         this.notifyError('Error loading containers');
       });
-
-    // api
-    //   .post(`${config.rootURL}/list`, { statuses })
-    //   .then(response => {
-    //     this.setState({ showLoader: false });
-    //     console.log(response.data);
-    //     if (response.data && response.data.length > 0) {
-    //       this.notifySuccess('Loaded containers');
-    //       this.props.storeContainers(response.data);
-    //     } else {
-    //       this.notifyError('Error loading containers');
-    //     }
-    //   })
-    //   .catch(error => {
-    //     this.setState({ showLoader: false });
-    //     this.notifyWarning('No containers available');
-    //   });
   };
 
   render() {

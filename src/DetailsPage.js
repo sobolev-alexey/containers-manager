@@ -110,7 +110,6 @@ class DetailsPage extends Component {
         this.setState({ showLoader: false });
         return reject(this.notifyError('Container data missing'));
       } catch (error) {
-        console.log(error);
         this.setState({ showLoader: false });
         return reject(this.notifyError('Something went wrong'));
       }
@@ -134,7 +133,6 @@ class DetailsPage extends Component {
         this.setState({ showLoader: false });
         return resolve(this.notifySuccess('Container data loaded'));
       } catch (error) {
-        console.log(error, root);
         this.setState({ showLoader: false });
         return reject(this.notifyError('Error loading container data'));
       }
