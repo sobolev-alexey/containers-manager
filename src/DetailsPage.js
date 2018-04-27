@@ -63,6 +63,16 @@ class DetailsPage extends Component {
           const newStatus = meta
             ? status
             : auth.nextEvents[status.toLowerCase().replace(/[-\ ]/g, '')];
+
+          metadata.forEach(({ name }) => {
+            documents.forEach(existingDocument => {
+              if (existingDocument.name === name) {
+                this.setState({ showLoader: false });
+                reject(this.notifyError(`Document named ${name} already exists`));
+              }
+            });
+          });
+
           const newDocuments = [...documents, ...metadata];
 
           const newContainerData = await appentToChannel(
@@ -142,7 +152,6 @@ class DetailsPage extends Component {
   };
 
   onUploadComplete = metadata => {
-    metadata.map(file => console.log(100, file));
     this.setState({ metadata, fileUploadEnabled: false }, () => {
       this.notifySuccess('File upload complete!');
       this.appendContainerChannel();
@@ -207,7 +216,6 @@ class DetailsPage extends Component {
               Confirm {nextStatus}
             </Button>
           ) : null}
-          <FilesList metadata={metadata} />
           {auth.canUploadDocuments ? (
             <Switch
               id="fileUpload"
@@ -218,10 +226,11 @@ class DetailsPage extends Component {
               onChange={this.onSwitchFileUpload}
             />
           ) : null}
-          {fileUploadEnabled && auth.canUploadDocuments ? (
+          {fileUploadEnabled && auth.canUploadDocuments && !isEmpty(container) ? (
             <FilesUpload
               uploadComplete={this.onUploadComplete}
-              pathTofile={'Rotterdam/containers'}
+              pathTofile={`containers/${last(container).containerId}`}
+              existingDocuments={last(container).documents}
             />
           ) : null}
         </div>
