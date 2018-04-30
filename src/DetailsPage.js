@@ -5,6 +5,8 @@ import { Button, Switch, List, ListItem, Subheader } from 'react-md';
 import isEmpty from 'lodash-es/isEmpty';
 import find from 'lodash-es/find';
 import last from 'lodash-es/last';
+import uniqBy from 'lodash-es/uniqBy';
+import pick from 'lodash-es/pick';
 import * as moment from 'moment';
 import { toast } from 'react-toastify';
 import { appentToChannel, fetchChannel } from './mamFunctions.js';
@@ -12,7 +14,7 @@ import { storeContainer } from './store/container/actions';
 import FilesUpload from './FilesUpload';
 import FilesList from './FilesList';
 import Notification from './Notification';
-import DocumentIntegrityValidator from './DocumentIntegrityValidator';
+import { validateIntegrity } from './DocumentIntegrityValidator';
 import './DetailsPage.css';
 
 class DetailsPage extends Component {
@@ -21,6 +23,7 @@ class DetailsPage extends Component {
     metadata: [],
     fileUploadEnabled: false,
     statusUpdated: false,
+    statuses: [],
   };
 
   componentDidMount() {
@@ -39,7 +42,7 @@ class DetailsPage extends Component {
   notifyWarning = message => toast.warn(message);
   notifyError = message => toast.error(message);
 
-  appendContainerChannel = () => {
+  appendContainerChannel = async () => {
     const { metadata } = this.state;
     const meta = metadata.length;
     const { auth, container, containers, history, match: { params: { containerId } } } = this.props;
@@ -116,7 +119,8 @@ class DetailsPage extends Component {
             this.setState({ showLoader: false, statusUpdated: true });
           }
 
-          return resolve(this.notifySuccess(`Container ${meta ? '' : 'status '}updated`));
+          this.notifySuccess(`Container ${meta ? '' : 'status '}updated`);
+          return resolve(history.push(`/details/${containerId}`));
         }
         this.setState({ showLoader: false });
         return reject(this.notifyError('Container data missing'));
@@ -139,9 +143,26 @@ class DetailsPage extends Component {
     this.setState({ showLoader: true });
     const promise = new Promise(async (resolve, reject) => {
       try {
-        const container = await fetchChannel(root, secretKey);
-        this.props.storeContainer(container);
-        this.setState({ showLoader: false });
+        const containerEvents = await fetchChannel(root, secretKey);
+        await last(containerEvents).documents.forEach(async document => {
+          const downloadedDocument = await validateIntegrity(document.downloadURL, null);
+          document.integrity = {
+            hashMatch: downloadedDocument.sha256Hash === document.sha256Hash,
+            sizeMatch: downloadedDocument.size === document.size,
+            sha256Hash: downloadedDocument.sha256Hash,
+            size: downloadedDocument.size,
+          };
+        });
+
+        const statuses = await uniqBy(
+          containerEvents.map(event => pick(event, ['status', 'timestamp'])),
+          'status'
+        );
+
+        this.setState({ statuses, showLoader: false }, () => {
+          this.props.storeContainer(containerEvents);
+        });
+
         return resolve(this.notifySuccess('Container data loaded'));
       } catch (error) {
         this.setState({ showLoader: false });
@@ -164,7 +185,7 @@ class DetailsPage extends Component {
   };
 
   render() {
-    const { metadata, fileUploadEnabled, showLoader, statusUpdated } = this.state;
+    const { metadata, fileUploadEnabled, showLoader, statusUpdated, statuses } = this.state;
     const { container, auth } = this.props;
     const nextStatus =
       auth.canAppendToStream && !isEmpty(container)
@@ -206,6 +227,7 @@ class DetailsPage extends Component {
                       <a href={document.downloadURL} target="_blank">
                         {document.name}
                       </a>
+                      {document.integrity && document.integrity.hashMatch ? 'yes' : 'no'}
                     </p>
                   ))}
                 </div>
@@ -236,10 +258,6 @@ class DetailsPage extends Component {
           ) : null}
         </div>
         <Notification />
-        <DocumentIntegrityValidator
-          metadata={null}
-          path="https://firebasestorage.googleapis.com/v0/b/container-tracking-simulation.appspot.com/o/containers%2F10%2Fpacking-list.pdf?alt=media&token=b07fc135-49a3-4bb8-ab49-5fa471ded5ff"
-        />
       </div>
     );
   }
