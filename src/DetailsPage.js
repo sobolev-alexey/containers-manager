@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
-import { Button, Switch, List, ListItem, Subheader } from 'react-md';
+import { Button, Switch } from 'react-md';
 import isEmpty from 'lodash-es/isEmpty';
 import find from 'lodash-es/find';
 import last from 'lodash-es/last';
@@ -12,8 +12,10 @@ import { toast } from 'react-toastify';
 import { appentToChannel, fetchChannel } from './mamFunctions.js';
 import { storeContainer } from './store/container/actions';
 import FilesUpload from './FilesUpload';
-import FilesList from './FilesList';
 import Notification from './Notification';
+import Loader from './Loader';
+import ContainerDetails from './ContainerDetails';
+import EventsList from './EventsList';
 import { validateIntegrity } from './DocumentIntegrityValidator';
 import './DetailsPage.css';
 
@@ -24,6 +26,7 @@ class DetailsPage extends Component {
     fileUploadEnabled: false,
     statusUpdated: false,
     statuses: [],
+    container: null,
   };
 
   componentDidMount() {
@@ -48,9 +51,10 @@ class DetailsPage extends Component {
     const { auth, container, containers, history, match: { params: { containerId } } } = this.props;
     const { mam } = find(containers, { containerId });
     const containersRef = firebase.database().ref(`containers/${containerId}`);
+
     const promise = new Promise(async (resolve, reject) => {
       try {
-        if (container && container.length > 0) {
+        if (container) {
           this.setState({ showLoader: true });
           const timestamp = Date.now();
           const {
@@ -113,14 +117,15 @@ class DetailsPage extends Component {
             },
           });
 
+          this.notifySuccess(`Container ${meta ? '' : 'status '}updated`);
+
           if (meta) {
             this.setState({ showLoader: false, metadata: [] });
+            return resolve(this.retrieveContainer(containerId));
           } else {
             this.setState({ showLoader: false, statusUpdated: true });
+            return resolve(history.push('/'));
           }
-
-          this.notifySuccess(`Container ${meta ? '' : 'status '}updated`);
-          return resolve(history.push(`/details/${containerId}`));
         }
         this.setState({ showLoader: false });
         return reject(this.notifyError('Container data missing'));
@@ -144,22 +149,14 @@ class DetailsPage extends Component {
     const promise = new Promise(async (resolve, reject) => {
       try {
         const containerEvents = await fetchChannel(root, secretKey);
-        await last(containerEvents).documents.forEach(async document => {
-          const downloadedDocument = await validateIntegrity(document.downloadURL, null);
-          document.integrity = {
-            hashMatch: downloadedDocument.sha256Hash === document.sha256Hash,
-            sizeMatch: downloadedDocument.size === document.size,
-            sha256Hash: downloadedDocument.sha256Hash,
-            size: downloadedDocument.size,
-          };
-        });
+        await validateIntegrity(last(containerEvents));
 
         const statuses = await uniqBy(
           containerEvents.map(event => pick(event, ['status', 'timestamp'])),
           'status'
         );
 
-        this.setState({ statuses, showLoader: false }, () => {
+        this.setState({ container: last(containerEvents), statuses, showLoader: false }, () => {
           this.props.storeContainer(containerEvents);
         });
 
@@ -185,56 +182,24 @@ class DetailsPage extends Component {
   };
 
   render() {
-    const { metadata, fileUploadEnabled, showLoader, statusUpdated, statuses } = this.state;
-    const { container, auth } = this.props;
+    const { fileUploadEnabled, showLoader, statusUpdated, statuses, container } = this.state;
+    const { auth } = this.props;
+
+    if (!container) return <Loader showLoader={showLoader} />;
+
     const nextStatus =
-      auth.canAppendToStream && !isEmpty(container)
-        ? auth.nextEvents[
-            last(container)
-              .status.toLowerCase()
-              .replace(/[-\ ]/g, '')
-          ]
+      auth.canAppendToStream && container
+        ? auth.nextEvents[container.status.toLowerCase().replace(/[-\ ]/g, '')]
         : '';
-    const updated = !isEmpty(container)
-      ? moment.duration(Date.now() - last(container).timestamp).humanize()
-      : '';
+    const updated = container ? moment.duration(Date.now() - container.timestamp).humanize() : '';
 
     return (
       <div className="App">
-        <div className={`bouncing-loader ${showLoader ? 'visible' : ''}`}>
-          <div />
-          <div />
-          <div />
-        </div>
+        <Loader showLoader={showLoader} />
         <div className={`md-block-centered ${showLoader ? 'hidden' : ''}`}>
-          <List className="md-cell md-paper md-paper--1">
-            <Subheader primaryText="Container data" primary />
-            {!isEmpty(container) && last(container) ? (
-              <div>
-                <p>Container IMO: {last(container).containerId}</p>
-                <p>Updated: {updated} ago</p>
-                <p>Shipper: {last(container).shipper}</p>
-                <p>Load: {last(container).load}</p>
-                <p>Type: {last(container).type}</p>
-                <p>Status: {last(container).status}</p>
-                <p>
-                  Route: {last(container).departure} &rarr; {last(container).destination}
-                </p>
-                <div>
-                  Documents:{' '}
-                  {last(container).documents.map(document => (
-                    <p key={document.name}>
-                      <a href={document.downloadURL} target="_blank">
-                        {document.name}
-                      </a>
-                      {document.integrity && document.integrity.hashMatch ? 'yes' : 'no'}
-                    </p>
-                  ))}
-                </div>
-              </div>
-            ) : null}
-          </List>
-          {!isEmpty(container) && auth.canAppendToStream && !statusUpdated ? (
+          <ContainerDetails container={container} updated={updated} />
+          <EventsList statuses={statuses} />
+          {auth.canAppendToStream && !statusUpdated ? (
             <Button raised onClick={this.appendContainerChannel}>
               Confirm {nextStatus}
             </Button>
@@ -249,11 +214,11 @@ class DetailsPage extends Component {
               onChange={this.onSwitchFileUpload}
             />
           ) : null}
-          {fileUploadEnabled && auth.canUploadDocuments && !isEmpty(container) ? (
+          {fileUploadEnabled && auth.canUploadDocuments ? (
             <FilesUpload
               uploadComplete={this.onUploadComplete}
-              pathTofile={`containers/${last(container).containerId}`}
-              existingDocuments={last(container).documents}
+              pathTofile={`containers/${container.containerId}`}
+              existingDocuments={container.documents}
             />
           ) : null}
         </div>

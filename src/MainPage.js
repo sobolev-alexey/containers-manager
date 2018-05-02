@@ -7,6 +7,7 @@ import isEmpty from 'lodash-es/isEmpty';
 import { storeContainers } from './store/containers/actions';
 import Notification from './Notification';
 import Autosuggest from './Autosuggest';
+import { getContainers } from './ContainerUtils';
 import './MainPage.css';
 
 class MainPage extends Component {
@@ -19,7 +20,7 @@ class MainPage extends Component {
     if (isEmpty(auth)) {
       history.push('/login');
     } else {
-      this.getContainers(auth.role);
+      this.retrieveContainers(auth);
     }
   }
 
@@ -27,57 +28,20 @@ class MainPage extends Component {
   notifyWarning = message => toast.warn(message);
   notifyError = message => toast.error(message);
 
-  getContainers = role => {
-    const promises = [];
+  retrieveContainers = async auth => {
+    const handleSuccess = results => {
+      this.notifySuccess('Loaded containers');
+      this.props.storeContainers(results);
+    };
 
-    switch (role) {
-      case 'shipper':
-        const queryByShipper = firebase
-          .database()
-          .ref('containers')
-          .orderByChild('shipper')
-          .equalTo(this.props.auth.name);
-        promises.push(queryByShipper.once('value'));
-        break;
-      case 'observer':
-        const queryAll = firebase.database().ref('containers');
-        promises.push(queryAll.once('value'));
-        break;
-      default:
-        const queryByStatus = firebase
-          .database()
-          .ref('containers')
-          .orderByChild('status');
-        this.props.auth.previousEvent.forEach(status => {
-          const query = queryByStatus.equalTo(status);
-          promises.push(query.once('value'));
-        });
-        break;
-    }
+    const handleError = () => {
+      this.setState({ showLoader: false });
+      this.notifyError('Error loading containers');
+    };
 
     this.setState({ showLoader: true });
-
-    Promise.all(promises)
-      .then(snapshots => {
-        const results = [];
-        snapshots.forEach(snapshot => {
-          const val = snapshot.val();
-          if (val) {
-            results.push(...Object.values(val));
-          }
-        });
-        this.setState({ showLoader: false });
-        if (results.length > 0) {
-          this.notifySuccess('Loaded containers');
-          this.props.storeContainers(results);
-        } else {
-          this.notifyError('Error loading containers');
-        }
-      })
-      .catch(error => {
-        this.setState({ showLoader: false });
-        this.notifyError('Error loading containers');
-      });
+    await getContainers(auth, handleSuccess, handleError);
+    this.setState({ showLoader: false });
   };
 
   render() {
