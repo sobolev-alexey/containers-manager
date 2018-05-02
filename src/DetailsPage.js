@@ -234,6 +234,17 @@ class DetailsPage extends Component {
               </div>
             ) : null}
           </List>
+          {!isEmpty(container) && last(container) ? (
+            <List className="md-cell md-paper md-paper--1">
+              <Subheader primaryText="Statuses" primary />
+              {statuses.map(({ status, timestamp }) => (
+                <div key={timestamp}>
+                  <p>{status}</p>
+                  <p>{moment(timestamp).format('MMMM Do @ LT')}</p>
+                </div>
+              ))}
+            </List>
+          ) : null}
           {!isEmpty(container) && auth.canAppendToStream && !statusUpdated ? (
             <Button raised onClick={this.appendContainerChannel}>
               Confirm {nextStatus}
