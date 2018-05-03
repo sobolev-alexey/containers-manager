@@ -5,8 +5,7 @@ import configureStore from './store/configure';
 import MainPage from './MainPage';
 import DetailsPage from './DetailsPage';
 import LoginPage from './LoginPage';
-import ErrorPage from './ErrorPage';
-import ContainerPage from './ContainerPage';
+import CreateContainerPage from './CreateContainerPage';
 
 const store = configureStore();
 
@@ -16,9 +15,7 @@ const Router = () => (
       <Route path="/" component={MainPage} exact />
       <Route path="/details/:containerId" component={DetailsPage} />
       <Route path="/login" component={LoginPage} />
-      <Route path="/error" component={ErrorPage} />
-      <Route path="/new" component={ContainerPage} />
-      <Route path="/update" component={ContainerPage} />
+      <Route path="/new" component={CreateContainerPage} />
       <Route component={MainPage} />
     </Switch>
   </Provider>

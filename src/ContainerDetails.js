@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { List, Subheader, FontIcon } from 'react-md';
 
-const style = {
-  color: '#f06292', // $md-pink-300
-};
-
 class ContainerDetails extends Component {
   render() {
     const { container, updated } = this.props;

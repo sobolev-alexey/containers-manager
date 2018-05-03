@@ -6,12 +6,14 @@ import { FocusContainer, TextField, SelectField, Button, CardActions } from 'rea
 import { toast } from 'react-toastify';
 import Notification from './Notification';
 import { createNewChannel } from './mamFunctions.js';
+import { getContainers } from './ContainerUtils';
+import { storeContainers } from './store/containers/actions';
 
 const PORTS = ['Rotterdam', 'Singapore'];
 const CARGO = ['Car', 'Consumer Goods', 'Heavy Machinery'];
 const TYPE = ['Dry storage', 'Refrigerated'];
 
-class ContainerPage extends Component {
+class CreateContainerPage extends Component {
   state = {
     showLoader: false,
     imoError: false,
@@ -135,7 +137,19 @@ class ContainerPage extends Component {
           },
         });
 
-        return resolve(this.props.history.push('/'));
+        const handleSuccess = results => {
+          this.props.storeContainers(results);
+        };
+
+        const handleError = () => {
+          this.notifyError('Error loading containers');
+          this.setState({ showLoader: false });
+        };
+
+        this.setState({ showLoader: true });
+        await getContainers(this.props.auth, handleSuccess, handleError);
+
+        return resolve(this.props.history.push(`/details/${containerId}`));
       } catch (error) {
         return reject(error);
       }
@@ -246,4 +260,8 @@ const mapStateToProps = state => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps)(ContainerPage);
+const mapDispatchToProps = dispatch => ({
+  storeContainers: containers => dispatch(storeContainers(containers)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateContainerPage);
