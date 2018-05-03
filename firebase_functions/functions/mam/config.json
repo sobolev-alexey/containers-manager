@@ -1,4 +1,4 @@
 {
-  "provider": "https://testnet140.tangle.works",
-  "secret_key": "TESTTEST"
+  "provider": "https://nodes.testnet.iota.org",
+  "secret_key": "TESTTESTTESTTEST"
 }

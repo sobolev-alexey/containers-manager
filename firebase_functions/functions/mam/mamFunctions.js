@@ -6,9 +6,6 @@ const iota = new IOTA({ provider: config.provider });
 // Initialise MAM State
 let mamState = Mam.init(iota);
 
-// Set channel mode for default state
-const defaultMamState = Mam.changeMode(mamState, 'restricted', config.secret_key);
-
 // Publish to tangle
 const publish = async data => {
   // Create MAM Payload - STRING OF TRYTES
@@ -26,28 +23,44 @@ const publish = async data => {
 
 const updateMamState = newMamState => (mamState = newMamState);
 
-const fetch = async root => {
+const fetchChannel = async (root, secretKey) => {
   const fetchResults = [];
-  await Mam.fetch(root, 'restricted', config.secret_key, data =>
+  await Mam.fetch(root, 'restricted', secretKey, data =>
     fetchResults.push(JSON.parse(iota.utils.fromTrytes(data)))
   );
   return fetchResults;
 };
 
-const createNewChannel = async payload => {
+const createNewChannel = async (payload, secretKey) => {
+  // Set channel mode for default state
+  const defaultMamState = Mam.changeMode(mamState, 'restricted', secretKey);
   updateMamState(defaultMamState);
   const mamData = await publish(payload);
   return mamData;
 };
 
-const appentToChannel = async (payload, mamState) => {
+const appendToChannel = async (payload, savedMamData, secretKey) => {
+  const mamState = {
+    subscribed: [],
+    channel: {
+      side_key: secretKey,
+      mode: 'restricted',
+      next_root: savedMamData.next,
+      security: 2,
+      start: savedMamData.start,
+      count: 1,
+      next_count: 1,
+      index: 0,
+    },
+    seed: savedMamData.seed,
+  };
   updateMamState(mamState);
   const mamData = await publish(payload);
   return mamData;
 };
 
 module.exports = {
-  appentToChannel,
+  appendToChannel,
   createNewChannel,
-  fetch,
+  fetchChannel,
 };

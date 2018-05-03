@@ -1906,6 +1906,10 @@ lexical-scope@^1.2.0:
   dependencies:
     astw "^2.0.0"
 
+lodash-es@^4.17.10:
+  version "4.17.10"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.10.tgz#62cd7104cdf5dd87f235a837f0ede0e8e5117e05"
+
 lodash.includes@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/lodash.includes/-/lodash.includes-4.3.0.tgz#60bb98a87cb923c68ca1e51325483314849f553f"
@@ -1948,9 +1952,9 @@ loose-envify@^1.0.0:
   dependencies:
     js-tokens "^3.0.0"
 
-mam.client.js@sobolev-alexey/mam.client.js#refactor:
+mam.client.js@iotaledger/mam.client.js:
   version "0.0.2"
-  resolved "https://codeload.github.com/sobolev-alexey/mam.client.js/tar.gz/4f56f8fed3e22df528760156226ec4d8dcba5f8d"
+  resolved "https://codeload.github.com/iotaledger/mam.client.js/tar.gz/4f56f8fed3e22df528760156226ec4d8dcba5f8d"
   dependencies:
     babel-polyfill "^6.26.0"
     browserify "^16.1.1"
