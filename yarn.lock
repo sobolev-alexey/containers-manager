@@ -4953,9 +4953,9 @@ makeerror@1.0.x:
   dependencies:
     tmpl "1.0.x"
 
-mam.client.js@sobolev-alexey/mam.client.js#refactor:
+mam.client.js@iotaledger/mam.client.js:
   version "0.0.2"
-  resolved "https://codeload.github.com/sobolev-alexey/mam.client.js/tar.gz/4f56f8fed3e22df528760156226ec4d8dcba5f8d"
+  resolved "https://codeload.github.com/iotaledger/mam.client.js/tar.gz/4f56f8fed3e22df528760156226ec4d8dcba5f8d"
   dependencies:
     babel-polyfill "^6.26.0"
     browserify "^16.1.1"
