@@ -9,7 +9,7 @@ import uniqBy from 'lodash-es/uniqBy';
 import pick from 'lodash-es/pick';
 import * as moment from 'moment';
 import { toast } from 'react-toastify';
-import { appentToChannel, fetchChannel } from './mamFunctions.js';
+import { appendToChannel, fetchChannel } from './mamFunctions.js';
 import { storeContainer } from './store/container/actions';
 import FilesUpload from './FilesUpload';
 import Notification from './Notification';
@@ -83,7 +83,7 @@ class DetailsPage extends Component {
 
           const newDocuments = [...documents, ...metadata];
 
-          const newContainerData = await appentToChannel(
+          const newContainerData = await appendToChannel(
             {
               containerId,
               departure,

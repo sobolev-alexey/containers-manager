@@ -39,7 +39,7 @@ export const createNewChannel = async (payload, secretKey) => {
   return mamData;
 };
 
-export const appentToChannel = async (payload, savedMamData, secretKey) => {
+export const appendToChannel = async (payload, savedMamData, secretKey) => {
   const mamState = {
     subscribed: [],
     channel: {
