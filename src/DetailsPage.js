@@ -100,31 +100,33 @@ class DetailsPage extends Component {
             auth.mam.secret_key
           );
 
-          this.notifySuccess(`${meta ? 'File metadata' : 'Container status'} saved in Tangle`);
+          if (newContainerData) {
+            this.notifySuccess(`${meta ? 'File metadata' : 'Container status'} saved in Tangle`);
 
-          await containersRef.update({
-            containerId,
-            timestamp,
-            departure,
-            destination,
-            shipper,
-            status: newStatus,
-            mam: {
-              root: mam.root,
-              seed: newContainerData.state.seed,
-              next: newContainerData.state.channel.next_root,
-              start: newContainerData.state.channel.start,
-            },
-          });
+            await containersRef.update({
+              containerId,
+              timestamp,
+              departure,
+              destination,
+              shipper,
+              status: newStatus,
+              mam: {
+                root: mam.root,
+                seed: newContainerData.state.seed,
+                next: newContainerData.state.channel.next_root,
+                start: newContainerData.state.channel.start,
+              },
+            });
 
-          this.notifySuccess(`Container ${meta ? '' : 'status '}updated`);
+            this.notifySuccess(`Container ${meta ? '' : 'status '}updated`);
 
-          if (meta) {
-            this.setState({ showLoader: false, metadata: [] });
-            return resolve(this.retrieveContainer(containerId));
-          } else {
-            this.setState({ showLoader: false, statusUpdated: true });
-            return resolve(history.push('/'));
+            if (meta) {
+              this.setState({ showLoader: false, metadata: [] });
+              return resolve(this.retrieveContainer(containerId));
+            } else {
+              // this.setState({ showLoader: false, statusUpdated: true });
+              return resolve(history.push('/'));
+            }
           }
         }
         this.setState({ showLoader: false });
