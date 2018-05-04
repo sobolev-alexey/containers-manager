@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { TextField, SelectField, Button } from 'react-md';
 import { toast } from 'react-toastify';
 import { storeCredentials } from './store/auth/actions';
+import Logo from './Logo';
 import Notification from './Notification';
 import api from './api';
 import config from './config.json';
+import './LoginPage.css';
 
 const ROLES = ['Shipper', 'Forwarder', 'Customs', 'Port', 'Observer'];
 
@@ -43,39 +45,49 @@ class LoginPage extends Component {
   render() {
     const { showLoader } = this.state;
     return (
-      <form onSubmit={this.login}>
-        <h3>Login</h3>
-        <div className="md-grid">
-          <SelectField
-            ref={username => (this.username = username)}
-            id="username"
-            required
-            placeholder="Select role"
-            className="md-cell"
-            menuItems={ROLES}
-            position={SelectField.Positions.BELOW}
-          />
-          <TextField
-            ref={password => (this.password = password)}
-            id="password"
-            label="Enter your password"
-            type="password"
-            required
-            className="md-cell md-cell--bottom"
-          />
-        </div>
-        <div>
-          <div className={`bouncing-loader ${showLoader ? 'visible' : ''}`}>
-            <div />
-            <div />
-            <div />
+      <div className="wrapper">
+        <div className="graphic">
+          <img src="bg_login_page.png" />
+          <div className="welcome">
+            <Logo />
+            <p>Welcome back!</p>
+            <p>
+              Login to access<br />container tracking
+            </p>
           </div>
-          <Button raised onClick={this.login} className={showLoader ? 'hidden' : ''}>
-            Login
-          </Button>
         </div>
-        <Notification />
-      </form>
+        <div className="login">
+          <form onSubmit={this.login}>
+            <h3>Login</h3>
+            <SelectField
+              ref={username => (this.username = username)}
+              id="username"
+              required
+              simplifiedMenu
+              className="md-cell"
+              placeholder="Select role"
+              menuItems={ROLES}
+              position={SelectField.Positions.BELOW}
+            />
+            <TextField
+              ref={password => (this.password = password)}
+              id="password"
+              label="Enter password"
+              type="password"
+              required
+            />
+            <div className={`bouncing-loader ${showLoader ? 'visible' : ''}`}>
+              <div />
+              <div />
+              <div />
+            </div>
+            <Button raised onClick={this.login} className={showLoader ? 'hidden' : ''}>
+              Login
+            </Button>
+            <Notification />
+          </form>
+        </div>
+      </div>
     );
   }
 }
