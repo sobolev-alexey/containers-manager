@@ -37,15 +37,14 @@
     font-size: 18px;
     font-weight: 700;
     width: 33.3%;
+    height: 81px;
 
     &.md-text {
       color: rgb(63, 63, 63);
-      height: 81px;
     }
 
     &.md-text--secondary {
-      color: rgb(200, 200, 200);
-      height: 36px;
+      color: rgb(151, 151, 151);
     }
   }
 }
