@@ -1,5 +1,5 @@
 .react-autosuggest__container {
-  padding: 24px 0;
+  padding-top: 24px;
   margin: 0 auto;
   text-align: center;
   max-width: 1092px;
@@ -13,7 +13,7 @@
   padding: 20px 20px 20px 60px;
   font-size: 28px;
   border: 1px solid transparent;
-  border-bottom: 3px solid rgb(33, 175, 169);
+  border-bottom: 3px solid transparent;
   border-radius: 0;
   color: rgb(63, 63, 63);
   background-color: transparent;
@@ -22,6 +22,10 @@
   background-position: 0px;
   background-repeat: no-repeat;
   margin-bottom: 1px;
+
+  &:focus {
+    border-bottom: 3px solid rgb(33, 175, 169);
+  }
 
   &::placeholder {
     font-size: 18px;

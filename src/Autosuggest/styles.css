@@ -1,5 +1,5 @@
 .react-autosuggest__container {
-  padding: 24px 0;
+  padding-top: 24px;
   margin: 0 auto;
   text-align: center;
   max-width: 1092px;
@@ -12,7 +12,7 @@
   padding: 20px 20px 20px 60px;
   font-size: 28px;
   border: 1px solid transparent;
-  border-bottom: 3px solid #21afa9;
+  border-bottom: 3px solid transparent;
   border-radius: 0;
   color: #3f3f3f;
   background-color: transparent;
@@ -21,6 +21,8 @@
   background-position: 0px;
   background-repeat: no-repeat;
   margin-bottom: 1px; }
+  .react-autosuggest__input:focus {
+    border-bottom: 3px solid #21afa9; }
   .react-autosuggest__input::placeholder {
     font-size: 18px;
     color: #979797; }
