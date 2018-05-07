@@ -50,7 +50,12 @@ class MainPage extends Component {
     const { showLoader } = this.state;
     return (
       <div className="App">
-        <Header name={auth.name || auth.role} />
+        <Header>
+          <p>
+            Welcome to container tracking,<br />
+            {auth.name || auth.role}
+          </p>
+        </Header>
         {auth.canCreateStream ? (
           <div className="ctaWrapper">
             <Button raised onClick={() => history.push('/new')}>
