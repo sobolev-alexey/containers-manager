@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Autosuggester from 'react-autosuggest';
+import { DataTable, TableBody, TableRow, TableColumn } from 'react-md';
 import styles from './styles.css';
 
 class Autosuggest extends Component {
@@ -56,15 +57,18 @@ class Autosuggest extends Component {
   getSuggestionValue = suggestion => suggestion.containerId;
 
   renderSuggestion = suggestion => (
-    <div>
-      <p>
-        {suggestion.departure} &rarr; {suggestion.destination}
-      </p>
-      <p>{suggestion.status}</p>
-    </div>
+    <DataTable plain>
+      <TableBody>
+        <TableRow key={suggestion.containerId}>
+          <TableColumn>{suggestion.containerId}</TableColumn>
+          <TableColumn className="md-text-center">
+            {suggestion.departure} &rarr; {suggestion.destination}
+          </TableColumn>
+          <TableColumn className="md-text-right">{suggestion.status}</TableColumn>
+        </TableRow>
+      </TableBody>
+    </DataTable>
   );
-
-  renderSectionTitle = section => <strong>IMO: {section.containerId}</strong>;
 
   render() {
     const { value, suggestions } = this.state;
@@ -76,14 +80,12 @@ class Autosuggest extends Component {
 
     return (
       <Autosuggester
-        multiSection
         suggestions={suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
         onSuggestionSelected={this.onSuggestionSelected}
         getSuggestionValue={this.getSuggestionValue}
         renderSuggestion={this.renderSuggestion}
-        renderSectionTitle={this.renderSectionTitle}
         getSectionSuggestions={this.getSectionSuggestions}
         inputProps={inputProps}
       />
