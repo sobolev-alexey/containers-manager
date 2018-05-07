@@ -1,4 +1,4 @@
-@import './_helpers';
+@import './_commoncomponents';
 
 .wrapper {
   display: flex;
@@ -72,22 +72,13 @@
     }
 
     button.md-btn {
+      @include button();
+      width: 100%;
       margin-top: 60px;
       font-size: 22px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
       padding: 35px 50px;
-      width: 100%;
       line-height: 2px;
       border-radius: 45px;
-      text-align: center;
-      position: relative;
-      cursor: pointer;
-      overflow: hidden;
-      white-space: nowrap;
-      display: inline-block;
-      color: #ffffff;
-      background: linear-gradient(90deg,#18817c,#22b1ab);
     }
 
     input {
