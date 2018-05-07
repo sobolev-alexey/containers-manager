@@ -6,7 +6,6 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import Router from './Router';
 import config from './config.json';
-import 'react-toastify/dist/ReactToastify.css';
 
 WebFontLoader.load({
   google: {
