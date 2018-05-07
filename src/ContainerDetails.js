@@ -1,42 +1,37 @@
-import React, { Component } from 'react';
-import { List, Subheader, FontIcon } from 'react-md';
+import React from 'react';
+import * as moment from 'moment';
 
-class ContainerDetails extends Component {
-  render() {
-    const { container, updated } = this.props;
+const ContainerDetails = ({ container }) => {
+  const updated = container ? moment.duration(Date.now() - container.timestamp).humanize() : '';
 
-    return (
-      <List className="md-cell md-paper md-paper--1">
-        <Subheader primaryText="Container data" primary />
-        <div>
-          <p>Container IMO: {container.containerId}</p>
-          <p>Updated: {updated} ago</p>
-          <p>Shipper: {container.shipper}</p>
-          <p>Load: {container.load}</p>
-          <p>Type: {container.type}</p>
-          <p>Status: {container.status}</p>
-          <p>
-            Route: {container.departure} &rarr; {container.destination}
-          </p>
-          <div>
-            Documents:{' '}
-            {container.documents.map(doc => (
-              <div key={doc.name}>
-                <a href={doc.downloadURL} target="_blank">
-                  {doc.name}
-                </a>
-                {doc.hashMatch && doc.sizeMatch ? (
-                  <FontIcon secondary>done</FontIcon>
-                ) : (
-                  <FontIcon error>block</FontIcon>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </List>
-    );
-  }
+  return (
+    <div className="detailSectionWrapper">
+      <div className="detailsSection">
+        <span className="label">Shipper</span>
+        <span className="value">{container.shipper}</span>
+      </div>
+      <div className="detailsSection">
+        <span className="label">Container IMO</span>
+        <span className="value">{container.containerId}</span>
+      </div>
+      <div className="detailsSection">
+        <span className="label">Status</span>
+        <span className="value">{container.status}</span>
+      </div>
+      <div className="detailsSection">
+        <span className="label">Load</span>
+        <span className="value">{container.load}</span>
+      </div>
+      <div className="detailsSection">
+        <span className="label">Type</span>
+        <span className="value">{container.type}</span>
+      </div>
+      <div className="detailsSection">
+        <span className="label">Updated</span>
+        <span className="value">{updated}</span>
+      </div>
+    </div>
+  );
 }
 
 export default ContainerDetails;

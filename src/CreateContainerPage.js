@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash-es/isEmpty';
-import { FontIcon, FocusContainer, TextField, SelectField, Button, CardActions } from 'react-md';
+import { FocusContainer, TextField, SelectField, Button, CardActions } from 'react-md';
 import { toast } from 'react-toastify';
 import Header from './Header';
 import Notification from './Notification';
@@ -161,7 +161,6 @@ class CreateContainerPage extends Component {
   };
 
   render() {
-    const { auth } = this.props;
     const {
       showLoader,
       imoError,

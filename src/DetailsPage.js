@@ -14,6 +14,7 @@ import { storeContainer } from './store/container/actions';
 import FilesUpload from './FilesUpload';
 import Notification from './Notification';
 import Loader from './Loader';
+import Header from './Header';
 import ContainerDetails from './ContainerDetails';
 import EventsList from './EventsList';
 import { validateIntegrity } from './DocumentIntegrityValidator';
@@ -121,10 +122,9 @@ class DetailsPage extends Component {
             this.notifySuccess(`Container ${meta ? '' : 'status '}updated`);
 
             if (meta) {
-              this.setState({ showLoader: false, metadata: [] });
+              this.setState({ showLoader: false, metadata: [], fileUploadEnabled: true });
               return resolve(this.retrieveContainer(containerId));
             } else {
-              // this.setState({ showLoader: false, statusUpdated: true });
               return resolve(history.push('/'));
             }
           }
@@ -179,10 +179,6 @@ class DetailsPage extends Component {
     });
   };
 
-  onSwitchFileUpload = changeEvent => {
-    this.setState({ fileUploadEnabled: changeEvent });
-  };
-
   render() {
     const { fileUploadEnabled, showLoader, statusUpdated, statuses, container } = this.state;
     const { auth } = this.props;
@@ -193,29 +189,27 @@ class DetailsPage extends Component {
       auth.canAppendToStream && container
         ? auth.nextEvents[container.status.toLowerCase().replace(/[-\ ]/g, '')]
         : '';
-    const updated = container ? moment.duration(Date.now() - container.timestamp).humanize() : '';
 
     return (
       <div className="App">
+        <Header>
+          <p>
+            Welcome to container tracking,<br />
+            {auth.name || auth.role}
+          </p>
+        </Header>
         <Loader showLoader={showLoader} />
         <div className={`md-block-centered ${showLoader ? 'hidden' : ''}`}>
-          <ContainerDetails container={container} updated={updated} />
-          <EventsList statuses={statuses} />
+          <p>
+            {container.departure} &rarr; {container.destination}
+          </p>
           {auth.canAppendToStream && !statusUpdated ? (
             <Button raised onClick={this.appendContainerChannel}>
               Confirm {nextStatus}
             </Button>
           ) : null}
-          {auth.canUploadDocuments ? (
-            <Switch
-              id="fileUpload"
-              type="switch"
-              label="Enable file upload"
-              name="fileUpload"
-              checked={fileUploadEnabled}
-              onChange={this.onSwitchFileUpload}
-            />
-          ) : null}
+          <EventsList statuses={statuses} />
+          <ContainerDetails container={container} />
           {fileUploadEnabled && auth.canUploadDocuments ? (
             <FilesUpload
               uploadComplete={this.onUploadComplete}
