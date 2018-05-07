@@ -69,7 +69,7 @@ class Autosuggest extends Component {
   render() {
     const { value, suggestions } = this.state;
     const inputProps = {
-      placeholder: 'Search',
+      placeholder: 'Search for containers',
       value,
       onChange: this.onChange,
     };

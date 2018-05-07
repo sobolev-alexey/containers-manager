@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
-import { Button, List, ListItem, Subheader } from 'react-md';
+import { Button, DataTable, TableHeader, TableBody, TableRow, TableColumn } from 'react-md';
 import isEmpty from 'lodash-es/isEmpty';
 import { storeContainers } from './store/containers/actions';
+import Header from './Header';
 import Notification from './Notification';
 import Autosuggest from './Autosuggest';
 import { getContainers } from './ContainerUtils';
@@ -49,10 +50,13 @@ class MainPage extends Component {
     const { showLoader } = this.state;
     return (
       <div className="App">
+        <Header name={auth.name || auth.role} />
         {auth.canCreateStream ? (
-          <Button raised onClick={() => history.push('/new')}>
-            Create new container
-          </Button>
+          <div className="ctaWrapper">
+            <Button raised onClick={() => history.push('/new')}>
+              Create new container
+            </Button>
+          </div>
         ) : null}
         <div className={`bouncing-loader ${showLoader ? 'visible' : ''}`}>
           <div />
@@ -60,32 +64,30 @@ class MainPage extends Component {
           <div />
         </div>
         <div className={`md-block-centered ${showLoader ? 'hidden' : ''}`}>
-          <List className="md-cell md-paper md-paper--1">
-            <Subheader
-              primaryText={auth.name ? `Containers of ${auth.name}` : 'Available containers'}
-              primary
-            />
-            <Autosuggest
-              items={containers}
-              onSelect={container => history.push(`/details/${container.containerId}`)}
-            />
-            {containers.map(({ containerId, departure, destination, status }) => (
-              <ListItem
-                key={containerId}
-                primaryText={containerId}
-                secondaryText={
-                  <div>
-                    <div>
-                      {departure} &rarr; {destination}
-                    </div>
-                    <div>{status}</div>
-                  </div>
-                }
-                threeLines
-                onClick={() => history.push(`/details/${containerId}`)}
-              />
-            ))}
-          </List>
+          <Autosuggest
+            items={containers}
+            onSelect={container => history.push(`/details/${container.containerId}`)}
+          />
+          <DataTable plain>
+            <TableHeader>
+              <TableRow>
+                <TableColumn>IMO</TableColumn>
+                <TableColumn className="md-text-center">Route</TableColumn>
+                <TableColumn className="md-text-right">Status</TableColumn>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {containers.map(({ containerId, departure, destination, status }) => (
+                <TableRow key={containerId} onClick={() => history.push(`/details/${containerId}`)}>
+                  <TableColumn>{containerId}</TableColumn>
+                  <TableColumn className="md-text-center">
+                    {departure} &rarr; {destination}
+                  </TableColumn>
+                  <TableColumn className="md-text-right">{status}</TableColumn>
+                </TableRow>
+              ))}
+            </TableBody>
+          </DataTable>
         </div>
         <Notification />
       </div>
