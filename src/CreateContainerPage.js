@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash-es/isEmpty';
-import { FocusContainer, TextField, SelectField, Button, CardActions } from 'react-md';
+import { FontIcon, FocusContainer, TextField, SelectField, Button, CardActions } from 'react-md';
 import { toast } from 'react-toastify';
+import Header from './Header';
 import Notification from './Notification';
 import { createNewChannel } from './mamFunctions.js';
 import { getContainers } from './ContainerUtils';
 import { storeContainers } from './store/containers/actions';
+import './CreateContainerPage.css';
 
 const PORTS = ['Rotterdam', 'Singapore'];
 const CARGO = ['Car', 'Consumer Goods', 'Heavy Machinery'];
@@ -159,6 +161,7 @@ class CreateContainerPage extends Component {
   };
 
   render() {
+    const { auth } = this.props;
     const {
       showLoader,
       imoError,
@@ -169,23 +172,27 @@ class CreateContainerPage extends Component {
     } = this.state;
     return (
       <div>
-        <FocusContainer
-          focusOnMount
-          containFocus
-          component="form"
-          className="md-grid"
-          onSubmit={this.createContainer}
-          aria-labelledby="contained-form-example"
-        >
-          <h3>Create new container</h3>
-          <div className="md-grid">
+        <Header>
+          <p>
+            <a onClick={() => this.props.history.push('/')}>&nbsp;</a>
+            Create new container
+          </p>
+        </Header>
+        <div className="createContainerWrapper">
+          <FocusContainer
+            focusOnMount
+            containFocus
+            component="form"
+            className="md-grid"
+            onSubmit={this.createContainer}
+            aria-labelledby="contained-form-example"
+          >
             <TextField
               ref={imo => (this.containerIMO = imo)}
               id="containerIMO"
               label="Container IMO"
               required
-              type="number"
-              className="md-cell md-cell--bottom"
+              type="text"
               error={imoError}
               errorText="This field is required."
             />
@@ -233,23 +240,20 @@ class CreateContainerPage extends Component {
               error={typeError}
               errorText="This field is required."
             />
+          </FocusContainer>
+          <Notification />
+          <div>
+            <div className={`bouncing-loader ${showLoader ? 'visible' : ''}`}>
+              <div />
+              <div />
+              <div />
+            </div>
+            <CardActions className={`md-cell md-cell--12 ${showLoader ? 'hidden' : ''}`}>
+              <Button raised onClick={this.createContainer}>
+                Create
+              </Button>
+            </CardActions>
           </div>
-        </FocusContainer>
-        <Notification />
-        <div>
-          <div className={`bouncing-loader ${showLoader ? 'visible' : ''}`}>
-            <div />
-            <div />
-            <div />
-          </div>
-          <CardActions className={`md-cell md-cell--12 ${showLoader ? 'hidden' : ''}`}>
-            <Button raised primary onClick={this.createContainer} className="md-cell--right">
-              Submit
-            </Button>
-            <Button flat onClick={() => this.props.history.push('/')}>
-              Cancel
-            </Button>
-          </CardActions>
         </div>
       </div>
     );
