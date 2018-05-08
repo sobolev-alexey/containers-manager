@@ -6,6 +6,11 @@
   display: flex;
   margin: 0 auto;
 
+  .loaderWrapper {
+    width: 100%;
+    margin: 20% auto;
+  }
+
   .md-block-centered  {
     width: 100%;
   }
@@ -14,7 +19,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 50px 0;
+    margin: 50px 20px;
 
     @media (max-width: 768px) {
       margin: 20px;

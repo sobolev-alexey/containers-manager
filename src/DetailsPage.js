@@ -15,6 +15,7 @@ import FilesUpload from './FilesUpload';
 import Notification from './Notification';
 import Loader from './Loader';
 import Header from './Header';
+import Tabs from './Tabs';
 import ContainerDetails from './ContainerDetails';
 import StatusList from './StatusList';
 import { validateIntegrity } from './DocumentIntegrityValidator';
@@ -22,7 +23,7 @@ import './DetailsPage.css';
 
 class DetailsPage extends Component {
   state = {
-    showLoader: false,
+    showLoader: true,
     metadata: [],
     fileUploadEnabled: true,
     statusUpdated: false,
@@ -199,7 +200,9 @@ class DetailsPage extends Component {
           </p>
         </Header>
         <div className="detailsWrapper">
-          <Loader showLoader={showLoader} />
+          <div className={`loaderWrapper ${showLoader ? '' : 'hidden'}`}>
+            <Loader showLoader={showLoader} />
+          </div>
           <div className={`md-block-centered ${showLoader ? 'hidden' : ''}`}>
             <div className="routeCtaWrapper">
               <h1>
@@ -211,7 +214,7 @@ class DetailsPage extends Component {
                 </Button>
               ) : null}
             </div>
-            <StatusList statuses={statuses} />
+            <Tabs container={container} statuses={statuses} />
             <ContainerDetails container={container} />
           </div>
         </div>
