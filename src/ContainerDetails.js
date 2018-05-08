@@ -29,7 +29,7 @@ const ContainerDetails = ({ container }) => {
       </div>
       <div className="detailsSection">
         <span className="label">Updated</span>
-        <span className="value">{updated}</span>
+        <span className="value">{updated} ago</span>
       </div>
     </div>
   );

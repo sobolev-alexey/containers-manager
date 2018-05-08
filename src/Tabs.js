@@ -6,7 +6,7 @@ import ContainerDocuments from './ContainerDocuments';
 import './Tabs.css';
 
 const ContainerTabs = ({ container, statuses }) => (
-  <TabsContainer panelClassName="md-grid" className="tabsWrapper">
+  <TabsContainer className="tabsWrapper">
     <Tabs tabId="simple-tab" mobile={false}>
       <Tab label="Status">
         <StatusList statuses={statuses} />
