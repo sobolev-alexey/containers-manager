@@ -2,7 +2,6 @@ import React from 'react';
 import { TabsContainer, Tabs, Tab } from 'react-md';
 import StatusList from './StatusList';
 import ContainerDocuments from './ContainerDocuments';
-// import ContainerTemperature from './ContainerTemperature';
 import './Tabs.css';
 
 const ContainerTabs = ({ container, statuses }) => (
@@ -11,9 +10,11 @@ const ContainerTabs = ({ container, statuses }) => (
       <Tab label="Status">
         <StatusList statuses={statuses} />
       </Tab>
-      <Tab label="Documents">
-        <ContainerDocuments container={container} />
-      </Tab>
+      {container.documents && container.documents.length > 0 ? (
+        <Tab label="Documents">
+          <ContainerDocuments container={container} />
+        </Tab>
+      ) : null}
     </Tabs>
   </TabsContainer>
 );
