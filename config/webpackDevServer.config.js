@@ -74,6 +74,7 @@ module.exports = function(proxy, allowedHost) {
     https: protocol === 'https',
     host: host,
     overlay: false,
+    headers: { 'Access-Control-Allow-Origin': '*' },
     historyApiFallback: {
       // Paths with dots should still use the history fallback.
       // See https://github.com/facebookincubator/create-react-app/issues/387.

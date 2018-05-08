@@ -16,7 +16,7 @@ import Notification from './Notification';
 import Loader from './Loader';
 import Header from './Header';
 import ContainerDetails from './ContainerDetails';
-import EventsList from './EventsList';
+import StatusList from './StatusList';
 import { validateIntegrity } from './DocumentIntegrityValidator';
 import './DetailsPage.css';
 
@@ -24,7 +24,7 @@ class DetailsPage extends Component {
   state = {
     showLoader: false,
     metadata: [],
-    fileUploadEnabled: false,
+    fileUploadEnabled: true,
     statusUpdated: false,
     statuses: [],
     container: null,
@@ -162,7 +162,7 @@ class DetailsPage extends Component {
           this.props.storeContainer(containerEvents);
         });
 
-        return resolve(this.notifySuccess('Container data loaded'));
+        return resolve();
       } catch (error) {
         this.setState({ showLoader: false });
         return reject(this.notifyError('Error loading container data'));
@@ -191,33 +191,37 @@ class DetailsPage extends Component {
         : '';
 
     return (
-      <div className="App">
+      <div>
         <Header>
           <p>
             Welcome to container tracking,<br />
             {auth.name || auth.role}
           </p>
         </Header>
-        <Loader showLoader={showLoader} />
-        <div className={`md-block-centered ${showLoader ? 'hidden' : ''}`}>
-          <p>
-            {container.departure} &rarr; {container.destination}
-          </p>
-          {auth.canAppendToStream && !statusUpdated ? (
-            <Button raised onClick={this.appendContainerChannel}>
-              Confirm {nextStatus}
-            </Button>
-          ) : null}
-          <EventsList statuses={statuses} />
-          <ContainerDetails container={container} />
-          {fileUploadEnabled && auth.canUploadDocuments ? (
-            <FilesUpload
-              uploadComplete={this.onUploadComplete}
-              pathTofile={`containers/${container.containerId}`}
-              existingDocuments={container.documents}
-            />
-          ) : null}
+        <div className="detailsWrapper">
+          <Loader showLoader={showLoader} />
+          <div className={`md-block-centered ${showLoader ? 'hidden' : ''}`}>
+            <div className="routeCtaWrapper">
+              <h1>
+                {container.departure} &rarr; {container.destination}
+              </h1>
+              {auth.canAppendToStream && !statusUpdated ? (
+                <Button raised onClick={this.appendContainerChannel}>
+                  Confirm {nextStatus}
+                </Button>
+              ) : null}
+            </div>
+            <StatusList statuses={statuses} />
+            <ContainerDetails container={container} />
+          </div>
         </div>
+        {fileUploadEnabled && auth.canUploadDocuments ? (
+          <FilesUpload
+            uploadComplete={this.onUploadComplete}
+            pathTofile={`containers/${container.containerId}`}
+            existingDocuments={container.documents}
+          />
+        ) : null}
         <Notification />
       </div>
     );

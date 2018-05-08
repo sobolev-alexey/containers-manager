@@ -1,5 +1,6 @@
 import React from 'react';
 import * as moment from 'moment';
+import './ContainerDetails.css';
 
 const ContainerDetails = ({ container }) => {
   const updated = container ? moment.duration(Date.now() - container.timestamp).humanize() : '';
@@ -32,6 +33,6 @@ const ContainerDetails = ({ container }) => {
       </div>
     </div>
   );
-}
+};
 
 export default ContainerDetails;
