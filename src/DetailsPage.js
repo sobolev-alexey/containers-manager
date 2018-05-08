@@ -15,6 +15,7 @@ import FilesUpload from './FilesUpload';
 import Notification from './Notification';
 import Loader from './Loader';
 import Header from './Header';
+import Tabs from './Tabs';
 import ContainerDetails from './ContainerDetails';
 import StatusList from './StatusList';
 import { validateIntegrity } from './DocumentIntegrityValidator';
@@ -211,7 +212,7 @@ class DetailsPage extends Component {
                 </Button>
               ) : null}
             </div>
-            <StatusList statuses={statuses} />
+            <Tabs container={container} statuses={statuses} />
             <ContainerDetails container={container} />
           </div>
         </div>
