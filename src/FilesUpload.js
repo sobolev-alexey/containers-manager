@@ -7,6 +7,7 @@ import FilePondImagePreview from 'filepond-plugin-image-preview';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import Notification from './Notification';
+import './FileUpload.css';
 
 registerPlugin(FilePondImagePreview);
 

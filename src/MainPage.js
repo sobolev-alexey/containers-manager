@@ -31,7 +31,6 @@ class MainPage extends Component {
 
   retrieveContainers = async auth => {
     const handleSuccess = results => {
-      this.notifySuccess('Loaded containers');
       this.props.storeContainers(results);
     };
 

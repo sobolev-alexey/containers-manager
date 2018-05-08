@@ -172,10 +172,12 @@ class CreateContainerPage extends Component {
     return (
       <div>
         <Header>
-          <p>
-            <a onClick={() => this.props.history.push('/')}>&nbsp;</a>
-            Create new container
-          </p>
+          <div>
+            <a onClick={() => this.props.history.push('/')}>
+              <img src="arrow_left.svg" alt="back" />
+            </a>
+            <span>Create new container</span>
+          </div>
         </Header>
         <div className="createContainerWrapper">
           <FocusContainer
