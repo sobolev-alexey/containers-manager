@@ -23,7 +23,7 @@ import './DetailsPage.css';
 
 class DetailsPage extends Component {
   state = {
-    showLoader: false,
+    showLoader: true,
     metadata: [],
     fileUploadEnabled: true,
     statusUpdated: false,
@@ -200,7 +200,9 @@ class DetailsPage extends Component {
           </p>
         </Header>
         <div className="detailsWrapper">
-          <Loader showLoader={showLoader} />
+          <div className={`loaderWrapper ${showLoader ? '' : 'hidden'}`}>
+            <Loader showLoader={showLoader} />
+          </div>
           <div className={`md-block-centered ${showLoader ? 'hidden' : ''}`}>
             <div className="routeCtaWrapper">
               <h1>

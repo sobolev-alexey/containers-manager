@@ -30,10 +30,11 @@ class ContainerDocuments extends Component {
             {container.documents.map(doc => (
               <TableRow key={doc.name}>
                 <TableColumn>
-                  <div className={`icon ${this.getDocumentIcon(doc)}`} />
-                </TableColumn>
-                <TableColumn>
-                  <a href={doc.downloadURL} target="_blank">
+                  <a
+                    className={`icon ${this.getDocumentIcon(doc)}`}
+                    href={doc.downloadURL}
+                    target="_blank"
+                  >
                     {doc.name}
                   </a>
                 </TableColumn>

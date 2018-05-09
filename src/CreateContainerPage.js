@@ -121,8 +121,6 @@ class CreateContainerPage extends Component {
           mam.secret_key
         );
 
-        this.notifySuccess('New container created');
-
         // Create a new container entry using that container ID
         await containersRef.set({
           containerId,
