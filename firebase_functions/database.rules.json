@@ -3,7 +3,7 @@
     ".read": "true",
     ".write": "true",
     "containers": {
-      ".indexOn": ["containerId, status"]
+      ".indexOn": ["containerId", "status", "shipper"]
     }
   }
 }

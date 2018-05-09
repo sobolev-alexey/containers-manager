@@ -29,3 +29,18 @@ To test this locally, run
 
 Then call a function with parameters
 `login.post('/login').form( {username: 'user123', password: 'password123' })`
+
+## CORS
+
+See https://cloud.google.com/storage/docs/configuring-cors
+You can also use the `gsutil cors` command to get the CORS configuration of a bucket:
+
+```
+gsutil cors get gs://container-tracking-simulation.appspot.com
+```
+
+Use the `gsutil cors` command to configure CORS on a bucket:
+
+```
+gsutil cors set firebase_storage.json gs://container-tracking-simulation.appspot.com
+```

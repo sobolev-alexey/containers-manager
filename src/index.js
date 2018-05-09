@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import WebFontLoader from 'webfontloader';
 import firebase from 'firebase';
 import { BrowserRouter } from 'react-router-dom';
-import './index.css';
+import './styles/index.css';
 import Router from './Router';
 import config from './config.json';
 
