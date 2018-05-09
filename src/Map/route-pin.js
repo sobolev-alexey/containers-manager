@@ -3,16 +3,15 @@ import styles from './styles.css';
 
 export default class RoutePin extends PureComponent {
   render() {
-    const { size = 15, onClick, color = '#18807b' } = this.props;
+    const { size = 20 } = this.props;
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        height={size}
+        height={size * 1.6}
         viewBox="0 0 100 100"
-        onClick={() => onClick()}
         className={styles.routePin}
       >
-        <circle cx="50" cy="50" r="40" style={{ fill: color }} />
+        <circle cx="50" cy="50" r="40" style={{ fill: '#18807b' }} />
       </svg>
     );
   }

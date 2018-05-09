@@ -8,7 +8,7 @@ import './ContainerTemperature.css';
 
 class ContainerTemperature extends Component {
   getTemperatureData = data => {
-    return data.filter(({ temperature }) => temperature).map(({ temperature, timestamp }) => ({
+    return data.map(({ temperature, timestamp }) => ({
       x: moment(timestamp).format('YYYY-MM-DD HH:mm'),
       y: Number(temperature),
     }));
@@ -25,17 +25,16 @@ class ContainerTemperature extends Component {
   };
 
   getYRange = data => {
-    const temps = data
-      .filter(({ temperature }) => temperature)
-      .map(({ temperature }) => temperature);
+    const temps = data.map(({ temperature }) => temperature);
     return [Math.ceil(Math.min(...temps) - 1), Math.ceil(Math.max(...temps) + 1)];
   };
 
   render() {
     const { data, size: { width } } = this.props;
-    const temperature = this.getTemperatureData(data);
-    const xRange = this.getXRange(data);
-    const yRange = this.getYRange(data);
+    const filteredData = data.filter(({ temperature }) => temperature);
+    const temperature = this.getTemperatureData(filteredData);
+    const xRange = this.getXRange(filteredData);
+    const yRange = this.getYRange(filteredData);
 
     return (
       <div className="temperatureChart">
