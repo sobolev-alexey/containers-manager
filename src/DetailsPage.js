@@ -63,7 +63,9 @@ class DetailsPage extends Component {
             containerId,
             departure,
             destination,
+            lastPositionIndex = 0,
             load,
+            position = null,
             shipper,
             type,
             status,
@@ -90,7 +92,9 @@ class DetailsPage extends Component {
               containerId,
               departure,
               destination,
+              lastPositionIndex,
               load,
+              position,
               shipper,
               type,
               timestamp,
@@ -214,7 +218,11 @@ class DetailsPage extends Component {
                 </Button>
               ) : null}
             </div>
-            <Tabs container={container} statuses={statuses} />
+            <Tabs
+              container={container}
+              statuses={statuses}
+              containerEvents={this.props.container}
+            />
             <ContainerDetails container={container} />
           </div>
         </div>
