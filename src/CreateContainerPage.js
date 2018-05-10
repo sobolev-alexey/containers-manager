@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import isEmpty from 'lodash-es/isEmpty';
 import { FocusContainer, TextField, SelectField, Button, CardActions } from 'react-md';
 import { toast } from 'react-toastify';
 import Header from './Header';
 import Notification from './Notification';
 import { createNewChannel } from './mamFunctions.js';
-import { getContainers } from './ContainerUtils';
-import { storeContainers } from './store/containers/actions';
+import { addContainer } from './store/containers/actions';
 import './CreateContainerPage.css';
 
 const PORTS = ['Rotterdam', 'Singapore'];
@@ -137,17 +137,8 @@ class CreateContainerPage extends Component {
           },
         });
 
-        const handleSuccess = results => {
-          this.props.storeContainers(results);
-        };
-
-        const handleError = () => {
-          this.notifyError('Error loading containers');
-          this.setState({ showLoader: false });
-        };
-
         this.setState({ showLoader: true });
-        await getContainers(this.props.auth, handleSuccess, handleError);
+        await this.props.addContainer(containerId);
 
         return resolve(this.props.history.push(`/details/${containerId}`));
       } catch (error) {
@@ -266,7 +257,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  storeContainers: containers => dispatch(storeContainers(containers)),
+  addContainer: containerId => dispatch(addContainer(containerId)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateContainerPage);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateContainerPage));

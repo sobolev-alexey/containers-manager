@@ -1,4 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
+import { middleware as reduxPackMiddleware } from 'redux-pack';
 import reducer from './reducer';
 
 let devtools = () => fn => fn;
@@ -10,11 +11,11 @@ if (process.env.NODE_ENV === 'local') {
 }
 
 // if (process.env.NODE_ENV === 'local') {
-  log = require('redux-logger').default;
+log = require('redux-logger').default;
 // }
 
 const configureStore = initialState => {
-  const enhancers = [applyMiddleware(log), devtools()];
+  const enhancers = [applyMiddleware(reduxPackMiddleware, log), devtools()];
 
   const store = createStore(reducer, initialState, compose(...enhancers));
 

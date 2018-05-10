@@ -7,45 +7,40 @@ import { storeContainers } from './store/containers/actions';
 import Header from './Header';
 import Notification from './Notification';
 import Autosuggest from './Autosuggest';
-import { getContainers } from './ContainerUtils';
 import './MainPage.css';
 
 class MainPage extends Component {
   state = {
-    showLoader: false,
+    showLoader: true,
   };
 
   componentDidMount() {
-    const { auth, history } = this.props;
+    const { auth, history, containers } = this.props;
     if (isEmpty(auth)) {
       history.push('/login');
     } else {
-      this.retrieveContainers(auth);
+      if (isEmpty(containers.data)) {
+        this.props.storeContainers(auth);
+      }
     }
   }
 
-  notifySuccess = message => toast.success(message);
-  notifyWarning = message => toast.warn(message);
+  componentWillReceiveProps(nextProps) {
+    const { containers: { data, error } } = nextProps;
+    if (error) {
+      this.notifyError(error);
+    }
+    if (!isEmpty(data)) {
+      this.setState({ showLoader: false });
+    }
+  }
+
   notifyError = message => toast.error(message);
 
-  retrieveContainers = async auth => {
-    const handleSuccess = results => {
-      this.props.storeContainers(results);
-    };
-
-    const handleError = () => {
-      this.setState({ showLoader: false });
-      this.notifyError('Error loading containers');
-    };
-
-    this.setState({ showLoader: true });
-    await getContainers(auth, handleSuccess, handleError);
-    this.setState({ showLoader: false });
-  };
-
   render() {
-    const { auth, containers, history } = this.props;
+    const { auth, history, containers: { data } } = this.props;
     const { showLoader } = this.state;
+
     return (
       <div className="App">
         <Header>
@@ -68,7 +63,7 @@ class MainPage extends Component {
         </div>
         <div className={`md-block-centered ${showLoader ? 'hidden' : ''}`}>
           <Autosuggest
-            items={containers}
+            items={data}
             onSelect={container => history.push(`/details/${container.containerId}`)}
           />
           <DataTable plain>
@@ -80,7 +75,7 @@ class MainPage extends Component {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {containers.map(({ containerId, departure, destination, status }) => (
+              {data.map(({ containerId, departure, destination, status }) => (
                 <TableRow key={containerId} onClick={() => history.push(`/details/${containerId}`)}>
                   <TableColumn>{containerId}</TableColumn>
                   <TableColumn className="md-text-center">
@@ -104,7 +99,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  storeContainers: containers => dispatch(storeContainers(containers)),
+  storeContainers: auth => dispatch(storeContainers(auth)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

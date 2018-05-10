@@ -240,7 +240,7 @@ class DetailsPage extends Component {
 const mapStateToProps = state => ({
   auth: state.auth,
   container: state.container,
-  containers: state.containers,
+  containers: state.containers.data,
 });
 
 const mapDispatchToProps = dispatch => ({
