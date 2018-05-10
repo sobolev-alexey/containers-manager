@@ -1,5 +1,4 @@
 import React from 'react';
-import { List, Subheader } from 'react-md';
 import * as moment from 'moment';
 import './StatusList.css';
 

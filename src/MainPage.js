@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Button, DataTable, TableHeader, TableBody, TableRow, TableColumn } from 'react-md';

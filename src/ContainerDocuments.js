@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { DataTable, TableBody, TableRow, TableColumn, FontIcon } from 'react-md';
+import { DataTable, TableBody, TableRow, TableColumn } from 'react-md';
 import './ContainerDocuments.css';
 
 class ContainerDocuments extends Component {

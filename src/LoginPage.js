@@ -47,7 +47,7 @@ class LoginPage extends Component {
     return (
       <div className="wrapper">
         <div className="graphic">
-          <img src="bg_login_page.png" />
+          <img src="bg_login_page.png" alt="background" />
           <div className="welcome">
             <Logo />
             <p>Welcome back!</p>

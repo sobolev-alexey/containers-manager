@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
-import { Button, Switch } from 'react-md';
+import { Button } from 'react-md';
 import isEmpty from 'lodash-es/isEmpty';
 import find from 'lodash-es/find';
 import last from 'lodash-es/last';
 import uniqBy from 'lodash-es/uniqBy';
 import pick from 'lodash-es/pick';
-import * as moment from 'moment';
 import { toast } from 'react-toastify';
 import { appendToChannel, fetchChannel } from './mamFunctions.js';
 import { storeContainer } from './store/container/actions';
@@ -17,7 +16,6 @@ import Loader from './Loader';
 import Header from './Header';
 import Tabs from './Tabs';
 import ContainerDetails from './ContainerDetails';
-import StatusList from './StatusList';
 import { validateIntegrity } from './DocumentIntegrityValidator';
 import './DetailsPage.css';
 
@@ -74,7 +72,7 @@ class DetailsPage extends Component {
           } = last(container);
           const newStatus = meta
             ? status
-            : auth.nextEvents[status.toLowerCase().replace(/[-\ ]/g, '')];
+            : auth.nextEvents[status.toLowerCase().replace(/[- ]/g, '')];
 
           metadata.forEach(({ name }) => {
             documents.forEach(existingDocument => {
@@ -192,7 +190,7 @@ class DetailsPage extends Component {
 
     const nextStatus =
       auth.canAppendToStream && container
-        ? auth.nextEvents[container.status.toLowerCase().replace(/[-\ ]/g, '')]
+        ? auth.nextEvents[container.status.toLowerCase().replace(/[- ]/g, '')]
         : '';
 
     return (
