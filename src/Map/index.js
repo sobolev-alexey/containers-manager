@@ -42,7 +42,7 @@ class Map extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { data } = nextProps;
-    this.setState({ data: [...data.filter(({ position }) => !isEmpty(position))] }, () =>
+    this.setState({ data: [...data] }, () =>
       this.state.data.map(this.updateLine)
     );
   }
