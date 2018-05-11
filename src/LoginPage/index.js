@@ -5,6 +5,7 @@ import { TextField, SelectField, Button } from 'react-md';
 import { toast } from 'react-toastify';
 import { storeCredentials } from '../store/auth/actions';
 import Logo from '../SharedComponents/Logo';
+import Loader from '../SharedComponents/Loader';
 import Notification from '../SharedComponents/Notification';
 import api from '../api';
 import config from '../config.json';
@@ -75,11 +76,7 @@ class LoginPage extends Component {
               type="password"
               required
             />
-            <div className={`bouncing-loader ${showLoader ? 'visible' : ''}`}>
-              <div />
-              <div />
-              <div />
-            </div>
+            <Loader showLoader={showLoader} />
             <Button raised onClick={this.login} className={showLoader ? 'hidden' : ''}>
               Login
             </Button>

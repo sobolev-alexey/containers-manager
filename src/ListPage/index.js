@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { Button, DataTable, TableHeader, TableBody, TableRow, TableColumn } from 'react-md';
 import isEmpty from 'lodash-es/isEmpty';
 import { storeContainers } from '../store/containers/actions';
+import Loader from '../SharedComponents/Loader';
 import Header from '../SharedComponents/Header';
 import Notification from '../SharedComponents/Notification';
 import Autosuggest from './Autosuggest';
@@ -57,11 +58,7 @@ class ListPage extends Component {
             </Button>
           </div>
         ) : null}
-        <div className={`bouncing-loader ${showLoader ? 'visible' : ''}`}>
-          <div />
-          <div />
-          <div />
-        </div>
+        <Loader showLoader={showLoader} />
         <div className={`md-block-centered ${showLoader ? 'hidden' : ''}`}>
           <Autosuggest
             items={data}

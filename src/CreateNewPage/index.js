@@ -5,6 +5,7 @@ import { withRouter } from 'react-router';
 import isEmpty from 'lodash-es/isEmpty';
 import { FocusContainer, TextField, SelectField, Button, CardActions } from 'react-md';
 import { toast } from 'react-toastify';
+import Loader from '../SharedComponents/Loader';
 import Header from '../SharedComponents/Header';
 import Notification from '../SharedComponents/Notification';
 import { createNewChannel } from '../mamFunctions.js';
@@ -235,11 +236,7 @@ class CreateContainerPage extends Component {
           </FocusContainer>
           <Notification />
           <div>
-            <div className={`bouncing-loader ${showLoader ? 'visible' : ''}`}>
-              <div />
-              <div />
-              <div />
-            </div>
+            <Loader showLoader={showLoader} />
             <CardActions className={`md-cell md-cell--12 ${showLoader ? 'hidden' : ''}`}>
               <Button raised onClick={this.createContainer}>
                 Create
