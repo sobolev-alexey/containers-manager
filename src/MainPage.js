@@ -11,7 +11,7 @@ import './MainPage.css';
 
 class MainPage extends Component {
   state = {
-    showLoader: true,
+    showLoader: false,
   };
 
   componentDidMount() {
@@ -20,6 +20,7 @@ class MainPage extends Component {
       history.push('/login');
     } else {
       if (isEmpty(containers.data)) {
+        this.setState({ showLoader: true });
         this.props.storeContainers(auth);
       }
     }

@@ -1,15 +1,16 @@
 @import './_components';
 
+.loaderWrapper {
+  height: 30px;
+  width: 100%;
+  margin: 30px auto;
+}
+
 .detailsWrapper {
   max-width: 1092px;
   width: 100%;
   display: flex;
   margin: 0 auto;
-
-  .loaderWrapper {
-    width: 100%;
-    margin: 20% auto;
-  }
 
   .md-block-centered  {
     width: 100%;

@@ -19,12 +19,11 @@ class LoginPage extends Component {
 
   login = event => {
     event.preventDefault();
+    this.setState({ showLoader: true });
     if (!this.username.value) return;
 
     const username = this.username.value.toLowerCase();
     const password = sha256(this.username.value.toLowerCase());
-
-    this.setState({ showLoader: true });
 
     api
       .post(`${config.rootURL}/login`, { username, password })

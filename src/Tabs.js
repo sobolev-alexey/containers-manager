@@ -9,7 +9,7 @@ import ContainerTemperature from './ContainerTemperature';
 import ContainerLocation from './Map';
 import './Tabs.css';
 
-const ContainerTabs = ({ container, statuses, containerEvents, size }) => {
+const ContainerTabs = ({ container, statuses, containerEvents, size, fetchComplete }) => {
   const locations = containerEvents.filter(({ position }) => !isEmpty(position));
   return (
     <TabsContainer className="tabsWrapper">
@@ -19,7 +19,6 @@ const ContainerTabs = ({ container, statuses, containerEvents, size }) => {
         </Tab>
         {container.documents && container.documents.length > 0 ? (
           <Tab label="Documents">
-            { console.log('Mobile', size.width) }
             <ContainerDocuments container={container} />
           </Tab>
         ) : null}
@@ -28,7 +27,7 @@ const ContainerTabs = ({ container, statuses, containerEvents, size }) => {
             <ContainerTemperature data={containerEvents} />
           </Tab>
         ) : null}
-        {containerEvents && last(containerEvents) && locations.length > 0 ? (
+        {fetchComplete && containerEvents && last(containerEvents) && locations.length > 0 ? (
           <Tab label="Location">
             <ContainerLocation data={locations} />
           </Tab>
@@ -36,6 +35,6 @@ const ContainerTabs = ({ container, statuses, containerEvents, size }) => {
       </Tabs>
     </TabsContainer>
   );
-}
+};
 
 export default sizeMe({ monitorHeight: false })(ContainerTabs);

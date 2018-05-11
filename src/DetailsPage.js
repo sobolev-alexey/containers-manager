@@ -21,7 +21,8 @@ import './DetailsPage.css';
 
 class DetailsPage extends Component {
   state = {
-    showLoader: true,
+    showLoader: false,
+    fetchComplete: false,
     metadata: [],
     fileUploadEnabled: true,
     statusUpdated: false,
@@ -183,7 +184,14 @@ class DetailsPage extends Component {
   };
 
   render() {
-    const { fileUploadEnabled, showLoader, statusUpdated, statuses, container } = this.state;
+    const {
+      fileUploadEnabled,
+      showLoader,
+      statusUpdated,
+      statuses,
+      container,
+      fetchComplete,
+    } = this.state;
     const { auth } = this.props;
 
     if (!container) return <Loader showLoader={showLoader} />;
@@ -201,11 +209,11 @@ class DetailsPage extends Component {
             {auth.name || auth.role}
           </p>
         </Header>
+        <div className={`loaderWrapper ${showLoader ? '' : 'hidden'}`}>
+          <Loader showLoader={showLoader} />
+        </div>
         <div className="detailsWrapper">
-          <div className={`loaderWrapper ${showLoader ? '' : 'hidden'}`}>
-            <Loader showLoader={showLoader} />
-          </div>
-          <div className={`md-block-centered ${showLoader ? 'hidden' : ''}`}>
+          <div className="md-block-centered">
             <div className="routeCtaWrapper">
               <h1>
                 {container.departure} &rarr; {container.destination}
@@ -220,6 +228,7 @@ class DetailsPage extends Component {
               container={container}
               statuses={statuses}
               containerEvents={this.props.container}
+              fetchComplete={fetchComplete}
             />
             <ContainerDetails container={container} />
           </div>
