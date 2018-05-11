@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { DataTable, TableBody, TableRow, TableColumn } from 'react-md';
+import { DataTable, TableBody, TableRow, TableColumn, FontIcon } from 'react-md';
 import './styles.css';
 
 class ContainerDocuments extends Component {
@@ -38,15 +38,13 @@ class ContainerDocuments extends Component {
                     {doc.name}
                   </a>
                 </TableColumn>
-                {
-                  // <TableColumn className="md-text-right">
-                  //          {doc.hashMatch && doc.sizeMatch ? (
-                  //            <FontIcon secondary>done</FontIcon>
-                  //          ) : (
-                  //            <FontIcon error>block</FontIcon>
-                  //          )}
-                  //        </TableColumn>
-                }
+                <TableColumn className="md-text-right">
+                  {doc.hashMatch && doc.sizeMatch ? (
+                    <FontIcon secondary>done</FontIcon>
+                  ) : (
+                    <FontIcon error>block</FontIcon>
+                  )}
+                </TableColumn>
               </TableRow>
             ))}
           </TableBody>
