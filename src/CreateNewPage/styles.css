@@ -1,0 +1,53 @@
+.createContainerWrapper {
+  max-width: 630px;
+  width: 40%;
+  margin: 30px auto 0; }
+  .createContainerWrapper .md-grid > div {
+    width: 100%; }
+  .createContainerWrapper .md-grid input {
+    font-size: 18px;
+    font-weight: 700;
+    padding-left: 10px; }
+  .createContainerWrapper .md-grid .md-divider {
+    background-color: #979797; }
+  .createContainerWrapper .md-grid .md-floating-label {
+    color: #3f3f3f;
+    font-size: 18px;
+    font-weight: 400;
+    padding-left: 10px; }
+  .createContainerWrapper .md-grid .md-layover {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #979797;
+    margin-bottom: 20px; }
+    .createContainerWrapper .md-grid .md-layover .md-select-field--btn {
+      color: #3f3f3f;
+      font-size: 18px;
+      font-weight: 700;
+      padding-left: 10px; }
+    .createContainerWrapper .md-grid .md-layover .md-icon-separator {
+      padding-right: 0; }
+  .createContainerWrapper .md-grid .md-tile-content .md-text {
+    color: #3f3f3f;
+    font-size: 18px;
+    font-weight: 700; }
+  .createContainerWrapper .md-grid .md-list--menu-below {
+    top: 80%; }
+  .createContainerWrapper button.md-btn {
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+    color: #ffffff;
+    background: linear-gradient(90deg, #18817c, #22b1ab);
+    width: 100%;
+    margin-top: 20px;
+    font-size: 22px;
+    padding: 35px 50px;
+    line-height: 2px;
+    border-radius: 45px; }

@@ -2,21 +2,21 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import configureStore from './store/configure';
-import MainPage from './MainPage';
+import ListPage from './ListPage';
 import DetailsPage from './DetailsPage';
 import LoginPage from './LoginPage';
-import CreateContainerPage from './CreateContainerPage';
+import CreateNewPage from './CreateNewPage';
 
 const store = configureStore();
 
 const Router = () => (
   <Provider store={store}>
     <Switch>
-      <Route path="/" component={MainPage} exact />
+      <Route path="/" component={ListPage} exact />
       <Route path="/details/:containerId" component={DetailsPage} />
       <Route path="/login" component={LoginPage} />
-      <Route path="/new" component={CreateContainerPage} />
-      <Route component={MainPage} />
+      <Route path="/new" component={CreateNewPage} />
+      <Route component={ListPage} />
     </Switch>
   </Provider>
 );
