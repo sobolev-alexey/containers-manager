@@ -5,7 +5,7 @@ export default (state = [], action) => {
 
   switch (type) {
     case STORE_CONTAINER:
-      return [...payload];
+      return [...state, payload];
     default:
       return state;
   }

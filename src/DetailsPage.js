@@ -19,6 +19,12 @@ import ContainerDetails from './ContainerDetails';
 import { validateIntegrity } from './DocumentIntegrityValidator';
 import './DetailsPage.css';
 
+import Mam from 'mam.client.js';
+import IOTA from 'iota.lib.js';
+import config from './config.json';
+
+const iota = new IOTA({ provider: config.provider });
+
 class DetailsPage extends Component {
   state = {
     showLoader: false,
@@ -30,21 +36,32 @@ class DetailsPage extends Component {
     container: null,
   };
 
-  componentDidMount() {
-    const { auth, containers, history, match: { params: { containerId } } } = this.props;
+  async componentDidMount() {
+    const { auth, container, containers, history, match: { params: { containerId } } } = this.props;
     if (isEmpty(auth)) {
       history.push('/login');
     }
     if (!containerId || isEmpty(containers)) {
       history.push('/');
-    } else {
+    } else if (isEmpty(container) || container[0].containerId !== containerId) {
       this.retrieveContainer(containerId);
+    } else {
+      await validateIntegrity(last(container));
+      this.setState({
+        showLoader: false,
+        fetchComplete: true,
+        container: last(container),
+        statuses: this.getUniqueStatuses(container),
+      });
     }
   }
 
   notifySuccess = message => toast.success(message);
   notifyWarning = message => toast.warn(message);
   notifyError = message => toast.error(message);
+
+  getUniqueStatuses = containerEvents =>
+    uniqBy(containerEvents.map(event => pick(event, ['status', 'timestamp'])), 'status');
 
   appendContainerChannel = async () => {
     const { metadata } = this.state;
@@ -144,28 +161,25 @@ class DetailsPage extends Component {
     return promise;
   };
 
-  retrieveContainer = async containerId => {
+  retrieveContainer = containerId => {
     const { auth, containers } = this.props;
     const container = find(containers, { containerId });
-    this.retrieveContainerChannel(container.mam.root, auth.mam.secret_key);
-  };
-
-  retrieveContainerChannel = (root, secretKey) => {
     this.setState({ showLoader: true });
     const promise = new Promise(async (resolve, reject) => {
       try {
-        const containerEvents = await fetchChannel(root, secretKey);
-        await validateIntegrity(last(containerEvents));
-
-        const statuses = await uniqBy(
-          containerEvents.map(event => pick(event, ['status', 'timestamp'])),
-          'status'
-        );
-
-        this.setState({ container: last(containerEvents), statuses, showLoader: false }, () => {
-          this.props.storeContainer(containerEvents);
+        const containerEvents = [];
+        await Mam.fetch(container.mam.root, 'restricted', auth.mam.secret_key, data => {
+          const containerEvent = JSON.parse(iota.utils.fromTrytes(data));
+          this.props.storeContainer(containerEvent);
+          containerEvents.push(containerEvent);
+          this.setState({
+            container: containerEvent,
+            statuses: this.getUniqueStatuses(containerEvents),
+          });
         });
 
+        await validateIntegrity(last(containerEvents));
+        this.setState({ showLoader: false, fetchComplete: true });
         return resolve();
       } catch (error) {
         this.setState({ showLoader: false });

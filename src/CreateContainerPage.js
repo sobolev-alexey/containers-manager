@@ -9,6 +9,7 @@ import Header from './Header';
 import Notification from './Notification';
 import { createNewChannel } from './mamFunctions.js';
 import { addContainer } from './store/containers/actions';
+import { storeContainer } from './store/container/actions';
 import './CreateContainerPage.css';
 
 const PORTS = ['Rotterdam', 'Singapore'];
@@ -102,24 +103,22 @@ class CreateContainerPage extends Component {
     const promise = new Promise(async (resolve, reject) => {
       try {
         const { departure, destination, load, type, shipper, status } = request;
+        const eventBody = {
+          containerId,
+          departure,
+          destination,
+          load,
+          shipper,
+          type,
+          timestamp,
+          status,
+          temperature: null,
+          position: null,
+          documents: [],
+        };
 
         const timestamp = Date.now();
-        const channel = await createNewChannel(
-          {
-            containerId,
-            departure,
-            destination,
-            load,
-            shipper,
-            type,
-            timestamp,
-            status,
-            temperature: null,
-            position: null,
-            documents: [],
-          },
-          mam.secret_key
-        );
+        const channel = await createNewChannel(eventBody, mam.secret_key);
 
         // Create a new container entry using that container ID
         await containersRef.set({
@@ -139,6 +138,7 @@ class CreateContainerPage extends Component {
 
         this.setState({ showLoader: true });
         await this.props.addContainer(containerId);
+        await this.props.storeContainer([eventBody]);
 
         return resolve(this.props.history.push(`/details/${containerId}`));
       } catch (error) {
@@ -258,6 +258,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   addContainer: containerId => dispatch(addContainer(containerId)),
+  storeContainer: container => dispatch(storeContainer(container)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateContainerPage));
