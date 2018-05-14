@@ -34,6 +34,7 @@ class DetailsPage extends Component {
     statusUpdated: false,
     statuses: [],
     container: null,
+    activeTabIndex: 0,
   };
 
   async componentDidMount() {
@@ -191,7 +192,7 @@ class DetailsPage extends Component {
   };
 
   onUploadComplete = metadata => {
-    this.setState({ metadata, fileUploadEnabled: false }, () => {
+    this.setState({ metadata, fileUploadEnabled: false, activeTabIndex: 1 }, () => {
       this.notifySuccess('File upload complete!');
       this.appendContainerChannel();
     });
@@ -205,6 +206,7 @@ class DetailsPage extends Component {
       statuses,
       container,
       fetchComplete,
+      activeTabIndex,
     } = this.state;
     const { auth } = this.props;
 
@@ -239,6 +241,7 @@ class DetailsPage extends Component {
               ) : null}
             </div>
             <Tabs
+              activeTabIndex={activeTabIndex}
               container={container}
               statuses={statuses}
               containerEvents={this.props.container}

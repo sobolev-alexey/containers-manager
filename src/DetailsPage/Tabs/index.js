@@ -9,11 +9,18 @@ import ContainerTemperature from '../Temperature';
 import ContainerLocation from '../Location';
 import './styles.css';
 
-const ContainerTabs = ({ container, statuses, containerEvents, size, fetchComplete }) => {
+const ContainerTabs = ({
+  activeTabIndex,
+  container,
+  statuses,
+  containerEvents,
+  size,
+  fetchComplete,
+}) => {
   const locations = containerEvents.filter(({ position }) => !isEmpty(position));
   return (
-    <TabsContainer className="tabsWrapper">
-      <Tabs tabId="simple-tab" mobile={size.width <= 768}>
+    <TabsContainer className="tabsWrapper" activeTabIndex={activeTabIndex}>
+      <Tabs tabId="container-details" mobile={size.width <= 768}>
         <Tab label="Status">
           <StatusList statuses={statuses} />
         </Tab>
@@ -35,6 +42,10 @@ const ContainerTabs = ({ container, statuses, containerEvents, size, fetchComple
       </Tabs>
     </TabsContainer>
   );
+};
+
+ContainerTabs.defaultProps = {
+  activeTabIndex: 0,
 };
 
 export default sizeMe({ monitorHeight: false })(ContainerTabs);
