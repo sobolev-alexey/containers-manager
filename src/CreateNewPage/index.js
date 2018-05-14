@@ -3,7 +3,7 @@ import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import isEmpty from 'lodash-es/isEmpty';
-import { FocusContainer, TextField, SelectField, Button, CardActions } from 'react-md';
+import { FocusContainer, TextField, SelectField, Button, CardActions, FontIcon } from 'react-md';
 import { toast } from 'react-toastify';
 import Loader from '../SharedComponents/Loader';
 import Header from '../SharedComponents/Header';
@@ -159,6 +159,14 @@ class CreateContainerPage extends Component {
       cargoError,
       typeError,
     } = this.state;
+
+    const selectFieldProps = {
+      dropdownIcon: <FontIcon>expand_more</FontIcon>,
+      position: SelectField.Positions.BELOW,
+      required: true,
+      className: 'md-cell',
+      errorText: 'This field is required.',
+    };
     return (
       <div>
         <Header>
@@ -199,39 +207,31 @@ class CreateContainerPage extends Component {
               position={SelectField.Positions.BELOW}
               error={departureError}
               errorText="This field is required."
+              dropdownIcon={<FontIcon>expand_more</FontIcon>}
             />
             <SelectField
               ref={destination => (this.containerDestination = destination)}
               id="containerDestination"
-              required
               label="Destination Port"
-              className="md-cell"
               menuItems={PORTS}
-              position={SelectField.Positions.BELOW}
               error={destinationError}
-              errorText="This field is required."
+              {...selectFieldProps}
             />
             <SelectField
               ref={cargo => (this.containerCargo = cargo)}
               id="containerCargo"
-              required
               label="Cargo"
-              className="md-cell"
               menuItems={CARGO}
-              position={SelectField.Positions.BELOW}
               error={cargoError}
-              errorText="This field is required."
+              {...selectFieldProps}
             />
             <SelectField
               ref={type => (this.containerType = type)}
               id="containerType"
               label="Container type"
-              required
-              className="md-cell"
               menuItems={TYPE}
-              position={SelectField.Positions.BELOW}
               error={typeError}
-              errorText="This field is required."
+              {...selectFieldProps}
             />
           </FocusContainer>
           <Notification />

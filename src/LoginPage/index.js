@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { sha256 } from 'js-sha256';
 import { connect } from 'react-redux';
-import { TextField, SelectField, Button } from 'react-md';
+import { TextField, SelectField, Button, FontIcon } from 'react-md';
 import { toast } from 'react-toastify';
 import { storeCredentials } from '../store/auth/actions';
 import Logo from '../SharedComponents/Logo';
@@ -68,6 +68,7 @@ class LoginPage extends Component {
               placeholder="Select role"
               menuItems={ROLES}
               position={SelectField.Positions.BELOW}
+              dropdownIcon={<FontIcon>expand_more</FontIcon>}
             />
             <TextField
               ref={password => (this.password = password)}
