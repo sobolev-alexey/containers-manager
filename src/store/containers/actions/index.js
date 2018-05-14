@@ -37,7 +37,7 @@ export const storeContainers = auth => {
             .database()
             .ref('containers')
             .orderByChild('shipper')
-            .equalTo(auth.name);
+            .equalTo(auth.id);
           promises.push(queryByShipper.once('value'));
           break;
         case 'observer':
