@@ -62,7 +62,7 @@ class Location extends Component {
 
   // for drawing lines
   toGeoJson = () => {
-    this.state.data.map(event => [event.position.lng, event.position.lat]);
+    return this.state.data.map(event => [event.position.lng, event.position.lat]);
   };
 
   // draw lines
