@@ -6,7 +6,6 @@ export default class Logo extends PureComponent {
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="500"
-        height="160"
         fill="#ffffff"
         viewBox="0 0 2866.82 728.18"
       >

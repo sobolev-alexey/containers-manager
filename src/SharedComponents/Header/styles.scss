@@ -10,10 +10,10 @@
   span[role=button] {
     cursor: pointer;
   }
-  
+
   svg {
     width: 18%;
-    margin: 0 0 0 50px;
+    margin: 50px 0 0 50px;
     position: absolute;
   }
 
@@ -35,6 +35,53 @@
       img {
         height: 60px;
         padding: 0px 80px 10px 0px;
+      }
+    }
+  }
+}
+
+@media (max-width: 850px) and (min-width: 601px) {
+  .header {
+    svg {
+      width: 18%;
+      margin: 65px 0 0 15px;
+    }
+
+    div, p {
+      font-size: 24px;
+      line-height: 35px;
+
+      a {
+        img {
+          height: 46px;
+          padding: 0px 30px 10px 0px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    height: 100px;
+    flex-direction: row;
+    justify-content: space-between;
+
+    svg {
+      width: 18%;
+      margin: 40px 0 0 15px;
+    }
+
+    div, p {
+      font-size: 18px;
+      line-height: 30px;
+      padding: 20px;
+
+      a {
+        img {
+          height: 46px;
+          padding: 0px 30px 10px 0px;
+        }
       }
     }
   }

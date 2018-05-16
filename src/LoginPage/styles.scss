@@ -2,45 +2,34 @@
 
 .wrapper {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .graphic {
-  width: 50%;
+  width: 100%;
   position: relative;
 
-  img {
-    width: 100%;
-    height: 100vh;
-    position: relative;
+  img.background {
+    display: none;
   }
 
   .welcome {
     position: absolute;
     text-align: center;
-    top: 23%;
-    width: 80%;
-
-    svg {
-      width: 75%;
-      margin-bottom: 15%;
-    }
 
     p {
-      font-size: 36px;
       font-weight: 700;
       color: #ffffff;
-      // width: 50%;
       text-align: center;
-      line-height: 50px;
-      margin-bottom: 40px;
     }
   }
 }
+
 .login {
-  width: 50%;
+  width: 100%;
   display: flex;
   justify-content: center;
+  margin-top: 50px;
 
   form {
     display: flex;
@@ -49,7 +38,7 @@
     justify-content: center;
     max-width: 550px;
     min-width: 300px;
-    width: 50%;
+    width: 70%;
 
     h3 {
       color: rgb(34,177,171);
@@ -104,8 +93,8 @@
       margin: 0;
       padding: 0;
       border-bottom: 1px solid rgb(151, 151, 151);
-      margin-top: 150px;
-      margin-bottom: 50px;
+      margin-top: 100px;
+      margin-bottom: 20px;
 
       .md-select-field--btn {
         color: rgb(63, 63, 63);
@@ -130,6 +119,109 @@
     .bouncing-loader.visible {
       position: relative;
       top: 55px;
+    }
+  }
+}
+
+@media (min-width: 769px) {
+  .wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .graphic {
+    width: 50%;
+
+    .welcome {
+      top: 23%;
+      width: 80%;
+
+      svg {
+        width: 75%;
+        height: 160px;
+        margin-bottom: 15%;
+      }
+
+      p {
+        font-size: 36px;
+        width: 70%;
+        line-height: 50px;
+        margin-bottom: 40px;
+        margin: 0 auto 40px;
+      }
+    }
+  }
+
+  img.background.desktop {
+    display: block;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+  }
+
+  .login {
+    width: 50%;
+    margin-top: 0;
+
+    form {
+      width: 50%;
+
+      .md-layover {
+        margin-top: 150px;
+        margin-bottom: 50px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) and (min-width: 501px) {
+  img.background.tablet {
+    display: block;
+    width: 100%;
+    position: relative;
+  }
+
+  .graphic {
+    .welcome {
+      top: 0%;
+      width: 100%;
+
+      svg {
+        width: 30%;
+        height: 100px;
+        margin: 5% auto 2%;
+      }
+
+      p {
+        font-size: 20px;
+        margin: 0 auto 20px;
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  img.background.mobile {
+    display: block;
+    width: 100%;
+    position: relative;
+  }
+
+  .graphic {
+    .welcome {
+      top: 0%;
+      width: 100%;
+
+      svg {
+        width: 50%;
+        height: 100px;
+        margin: 7% auto;
+      }
+
+      p {
+        font-size: 20px;
+        margin: 0 auto 20px;
+      }
     }
   }
 }

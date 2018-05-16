@@ -70,3 +70,15 @@
     border-radius: 45px;
   }
 }
+
+@media (max-width: 900px) {
+  .createContainerWrapper {
+    width: 70%;
+  }
+}
+
+@media (max-width: 500px) {
+  .createContainerWrapper {
+    width: 85%;
+  }
+}
