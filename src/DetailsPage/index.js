@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
+import Mam from 'mam.client.js';
+import IOTA from 'iota.lib.js';
 import { connect } from 'react-redux';
 import { Button } from 'react-md';
 import isEmpty from 'lodash-es/isEmpty';
@@ -19,11 +21,7 @@ import FilesUpload from './Documents/FilesUpload';
 import { validateIntegrity } from './Documents/DocumentIntegrityValidator';
 import './styles.css';
 
-import Mam from 'mam.client.js';
-import IOTA from 'iota.lib.js';
-import config from '../config.json';
-
-const iota = new IOTA({ provider: config.provider });
+const iota = new IOTA();
 
 class DetailsPage extends Component {
   state = {

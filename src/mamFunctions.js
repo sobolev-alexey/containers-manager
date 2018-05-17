@@ -8,17 +8,22 @@ let mamState = Mam.init(iota);
 
 // Publish to tangle
 const publish = async data => {
-  // Create MAM Payload - STRING OF TRYTES
-  const trytes = iota.utils.toTrytes(JSON.stringify(data));
-  const message = Mam.create(mamState, trytes);
+  try {
+    // Create MAM Payload - STRING OF TRYTES
+    const trytes = iota.utils.toTrytes(JSON.stringify(data));
+    const message = Mam.create(mamState, trytes);
 
-  // Save new mamState
-  updateMamState(message.state);
+    // Save new mamState
+    updateMamState(message.state);
 
-  // Attach the payload.
-  await Mam.attach(message.payload, message.address);
+    // Attach the payload.
+    await Mam.attach(message.payload, message.address);
 
-  return { root: message.root, state: message.state };
+    return { root: message.root, state: message.state };
+  } catch (error) {
+    console.log('MAM publish error', error);
+    return null;
+  }
 };
 
 const updateMamState = newMamState => (mamState = newMamState);
@@ -54,7 +59,12 @@ export const appendToChannel = async (payload, savedMamData, secretKey) => {
     },
     seed: savedMamData.seed,
   };
-  updateMamState(mamState);
-  const mamData = await publish(payload);
-  return mamData;
+  try {
+    updateMamState(mamState);
+    const mamData = await publish(payload);
+    return mamData;
+  } catch (error) {
+    console.log('MAM append error', error);
+    return null;
+  }
 };
