@@ -2,15 +2,11 @@
 /node_modules
 
 # build artifacts
-/src/*.css
 /build
 
 # misc
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+tests/__coverage__/
 
 /src/config.json
 

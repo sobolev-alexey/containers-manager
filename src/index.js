@@ -1,11 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { AppContainer } from 'react-hot-loader';
 import WebFontLoader from 'webfontloader';
 import firebase from 'firebase';
-import { BrowserRouter } from 'react-router-dom';
-import './styles/index.css';
-import Router from './Router';
+import Router from 'components/Router';
+import './assets/scss/index.scss';
 import config from './config.json';
+
+const rootEl = document.getElementById('root');
+
+const renderComponent = Component => {
+  ReactDOM.render(
+    <AppContainer>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <Component />
+      </BrowserRouter>
+    </AppContainer>,
+    rootEl
+  );
+};
 
 WebFontLoader.load({
   google: {
@@ -15,10 +29,11 @@ WebFontLoader.load({
 
 firebase.initializeApp(config);
 
-const renderApp = () => (
-  <BrowserRouter basename={process.env.PUBLIC_URL}>
-    <Router />
-  </BrowserRouter>
-);
+renderComponent(Router);
 
-ReactDOM.render(renderApp(), document.getElementById('root'));
+// Hot Module Replacement API
+if (module.hot) {
+  module.hot.accept('./components/Router', () => {
+    renderComponent(Router);
+  });
+}
