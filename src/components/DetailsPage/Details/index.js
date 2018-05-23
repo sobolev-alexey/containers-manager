@@ -12,7 +12,7 @@ const ContainerDetails = ({ container }) => {
         <span className="value">{container.shipper}</span>
       </div>
       <div className="detailsSection">
-        <span className="label">Container IMO</span>
+        <span className="label">Container ID</span>
         <span className="value">{container.containerId}</span>
       </div>
       <div className="detailsSection">

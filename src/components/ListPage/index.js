@@ -73,7 +73,7 @@ class ListPage extends Component {
           <DataTable plain>
             <TableHeader>
               <TableRow>
-                <TableColumn>IMO</TableColumn>
+                <TableColumn>Container ID</TableColumn>
                 <TableColumn className="md-text-center">Route</TableColumn>
                 <TableColumn className="md-text-right">Status</TableColumn>
               </TableRow>

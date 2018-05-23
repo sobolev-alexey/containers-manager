@@ -5,13 +5,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js'],
   },
   context: resolve(__dirname, '../../src'),
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
         use: ['babel-loader'],
         exclude: /node_modules/,
       },
@@ -65,7 +65,14 @@ module.exports = {
       },
     ],
   },
-  plugins: [new StyleLintPlugin(), new HtmlWebpackPlugin({ template: 'index.html' })],
+  plugins: [
+    new StyleLintPlugin(),
+    new HtmlWebpackPlugin({
+      template: 'index.html',
+      favicon: 'assets/img/favicon.ico',
+      title: 'Containers Tracking Simulation',
+    }),
+  ],
   node: {
     fs: 'empty',
   },

@@ -4,8 +4,8 @@
   "description": "Starter kit for React, Webpack (with Hot Module Replacement) and Babel",
   "license": "MIT",
   "scripts": {
-    "build": "npm run clean-dist && NODE_ENV=production webpack -p --config=configs/webpack/prod",
-    "clean-dist": "rm -f -r -d dist",
+    "build": "npm run clean-build && NODE_ENV=production webpack -p --config=configs/webpack/prod",
+    "clean-build": "rm -f -r -d build",
     "lint": "npm run lint:js && npm run lint:sass",
     "lint:js": "jshint",
     "lint:sass": "stylelint ./src/**/*.scss",

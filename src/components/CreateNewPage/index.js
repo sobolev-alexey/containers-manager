@@ -20,7 +20,7 @@ const TYPE = ['Dry storage', 'Refrigerated'];
 class CreateContainerPage extends Component {
   state = {
     showLoader: false,
-    imoError: false,
+    idError: false,
     destinationError: false,
     departureError: false,
     cargoError: false,
@@ -39,7 +39,7 @@ class CreateContainerPage extends Component {
 
   validate = () => {
     this.setState({
-      imoError: !this.containerIMO.value,
+      idError: !this.containerId.value,
       departureError: !this.containerDeparture.value,
       destinationError: !this.containerDestination.value,
       cargoError: !this.containerCargo.value,
@@ -47,7 +47,7 @@ class CreateContainerPage extends Component {
     });
 
     return (
-      !this.containerIMO.value ||
+      !this.containerId.value ||
       !this.containerDeparture.value ||
       !this.containerDestination.value ||
       !this.containerCargo.value ||
@@ -63,7 +63,7 @@ class CreateContainerPage extends Component {
     if (!formError) {
       try {
         // Format the container ID to remove dashes and parens
-        const containerId = this.containerIMO.value.replace(/[^0-9a-zA-Z_-]/g, '');
+        const containerId = this.containerId.value.replace(/[^0-9a-zA-Z_-]/g, '');
 
         // Create reference
         const containersRef = firebase.database().ref(`containers/${containerId}`);
@@ -153,7 +153,7 @@ class CreateContainerPage extends Component {
   render() {
     const {
       showLoader,
-      imoError,
+      idError,
       departureError,
       destinationError,
       cargoError,
@@ -189,12 +189,12 @@ class CreateContainerPage extends Component {
             aria-labelledby="contained-form-example"
           >
             <TextField
-              ref={imo => (this.containerIMO = imo)}
-              id="containerIMO"
-              label="Container IMO"
+              ref={id => (this.containerId = id)}
+              id="containerId"
+              label="Container ID"
               required
               type="text"
-              error={imoError}
+              error={idError}
               errorText="This field is required."
             />
             <SelectField
