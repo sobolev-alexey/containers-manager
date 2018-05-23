@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import sizeMe from 'react-sizeme';
 import { LineChart } from 'react-easy-chart';
 import moment from 'moment';
-import last from 'lodash-es/last';
-import sortBy from 'lodash-es/sortBy';
-import './styles.css';
+import { sortBy, last } from 'lodash';
+import './styles.scss';
 
 class ContainerTemperature extends Component {
   getTemperatureData = data => {

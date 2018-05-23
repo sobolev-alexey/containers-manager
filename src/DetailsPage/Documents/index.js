@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { DataTable, TableBody, TableRow, TableColumn, FontIcon } from 'react-md';
-import './styles.css';
+import './styles.scss';
 
 class ContainerDocuments extends Component {
   getDocumentIcon = doc => {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { fromJS } from 'immutable';
 import sizeMe from 'react-sizeme';
-import isEmpty from 'lodash-es/isEmpty';
+import { isEmpty } from 'lodash';
 import MapGL, { Marker } from 'react-map-gl';
 import RoutePin from './route-pin';
 import { lineLayer, defaultMapStyle } from './map-style';

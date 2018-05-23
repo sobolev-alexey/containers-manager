@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { sha256 } from 'js-sha256';
 import { connect } from 'react-redux';
 import { TextField, SelectField, Button, FontIcon } from 'react-md';
 import { toast } from 'react-toastify';
 import { storeCredentials } from '../store/auth/actions';
-import Logo from '../SharedComponents/Logo';
+import Logo from '../logo.svg';
 import Loader from '../SharedComponents/Loader';
 import Notification from '../SharedComponents/Notification';
-import api from '../api';
 import config from '../config.json';
-import './styles.css';
+import './styles.scss';
 
 const ROLES = ['Shipper', 'Forwarder', 'Customs', 'Port', 'Observer'];
 
@@ -26,7 +26,7 @@ class LoginPage extends Component {
     const username = this.username.value.toLowerCase();
     const password = sha256(this.username.value.toLowerCase());
 
-    api
+    axios
       .post(`${config.rootURL}/login`, { username, password })
       .then(response => {
         this.props.storeCredentials(response.data);

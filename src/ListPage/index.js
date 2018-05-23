@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Button, DataTable, TableHeader, TableBody, TableRow, TableColumn } from 'react-md';
-import isEmpty from 'lodash-es/isEmpty';
+import { isEmpty } from 'lodash';
 import { storeContainers } from '../store/containers/actions';
 import Loader from '../SharedComponents/Loader';
 import Header from '../SharedComponents/Header';
 import Notification from '../SharedComponents/Notification';
 import Autosuggest from './Autosuggest';
-import './styles.css';
+import './styles.scss';
 
 class ListPage extends Component {
   state = {

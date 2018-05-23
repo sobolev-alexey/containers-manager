@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import isEmpty from 'lodash-es/isEmpty';
+import { isEmpty } from 'lodash';
 import { FocusContainer, TextField, SelectField, Button, CardActions, FontIcon } from 'react-md';
 import { toast } from 'react-toastify';
 import Loader from '../SharedComponents/Loader';
 import Header from '../SharedComponents/Header';
 import Notification from '../SharedComponents/Notification';
-import { createNewChannel } from '../mamFunctions.js';
 import { addContainer } from '../store/containers/actions';
 import { storeContainer } from '../store/container/actions';
-import './styles.css';
+import { create } from '../utils/firebase';
+import { createContainerChannel } from '../utils/mam';
+import './styles.scss';
 
 const PORTS = ['Rotterdam', 'Singapore'];
 const CARGO = ['Car', 'Consumer Goods', 'Heavy Machinery', 'Pharma'];
@@ -56,98 +56,42 @@ class CreateContainerPage extends Component {
     );
   };
 
+  onError = error => {
+    this.setState({ showLoader: false });
+    this.notifyError(error || 'Something went wrong');
+  };
+
   createContainer = async event => {
     event.preventDefault();
     const formError = this.validate();
 
     if (!formError) {
-      try {
-        // Format the container ID to remove dashes and parens
-        const containerId = this.containerId.value.replace(/[^0-9a-zA-Z_-]/g, '');
+      const { id, previousEvent, mam } = this.props.auth;
+      const request = {
+        departure: this.containerDeparture.value,
+        destination: this.containerDestination.value,
+        load: this.containerCargo.value,
+        type: this.containerType.value,
+        shipper: id,
+        status: previousEvent[0],
+      };
+      // Format the container ID to remove dashes and parens
+      const containerId = this.containerId.value.replace(/[^0-9a-zA-Z_-]/g, '');
+      const createContainerResult = await create(containerId, this.onError);
+      if (createContainerResult === null) {
+        this.setState({ showLoader: true });
+        const eventBody = await createContainerChannel(containerId, request, mam.secret_key);
 
-        // Create reference
-        const containersRef = firebase.database().ref(`containers/${containerId}`);
+        await this.props.addContainer(containerId);
+        await this.props.storeContainer([eventBody]);
 
-        containersRef
-          .once('value')
-          .then(snapshot => {
-            if (snapshot.val() === null) {
-              this.setState({ showLoader: true });
-              this.createContainerChannel(containerId, containersRef);
-            } else {
-              this.notifyError('Container exists');
-            }
-          })
-          .catch(error => {
-            this.setState({ showLoader: false });
-            this.notifyError('Something went wrong');
-          });
-      } catch (error) {
-        this.setState({ showLoader: false });
-        this.notifyError(error);
+        this.props.history.push(`/details/${containerId}`);
+      } else {
+        this.notifyError('Container exists');
       }
     } else {
       this.notifyError('Error with some of the input fields');
     }
-  };
-
-  createContainerChannel = (containerId, containersRef) => {
-    const { name, previousEvent, mam } = this.props.auth;
-    const request = {
-      departure: this.containerDeparture.value,
-      destination: this.containerDestination.value,
-      load: this.containerCargo.value,
-      type: this.containerType.value,
-      shipper: name,
-      status: previousEvent[0],
-    };
-    const promise = new Promise(async (resolve, reject) => {
-      try {
-        const { departure, destination, load, type, shipper, status } = request;
-        const timestamp = Date.now();
-        const eventBody = {
-          containerId,
-          departure,
-          destination,
-          load,
-          shipper,
-          type,
-          timestamp,
-          status,
-          temperature: null,
-          position: null,
-          documents: [],
-        };
-
-        const channel = await createNewChannel(eventBody, mam.secret_key);
-
-        // Create a new container entry using that container ID
-        await containersRef.set({
-          containerId,
-          timestamp,
-          departure,
-          destination,
-          shipper,
-          status,
-          mam: {
-            root: channel.root,
-            seed: channel.state.seed,
-            next: channel.state.channel.next_root,
-            start: channel.state.channel.start,
-          },
-        });
-
-        this.setState({ showLoader: true });
-        await this.props.addContainer(containerId);
-        await this.props.storeContainer([eventBody]);
-
-        return resolve(this.props.history.push(`/details/${containerId}`));
-      } catch (error) {
-        return reject(error);
-      }
-    });
-
-    return promise;
   };
 
   render() {

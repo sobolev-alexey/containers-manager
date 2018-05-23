@@ -2,7 +2,6 @@
 /node_modules
 
 # build artifacts
-/src/*.css
 /build
 
 # misc

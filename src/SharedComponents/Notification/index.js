@@ -1,7 +1,7 @@
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './styles.css';
+import './styles.scss';
 
 // https://fkhadra.github.io/react-toastify/
 export default () => (
@@ -9,7 +9,7 @@ export default () => (
     className="toast-container"
     bodyClassName="toast-body"
     position="top-center"
-    autoClose={5000000}
+    autoClose={5000}
     hideProgressBar
     closeOnClick
     pauseOnVisibilityChange

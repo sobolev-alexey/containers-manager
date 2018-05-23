@@ -1,13 +1,12 @@
 import React, { PureComponent } from 'react';
 import sizeMe from 'react-sizeme';
 import { TabsContainer, Tabs, Tab } from 'react-md';
-import last from 'lodash-es/last';
-import isEmpty from 'lodash-es/isEmpty';
+import { isEmpty, last } from 'lodash';
 import StatusList from '../Status';
 import ContainerDocuments from '../Documents';
 import ContainerTemperature from '../Temperature';
 import ContainerLocation from '../Location';
-import './styles.css';
+import './styles.scss';
 
 class ContainerTabs extends PureComponent {
   state = {

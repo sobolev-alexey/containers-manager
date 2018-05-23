@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { logout } from '../../store/auth/actions';
-import Logo from '../Logo';
-import './styles.css';
+import Logo from '../../logo.svg';
+import './styles.scss';
 
 class Header extends Component {
   logout = () => {
