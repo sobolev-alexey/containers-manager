@@ -1,6 +1,6 @@
 import React from 'react';
 import * as moment from 'moment';
-import './styles.scss';
+import '../../assets/scss/status.scss';
 
 const StatusList = ({ statuses }) => (
   <div className="statusWrapper">

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Autosuggester from 'react-autosuggest';
 import { DataTable, TableBody, TableRow, TableColumn } from 'react-md';
-import './styles.scss';
+import '../../assets/scss/autosuggest.scss';
 
 class Autosuggest extends Component {
   constructor() {

@@ -8,7 +8,7 @@ import Loader from '../SharedComponents/Loader';
 import Header from '../SharedComponents/Header';
 import Notification from '../SharedComponents/Notification';
 import Autosuggest from './Autosuggest';
-import './styles.scss';
+import '../assets/scss/listPage.scss';
 
 class ListPage extends Component {
   state = {

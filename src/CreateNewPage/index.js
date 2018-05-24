@@ -11,7 +11,7 @@ import { addContainer } from '../store/containers/actions';
 import { storeContainer } from '../store/container/actions';
 import { getFirebaseSnapshot } from '../utils/firebase';
 import { createContainerChannel } from '../utils/mam';
-import './styles.scss';
+import '../assets/scss/createContainerPage.scss';
 
 const PORTS = ['Rotterdam', 'Singapore'];
 const CARGO = ['Car', 'Consumer Goods', 'Heavy Machinery', 'Pharma'];

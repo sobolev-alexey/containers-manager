@@ -6,7 +6,7 @@ import StatusList from '../Status';
 import ContainerDocuments from '../Documents';
 import ContainerTemperature from '../Temperature';
 import ContainerLocation from '../Location';
-import './styles.scss';
+import '../../assets/scss/tabs.scss';
 
 class ContainerTabs extends PureComponent {
   state = {

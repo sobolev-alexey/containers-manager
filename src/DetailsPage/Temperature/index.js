@@ -3,7 +3,7 @@ import sizeMe from 'react-sizeme';
 import { LineChart } from 'react-easy-chart';
 import moment from 'moment';
 import { sortBy, last } from 'lodash';
-import './styles.scss';
+import '../../assets/scss/temperature.scss';
 
 class ContainerTemperature extends Component {
   getTemperatureData = data => {

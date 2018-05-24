@@ -12,7 +12,7 @@ import Details from './Details';
 import FilesUpload from './Documents/FilesUpload';
 import { validateIntegrity } from './Documents/DocumentIntegrityValidator';
 import { fetchContainer, appendContainerChannel } from '../utils/mam';
-import './styles.scss';
+import '../assets/scss/detailsPage.scss';
 
 class DetailsPage extends Component {
   state = {

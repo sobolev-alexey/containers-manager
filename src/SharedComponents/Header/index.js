@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { logout } from '../../store/auth/actions';
 import Logo from '../Logo';
-import './styles.scss';
+import '../../assets/scss/header.scss';
 
 class Header extends Component {
   logout = () => {

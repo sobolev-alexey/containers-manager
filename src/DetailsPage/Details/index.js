@@ -1,6 +1,6 @@
 import React from 'react';
 import * as moment from 'moment';
-import './styles.scss';
+import '../../assets/scss/details.scss';
 
 const ContainerDetails = ({ container }) => {
   const updated = container ? moment.duration(Date.now() - container.timestamp).humanize() : '';

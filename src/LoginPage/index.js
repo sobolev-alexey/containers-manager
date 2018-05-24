@@ -9,7 +9,7 @@ import Logo from '../SharedComponents/Logo';
 import Loader from '../SharedComponents/Loader';
 import Notification from '../SharedComponents/Notification';
 import config from '../config.json';
-import './styles.scss';
+import '../assets/scss/loginPage.scss';
 
 const ROLES = ['Shipper', 'Forwarder', 'Customs', 'Port', 'Observer'];
 

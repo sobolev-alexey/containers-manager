@@ -1,7 +1,7 @@
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './styles.scss';
+import '../../assets/scss/notification.scss';
 
 // https://fkhadra.github.io/react-toastify/
 export default () => (
