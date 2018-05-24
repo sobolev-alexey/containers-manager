@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import WebFontLoader from 'webfontloader';
 import { BrowserRouter } from 'react-router-dom';
-import './styles/index.scss';
+import './assets/scss/index.scss';
 import Router from './Router';
 import { initializeFirebaseApp } from './utils/firebase';
 
