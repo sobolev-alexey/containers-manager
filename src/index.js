@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import WebFontLoader from 'webfontloader';
-import firebase from 'firebase';
 import { BrowserRouter } from 'react-router-dom';
 import './styles/index.scss';
 import Router from './Router';
-import config from './config.json';
+import { initializeFirebaseApp } from './utils/firebase';
 
 WebFontLoader.load({
   google: {
@@ -13,7 +12,7 @@ WebFontLoader.load({
   },
 });
 
-firebase.initializeApp(config);
+initializeFirebaseApp();
 
 const renderApp = () => (
   <BrowserRouter basename={process.env.PUBLIC_URL}>

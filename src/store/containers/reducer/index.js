@@ -32,14 +32,14 @@ export default (state = initialState, action) => {
       return handle(state, action, {
         success: prevState => {
           return {
-            data: [...prevState.data, payload.data],
+            data: [...prevState.data, payload],
             error: null,
           };
         },
         failure: prevState => {
           return {
             data: prevState.data,
-            error: payload.error,
+            error: 'Loading containers failed',
           };
         },
       });

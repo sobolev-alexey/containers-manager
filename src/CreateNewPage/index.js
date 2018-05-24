@@ -9,7 +9,7 @@ import Header from '../SharedComponents/Header';
 import Notification from '../SharedComponents/Notification';
 import { addContainer } from '../store/containers/actions';
 import { storeContainer } from '../store/container/actions';
-import { create } from '../utils/firebase';
+import { getFirebaseSnapshot } from '../utils/firebase';
 import { createContainerChannel } from '../utils/mam';
 import './styles.scss';
 
@@ -77,8 +77,8 @@ class CreateContainerPage extends Component {
       };
       // Format the container ID to remove dashes and parens
       const containerId = this.containerId.value.replace(/[^0-9a-zA-Z_-]/g, '');
-      const createContainerResult = await create(containerId, this.onError);
-      if (createContainerResult === null) {
+      const firebaseSnapshot = await getFirebaseSnapshot(containerId, this.onError);
+      if (firebaseSnapshot === null) {
         this.setState({ showLoader: true });
         const eventBody = await createContainerChannel(containerId, request, mam.secret_key);
 

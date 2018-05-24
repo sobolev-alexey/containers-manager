@@ -1,24 +1,8 @@
-import firebase from 'firebase';
 import { ADD_CONTAINER, STORE_CONTAINERS } from '../../actionTypes';
+import { getFirebaseSnapshot, getFolderReference } from '../../../utils/firebase';
 
 export const addContainer = containerId => {
-  const promise = new Promise((resolve, reject) => {
-    try {
-      firebase
-        .database()
-        .ref(`containers/${containerId}`)
-        .once('value')
-        .then(snapshot => {
-          return resolve({ data: snapshot.val(), error: null });
-        })
-        .catch(error => {
-          return reject({ error: 'Something went wrong' });
-        });
-    } catch (error) {
-      return reject({ error: 'Loading containers failed' });
-    }
-  });
-
+  const promise = getFirebaseSnapshot(containerId, console.log);
   return {
     type: ADD_CONTAINER,
     promise,
@@ -30,25 +14,18 @@ export const storeContainers = auth => {
     try {
       const results = [];
       const promises = [];
+      const ref = getFolderReference();
 
       switch (auth.role) {
         case 'shipper':
-          const queryByShipper = firebase
-            .database()
-            .ref('containers')
-            .orderByChild('shipper')
-            .equalTo(auth.id);
+          const queryByShipper = ref.orderByChild('shipper').equalTo(auth.id);
           promises.push(queryByShipper.once('value'));
           break;
         case 'observer':
-          const queryAll = firebase.database().ref('containers');
-          promises.push(queryAll.once('value'));
+          promises.push(ref.once('value'));
           break;
         default:
-          const queryByStatus = firebase
-            .database()
-            .ref('containers')
-            .orderByChild('status');
+          const queryByStatus = ref.orderByChild('status');
           auth.previousEvent.forEach(status => {
             const query = queryByStatus.equalTo(status);
             promises.push(query.once('value'));

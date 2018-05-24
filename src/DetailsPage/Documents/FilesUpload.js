@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import firebase from 'firebase';
 import { sha256 } from 'js-sha256';
 import { toast } from 'react-toastify';
 import { FilePond, registerPlugin } from 'react-filepond';
@@ -7,6 +6,7 @@ import FilePondImagePreview from 'filepond-plugin-image-preview';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import Notification from '../../SharedComponents/Notification';
+import { getFileStorageReference } from '../../utils/firebase';
 import './FileUpload.scss';
 
 registerPlugin(FilePondImagePreview);
@@ -53,7 +53,7 @@ class FileUpload extends Component {
     }
 
     this.calculateHash(file).then(sha256Hash => {
-      const storageRef = firebase.storage().ref(`${pathTofile}/${file.name}`);
+      const storageRef = getFileStorageReference(pathTofile, file.name);
       const task = storageRef.put(file);
 
       if (!sha256Hash) {

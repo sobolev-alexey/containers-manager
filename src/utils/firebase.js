@@ -1,8 +1,16 @@
 import firebase from 'firebase';
+import config from '../config.json';
+
+export const initializeFirebaseApp = () => firebase.initializeApp(config);
 
 const getReference = containerId => firebase.database().ref(`containers/${containerId}`);
 
-export const create = (containerId, onError) => {
+export const getFolderReference = () => firebase.database().ref('containers');
+
+export const getFileStorageReference = (pathTofile, fileName) =>
+  firebase.storage().ref(`${pathTofile}/${fileName}`);
+
+export const getFirebaseSnapshot = (containerId, onError) => {
   const promise = new Promise((resolve, reject) => {
     try {
       // Create reference
