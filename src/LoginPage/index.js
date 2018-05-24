@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { TextField, SelectField, Button, FontIcon } from 'react-md';
 import { toast } from 'react-toastify';
 import { storeCredentials } from '../store/auth/actions';
-import Logo from '../logo.svg';
+import Logo from '../SharedComponents/Logo';
 import Loader from '../SharedComponents/Loader';
 import Notification from '../SharedComponents/Notification';
 import config from '../config.json';
