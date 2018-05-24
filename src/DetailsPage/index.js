@@ -149,7 +149,7 @@ class DetailsPage extends Component {
               <h1>
                 {container.departure} &rarr; {container.destination}
               </h1>
-              {auth.canAppendToStream && !statusUpdated ? (
+              {auth.canAppendToStream && !statusUpdated && nextStatus ? (
                 <Button raised onClick={this.appendToContainer}>
                   Confirm {nextStatus}
                 </Button>
