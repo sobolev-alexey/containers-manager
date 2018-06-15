@@ -65,7 +65,11 @@ class DetailsPage extends Component {
     const response = await appendContainerChannel(metadata, this.props, this.documentExists);
     if (response) {
       this.notifySuccess(`Container ${meta ? '' : 'status '}updated`);
-      this.setState({ showLoader: false, metadata: [], fileUploadEnabled: true });
+      this.setState({
+        showLoader: false,
+        metadata: [],
+        fileUploadEnabled: true,
+      });
       this.retrieveContainer(response);
     } else {
       this.setState({ showLoader: false });
@@ -89,7 +93,7 @@ class DetailsPage extends Component {
       try {
         const containerEvent = await fetchContainer(
           container.mam.root,
-          auth.mam.secret_key,
+          container.mam.secretKey,
           this.storeContainerCallback,
           this.setStateCalback
         );

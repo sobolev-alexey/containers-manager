@@ -3,7 +3,9 @@ import config from '../config.json';
 
 export const initializeFirebaseApp = () => firebase.initializeApp(config);
 
-const getReference = containerId => firebase.database().ref(`containers/${containerId}`);
+const getContainerReference = containerId => firebase.database().ref(`containers/${containerId}`);
+
+const getUserReference = userId => firebase.database().ref(`users/${userId}`);
 
 export const getFolderReference = () => firebase.database().ref('containers');
 
@@ -14,7 +16,7 @@ export const getFirebaseSnapshot = (containerId, onError) => {
   const promise = new Promise((resolve, reject) => {
     try {
       // Create reference
-      const containersRef = getReference(containerId);
+      const containersRef = getContainerReference(containerId);
 
       containersRef
         .once('value')
@@ -32,46 +34,46 @@ export const getFirebaseSnapshot = (containerId, onError) => {
   return promise;
 };
 
-export const createContainer = (eventBody, channel) => {
-  const { containerId, timestamp, departure, destination, shipper, status } = eventBody;
+const appendContainerToUser = (user, containerId) => {
+  // Get user reference
+  const userRef = getUserReference(user.userId);
+  const items = user.items || [];
 
-  // Create reference
-  const containersRef = getReference(containerId);
+  userRef.update({
+    items: [...items, containerId],
+  });
+};
+
+export const createContainer = (eventBody, channel, secretKey) => {
+  // Create container reference
+  const containersRef = getContainerReference(eventBody.containerId);
 
   containersRef.set({
-    containerId,
-    timestamp,
-    departure,
-    destination,
-    shipper,
-    status,
+    ...eventBody,
     mam: {
       root: channel.root,
       seed: channel.state.seed,
       next: channel.state.channel.next_root,
       start: channel.state.channel.start,
+      secretKey,
     },
   });
 };
 
-export const updateContainer = (eventBody, root, newContainerData) => {
-  const { containerId, timestamp, departure, destination, shipper, status } = eventBody;
-
+export const updateContainer = (eventBody, mam, newContainerData, user) => {
   // Create reference
-  const containersRef = getReference(containerId);
+  const containersRef = getContainerReference(eventBody.containerId);
 
   containersRef.update({
-    containerId,
-    timestamp,
-    departure,
-    destination,
-    shipper,
-    status,
+    ...eventBody,
     mam: {
-      root,
+      root: mam.root,
+      secretKey: mam.secretKey,
       seed: newContainerData.state.seed,
       next: newContainerData.state.channel.next_root,
       start: newContainerData.state.channel.start,
     },
   });
+
+  appendContainerToUser(user, eventBody.containerId);
 };

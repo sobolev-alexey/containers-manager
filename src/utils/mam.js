@@ -39,11 +39,11 @@ const createNewChannel = async (payload, secretKey) => {
   return mamData;
 };
 
-const appendToChannel = async (payload, savedMamData, secretKey) => {
+const appendToChannel = async (payload, savedMamData) => {
   const mamState = {
     subscribed: [],
     channel: {
-      side_key: secretKey,
+      side_key: savedMamData.secretKey,
       mode: 'restricted',
       next_root: savedMamData.next,
       security: 2,
@@ -71,7 +71,7 @@ export const fetchContainer = async (root, secretKey, storeContainerCallback, se
     storeContainerCallback(containerEvent);
     containerEvents.push(containerEvent);
     setStateCalback(containerEvent, getUniqueStatuses(containerEvents));
-  });
+  }).catch(error => console.log('Cannot fetch stream', error));
 
   return containerEvents[containerEvents.length - 1];
 };
@@ -79,30 +79,34 @@ export const fetchContainer = async (root, secretKey, storeContainerCallback, se
 const getUniqueStatuses = containerEvents =>
   uniqBy(containerEvents.map(event => pick(event, ['status', 'timestamp'])), 'status');
 
-export const createContainerChannel = (containerId, request, secretKey) => {
+export const createContainerChannel = (containerId, request) => {
   const promise = new Promise(async (resolve, reject) => {
     try {
       const { departure, destination, load, type, shipper, status } = request;
       const timestamp = Date.now();
+      const secretKey = generateSeed(20);
       const eventBody = {
         containerId,
+        timestamp,
         departure,
         destination,
-        load,
         shipper,
-        type,
-        timestamp,
         status,
+      };
+      const messageBody = {
+        ...eventBody,
+        load,
+        type,
         temperature: null,
         position: null,
         documents: [],
       };
 
-      const channel = await createNewChannel(eventBody, secretKey);
+      const channel = await createNewChannel(messageBody, secretKey);
 
       if (channel && !isEmpty(channel)) {
         // Create a new container entry using that container ID
-        await createContainer(eventBody, channel);
+        await createContainer(eventBody, channel, secretKey);
       }
 
       return resolve(eventBody);
@@ -166,8 +170,7 @@ export const appendContainerChannel = async (metadata, props, documentExists) =>
             status: newStatus,
             documents: newDocuments,
           },
-          mam,
-          auth.mam.secret_key
+          mam
         );
 
         if (newContainerData && !isEmpty(newContainerData)) {
@@ -180,7 +183,7 @@ export const appendContainerChannel = async (metadata, props, documentExists) =>
             status: newStatus,
           };
 
-          await updateContainer(eventBody, mam.root, newContainerData);
+          await updateContainer(eventBody, mam, newContainerData, auth);
 
           return resolve(containerId);
         }
@@ -192,4 +195,15 @@ export const appendContainerChannel = async (metadata, props, documentExists) =>
   });
 
   return promise;
+};
+
+const generateSeed = length => {
+  if (window.crypto && window.crypto.getRandomValues) {
+    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ9';
+    let result = '';
+    let values = new Uint32Array(length);
+    window.crypto.getRandomValues(values);
+    values.forEach(value => (result += charset[value % charset.length]));
+    return result;
+  } else throw new Error("Your browser is outdated and can't generate secure random numbers");
 };
