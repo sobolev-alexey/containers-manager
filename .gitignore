@@ -4,14 +4,12 @@
 # build artifacts
 /build
 
+.git
+
 # misc
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
 
-/src/config.json
+/src/config*.json
 
 /firebase_functions/appengine
 

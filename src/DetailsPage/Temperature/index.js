@@ -5,7 +5,7 @@ import moment from 'moment';
 import { sortBy, last } from 'lodash';
 import '../../assets/scss/temperature.scss';
 
-class ContainerTemperature extends Component {
+class Temperature extends Component {
   getTemperatureData = data => {
     return data.map(({ temperature, timestamp }) => ({
       x: moment(timestamp).format('YYYY-MM-DD HH:mm'),
@@ -29,7 +29,10 @@ class ContainerTemperature extends Component {
   };
 
   render() {
-    const { data, size: { width } } = this.props;
+    const {
+      data,
+      size: { width },
+    } = this.props;
     const filteredData = data.filter(({ temperature }) => temperature);
     const temperature = this.getTemperatureData(filteredData);
     const xRange = this.getXRange(filteredData);
@@ -61,4 +64,4 @@ class ContainerTemperature extends Component {
   }
 }
 
-export default sizeMe({ monitorHeight: false })(ContainerTemperature);
+export default sizeMe({ monitorHeight: false })(Temperature);

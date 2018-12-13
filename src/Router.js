@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import configureStore from './store/configure';
 import ListPage from './ListPage';
 import DetailsPage from './DetailsPage';
@@ -11,14 +11,13 @@ const store = configureStore();
 
 const Router = () => (
   <Provider store={store}>
-    <Switch>
+    <BrowserRouter>
       <Route path="/" component={ListPage} exact />
-      <Route path="/details/:containerId" component={DetailsPage} />
       <Route path="/login" component={LoginPage} />
       <Route path="/new" component={CreateNewPage} />
-      <Route component={ListPage} />
-    </Switch>
+      <Route path="/details/:itemId" component={DetailsPage} />
+    </BrowserRouter>
   </Provider>
 );
 
-export default Router;
+export default Router

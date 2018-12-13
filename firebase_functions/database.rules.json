@@ -2,8 +2,8 @@
   "rules": {
     ".read": "true",
     ".write": "true",
-    "containers": {
-      ".indexOn": ["containerId", "status", "shipper"]
+    "items": {
+      ".indexOn": ["itemId", "status", "owner"]
     }
   }
 }

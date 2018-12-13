@@ -1,35 +1,41 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import { isEmpty } from 'lodash';
+import { isEmpty, upperFirst } from 'lodash';
 import { FocusContainer, TextField, SelectField, Button, CardActions, FontIcon } from 'react-md';
 import { toast } from 'react-toastify';
 import Loader from '../SharedComponents/Loader';
 import Header from '../SharedComponents/Header';
 import Notification from '../SharedComponents/Notification';
-import { addContainer } from '../store/containers/actions';
-import { storeContainer } from '../store/container/actions';
-import { getFirebaseSnapshot } from '../utils/firebase';
-import { createContainerChannel } from '../utils/mam';
-import '../assets/scss/createContainerPage.scss';
+import { addItem } from '../store/items/actions';
+import { storeItem } from '../store/item/actions';
+import { getFirebaseSnapshot, reassignOwnership } from '../utils/firebase';
+import { createItemChannel } from '../utils/mam';
+import '../assets/scss/createItemPage.scss';
+import { BrowserQRCodeReader } from '@zxing/library';
+
+const codeReader = new BrowserQRCodeReader();
 
 const PORTS = ['Rotterdam', 'Singapore'];
 const CARGO = ['Car', 'Consumer Goods', 'Heavy Machinery', 'Pharma'];
 const TYPE = ['Dry storage', 'Refrigerated'];
 
-class CreateContainerPage extends Component {
+class CreateItemPage extends Component {
   state = {
     showLoader: false,
+    showQR: false,
     idError: false,
     destinationError: false,
     departureError: false,
     cargoError: false,
     typeError: false,
+    id: '',
   };
 
   componentDidMount() {
-    const { auth, history } = this.props;
-    if (isEmpty(auth)) {
+    const { user, history } = this.props;
+    if (isEmpty(user)) {
       history.push('/login');
     }
   }
@@ -39,21 +45,47 @@ class CreateContainerPage extends Component {
 
   validate = () => {
     this.setState({
-      idError: !this.containerId.value,
-      departureError: !this.containerDeparture.value,
-      destinationError: !this.containerDestination.value,
-      cargoError: !this.containerCargo.value,
-      typeError: !this.containerType.value,
+      idError: !this.state.id,
+      departureError: !this.departure.value,
+      destinationError: !this.destination.value,
+      cargoError: !this.cargo.value,
+      typeError: !this.type.value,
     });
 
     return (
-      !this.containerId.value ||
-      !this.containerDeparture.value ||
-      !this.containerDestination.value ||
-      !this.containerCargo.value ||
-      !this.containerType.value ||
-      this.containerDeparture.value === this.containerDestination.value
+      !this.state.id ||
+      !this.departure.value ||
+      !this.destination.value ||
+      !this.cargo.value ||
+      !this.type.value ||
+      this.departure.value === this.destination.value
     );
+  };
+
+  startScanner = async () => {
+    this.setState({ showQR: true });
+    const devices = await codeReader.getVideoInputDevices();
+    if (devices.length) {
+      const firstDeviceId = devices[0].deviceId;
+
+      codeReader
+        .decodeFromInputVideoDevice(firstDeviceId, 'video-area')
+        .then(result => {
+          this.setState({ id: result.text });
+        })
+        .catch(err => console.error(err));
+    } else {
+      this.notifyError('Please check your video inputs!, we cant find any');
+    }
+  };
+
+  stopScanner = () => {
+    codeReader.reset();
+    this.setState({ showQR: false });
+  };
+
+  handleTextChange = textID => {
+    this.setState({ id: textID });
   };
 
   onError = error => {
@@ -61,33 +93,35 @@ class CreateContainerPage extends Component {
     this.notifyError(error || 'Something went wrong');
   };
 
-  createContainer = async event => {
+  createItem = async event => {
     event.preventDefault();
     const formError = this.validate();
+    const { history, storeItem, addItem, user, project } = this.props;
 
     if (!formError) {
-      const { id, previousEvent, mam } = this.props.auth;
+      const { id, previousEvent } = user;
       const request = {
-        departure: this.containerDeparture.value,
-        destination: this.containerDestination.value,
-        load: this.containerCargo.value,
-        type: this.containerType.value,
-        shipper: id,
+        departure: this.departure.value,
+        destination: this.destination.value,
+        load: this.cargo.value,
+        type: this.type.value,
+        owner: id,
         status: previousEvent[0],
       };
-      // Format the container ID to remove dashes and parens
-      const containerId = this.containerId.value.replace(/[^0-9a-zA-Z_-]/g, '');
-      const firebaseSnapshot = await getFirebaseSnapshot(containerId, this.onError);
+      // Format the item ID to remove dashes and parens
+      const itemId = this.state.id.replace(/[^0-9a-zA-Z_-]/g, '');
+      const firebaseSnapshot = await getFirebaseSnapshot(itemId, this.onError);
       if (firebaseSnapshot === null) {
         this.setState({ showLoader: true });
-        const eventBody = await createContainerChannel(containerId, request, mam.secret_key);
+        const eventBody = await createItemChannel(project, itemId, request, id);
 
-        await this.props.addContainer(containerId);
-        await this.props.storeContainer([eventBody]);
+        await addItem(itemId);
+        await storeItem([eventBody]);
+        reassignOwnership(project, user, { itemId, status: previousEvent[0] }, false);
 
-        this.props.history.push(`/details/${containerId}`);
+        history.push(`/details/${itemId}`);
       } else {
-        this.notifyError('Container exists');
+        this.notifyError(`${upperFirst(project.trackingUnit)} exists`);
       }
     } else {
       this.notifyError('Error with some of the input fields');
@@ -97,12 +131,15 @@ class CreateContainerPage extends Component {
   render() {
     const {
       showLoader,
+      showQR,
       idError,
       departureError,
       destinationError,
       cargoError,
       typeError,
     } = this.state;
+    const { project: { trackingUnit, qrReader } } = this.props;
+    const unit = upperFirst(trackingUnit);
 
     const selectFieldProps = {
       dropdownIcon: <FontIcon>expand_more</FontIcon>,
@@ -116,34 +153,54 @@ class CreateContainerPage extends Component {
         <Header>
           <div>
             <div>
-              <a onClick={() => this.props.history.push('/')}>
+              <Link to="/">
                 <img src="arrow_left.svg" alt="back" />
-              </a>
-              <span>Create new container</span>
+              </Link>
+              <span>Create new {trackingUnit}</span>
             </div>
           </div>
         </Header>
-        <div className="createContainerWrapper">
+        <div className="create-item-wrapper">
           <FocusContainer
             focusOnMount
             containFocus
             component="form"
             className="md-grid"
-            onSubmit={this.createContainer}
-            aria-labelledby="contained-form-example"
+            onSubmit={this.createItem}
+            aria-labelledby="create-item"
           >
-            <TextField
-              ref={id => (this.containerId = id)}
-              id="containerId"
-              label="Container ID"
-              required
-              type="text"
-              error={idError}
-              errorText="This field is required."
-            />
+            <div className="input-wrapper">
+              <TextField
+                value={this.state.id}
+                onChange={this.handleTextChange}
+                id="itemId"
+                label={`${unit} ID`}
+                required
+                type="text"
+                error={idError}
+                errorText="This field is required."
+              />
+              {qrReader ? (
+                <div className="create-item-wrapper__qr-code-btn-container">
+                  <Button onClick={this.startScanner} raised primary swapTheming>
+                    Start
+                  </Button>
+                  <Button
+                    onClick={this.stopScanner}
+                    raised
+                    secondary
+                    iconChildren="close"
+                    swapTheming
+                  >
+                    Stop
+                  </Button>
+                </div>
+              ) : null}
+            </div>
+            {qrReader && showQR ? <video id="video-area" /> : null}
             <SelectField
-              ref={departure => (this.containerDeparture = departure)}
-              id="containerDeparture"
+              ref={departure => (this.departure = departure)}
+              id="departure"
               required
               label="Departure Port"
               className="md-cell"
@@ -154,25 +211,25 @@ class CreateContainerPage extends Component {
               dropdownIcon={<FontIcon>expand_more</FontIcon>}
             />
             <SelectField
-              ref={destination => (this.containerDestination = destination)}
-              id="containerDestination"
+              ref={destination => (this.destination = destination)}
+              id="destination"
               label="Destination Port"
               menuItems={PORTS}
               error={destinationError}
               {...selectFieldProps}
             />
             <SelectField
-              ref={cargo => (this.containerCargo = cargo)}
-              id="containerCargo"
+              ref={cargo => (this.cargo = cargo)}
+              id="cargo"
               label="Cargo"
               menuItems={CARGO}
               error={cargoError}
               {...selectFieldProps}
             />
             <SelectField
-              ref={type => (this.containerType = type)}
-              id="containerType"
-              label="Container type"
+              ref={type => (this.type = type)}
+              id="type"
+              label={`${unit} type`}
               menuItems={TYPE}
               error={typeError}
               {...selectFieldProps}
@@ -182,7 +239,7 @@ class CreateContainerPage extends Component {
           <div>
             <Loader showLoader={showLoader} />
             <CardActions className={`md-cell md-cell--12 ${showLoader ? 'hidden' : ''}`}>
-              <Button raised onClick={this.createContainer}>
+              <Button className="iota-theme-button" raised onClick={this.createItem}>
                 Create
               </Button>
             </CardActions>
@@ -194,12 +251,16 @@ class CreateContainerPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth,
+  user: state.user,
+  project: state.project,
 });
 
 const mapDispatchToProps = dispatch => ({
-  addContainer: containerId => dispatch(addContainer(containerId)),
-  storeContainer: container => dispatch(storeContainer(container)),
+  addItem: itemId => dispatch(addItem(itemId)),
+  storeItem: item => dispatch(storeItem(item)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateContainerPage));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(CreateItemPage));

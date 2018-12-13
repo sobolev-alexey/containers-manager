@@ -11,7 +11,7 @@ yarn
 
 ```
 cd functions
-node_modules/.bin/babel create_container.js --out-file generated/create_container.js
+node_modules/.bin/babel login.js --out-file generated/login.js
 ```
 
 ## Service account / Private key
@@ -19,7 +19,7 @@ node_modules/.bin/babel create_container.js --out-file generated/create_containe
 To use Firebase cloud functions you need to generate a private key and save it in `functions/service_account.json`
 
 Go to Firebase console of your project
-https://console.firebase.google.com/project/container-tracking-simulation/settings/serviceaccounts/adminsdk
+https://console.firebase.google.com/project/item-tracking/settings/serviceaccounts/adminsdk
 then press `GENERATE NEW PRIVATE KEY` button. This will produce a JSON file.
 
 ## Testing
@@ -36,11 +36,11 @@ See https://cloud.google.com/storage/docs/configuring-cors
 You can also use the `gsutil cors` command to get the CORS configuration of a bucket:
 
 ```
-gsutil cors get gs://container-tracking-simulation.appspot.com
+gsutil cors get gs://item-tracking.appspot.com
 ```
 
 Use the `gsutil cors` command to configure CORS on a bucket:
 
 ```
-gsutil cors set firebase_storage.json gs://container-tracking-simulation.appspot.com
+gsutil cors set firebase_storage.json gs://item-tracking.appspot.com
 ```

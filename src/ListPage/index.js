@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Button, DataTable, TableHeader, TableBody, TableRow, TableColumn } from 'react-md';
 import { isEmpty } from 'lodash';
-import { storeContainers } from '../store/containers/actions';
+import { storeItems } from '../store/items/actions';
 import Loader from '../SharedComponents/Loader';
 import Header from '../SharedComponents/Header';
 import Notification from '../SharedComponents/Notification';
@@ -16,23 +16,33 @@ class ListPage extends Component {
   };
 
   componentDidMount() {
-    const { auth, history, containers } = this.props;
-    if (isEmpty(auth)) {
+    const { project, user, history, items } = this.props;
+    if (isEmpty(user) || isEmpty(project)) {
       history.push('/login');
     } else {
-      if (isEmpty(containers.data)) {
+      if (isEmpty(items.data) && user.previousEvent) {
         this.setState({ showLoader: true });
-        this.props.storeContainers(auth);
+        this.props.storeItems(user);
       }
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { containers: { data, error } } = nextProps;
+    const {
+      items: { data, error },
+    } = nextProps;
     if (error) {
       this.notifyError(error);
     }
-    if (!isEmpty(data)) {
+    if (
+      isEmpty(this.props.items.data) &&
+      nextProps.user.previousEvent &&
+      !this.props.user.previousEvent
+    ) {
+      this.setState({ showLoader: true });
+      this.props.storeItems(nextProps.user);
+    }
+    if (!isEmpty(data) || !isEmpty(this.props.items.data) || this.props.user.previousEvent) {
       this.setState({ showLoader: false });
     }
   }
@@ -40,21 +50,28 @@ class ListPage extends Component {
   notifyError = message => toast.error(message);
 
   render() {
-    const { auth, history, containers: { data } } = this.props;
+    const {
+      project,
+      user,
+      history,
+      items: { data },
+    } = this.props;
     const { showLoader } = this.state;
 
+    if (!project || !project.listPage) return <div />;
+
     return (
-      <div className="App">
+      <div className="app">
         <Header>
           <p>
-            Welcome to container tracking,<br />
-            {auth.name || auth.role}
+            Welcome to {project.projectName},<br />
+            {user.name}
           </p>
         </Header>
-        {auth.canCreateStream ? (
-          <div className="ctaWrapper">
-            <Button raised onClick={() => history.push('/new')}>
-              Create new container
+        {user.canCreateStream ? (
+          <div className="cta-wrapper">
+            <Button className="listPage-button" raised onClick={() => history.push('/new')}>
+              Create new {project.trackingUnit}
             </Button>
           </div>
         ) : null}
@@ -62,24 +79,38 @@ class ListPage extends Component {
         <div className={`md-block-centered ${showLoader ? 'hidden' : ''}`}>
           <Autosuggest
             items={data}
-            onSelect={container => history.push(`/details/${container.containerId}`)}
+            project={project}
+            onSelect={item => history.push(`/details/${item.itemId}`)}
+            trackingUnit={project.trackingUnit}
           />
           <DataTable plain>
             <TableHeader>
               <TableRow>
-                <TableColumn>Container ID</TableColumn>
-                <TableColumn className="md-text-center">Route</TableColumn>
-                <TableColumn className="md-text-right">Status</TableColumn>
+                {project.listPage.headers.map((header, index) => (
+                  <TableColumn
+                    key={header}
+                    className={index === 1 ? 'md-text-center' : index === 2 ? 'md-text-right' : ''}
+                  >
+                    {header}
+                  </TableColumn>
+                ))}
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data.map(({ containerId, departure, destination, status }) => (
-                <TableRow key={containerId} onClick={() => history.push(`/details/${containerId}`)}>
-                  <TableColumn>{containerId}</TableColumn>
-                  <TableColumn className="md-text-center">
-                    {departure} &rarr; {destination}
-                  </TableColumn>
-                  <TableColumn className="md-text-right">{status}</TableColumn>
+              {data.map(item => (
+                <TableRow key={item.itemId} onClick={() => history.push(`/details/${item.itemId}`)}>
+                  {project.listPage.body.map((entry, index) => (
+                    <TableColumn
+                      key={`${item.itemId}-${index}`}
+                      className={
+                        index === 1 ? 'md-text-center' : index === 2 ? 'md-text-right' : ''
+                      }
+                    >
+                      {typeof entry === 'string'
+                        ? item[entry]
+                        : entry.map(field => item[field]).join(' → ')}
+                    </TableColumn>
+                  ))}
                 </TableRow>
               ))}
             </TableBody>
@@ -92,12 +123,16 @@ class ListPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth,
-  containers: state.containers,
+  project: state.project,
+  user: state.user,
+  items: state.items,
 });
 
 const mapDispatchToProps = dispatch => ({
-  storeContainers: auth => dispatch(storeContainers(auth)),
+  storeItems: user => dispatch(storeItems(user)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ListPage);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { logout } from '../../store/auth/actions';
+import { logout } from '../../store/user/actions';
 import Logo from '../Logo';
 import '../../assets/scss/header.scss';
 
@@ -14,7 +14,7 @@ class Header extends Component {
   render() {
     return (
       <div className="header">
-        <span role="button" onClick={this.logout}>
+        <span className="header__logo"role="button" onClick={this.logout}>
           <Logo />
         </span>
         {this.props.children}
@@ -27,4 +27,7 @@ const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(logout()),
 });
 
-export default connect(null, mapDispatchToProps)(withRouter(Header));
+export default connect(
+  null,
+  mapDispatchToProps
+)(withRouter(Header));

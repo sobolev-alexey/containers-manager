@@ -3,12 +3,12 @@ import sizeMe from 'react-sizeme';
 import { TabsContainer, Tabs, Tab } from 'react-md';
 import { isEmpty, last } from 'lodash';
 import StatusList from '../Status';
-import ContainerDocuments from '../Documents';
-import ContainerTemperature from '../Temperature';
-import ContainerLocation from '../Location';
+import Documents from '../Documents';
+import Temperature from '../Temperature';
+// import Location from '../Location';
 import '../../assets/scss/tabs.scss';
 
-class ContainerTabs extends PureComponent {
+class ItemTabs extends PureComponent {
   state = {
     activeTabIndex: this.props.activeTabIndex,
   };
@@ -26,8 +26,17 @@ class ContainerTabs extends PureComponent {
   };
 
   render() {
-    const { container, statuses, containerEvents, size, fetchComplete } = this.props;
-    const locations = containerEvents.filter(({ position }) => !isEmpty(position));
+    const {
+      item,
+      statuses,
+      itemEvents,
+      size,
+      fetchComplete,
+      locationTracking,
+      documentStorage,
+      temperatureChart,
+    } = this.props;
+    const locations = itemEvents.filter(({ position }) => !isEmpty(position));
 
     return (
       <TabsContainer
@@ -35,29 +44,35 @@ class ContainerTabs extends PureComponent {
         activeTabIndex={this.state.activeTabIndex}
         onTabChange={this.onTabChange}
       >
-        <Tabs tabId="container-details" mobile={size.width <= 768}>
+        <Tabs tabId="item-details" mobile={size.width <= 768}>
           <Tab label="Status">
             <StatusList statuses={statuses} />
           </Tab>
-          {container.documents && container.documents.length > 0 ? (
+          {documentStorage && item.documents && item.documents.length > 0 ? (
             <Tab label="Documents">
-              <ContainerDocuments container={container} />
+              <Documents item={item} />
             </Tab>
           ) : null}
-          {containerEvents && last(containerEvents) && last(containerEvents).temperature ? (
+          {temperatureChart && itemEvents && last(itemEvents) && last(itemEvents).temperature ? (
             <Tab label="Temperature">
-              <ContainerTemperature data={containerEvents} />
+              <Temperature data={itemEvents} />
             </Tab>
           ) : null}
-          {fetchComplete && containerEvents && last(containerEvents) && locations.length > 0 ? (
-            <Tab label="Location">
-              <ContainerLocation data={locations} />
-            </Tab>
-          ) : null}
+          {
+          //   locationTracking &&
+          // fetchComplete &&
+          // itemEvents &&
+          // last(itemEvents) &&
+          // locations.length > 0 ? (
+          //   <Tab label="Location">
+          //     <Location data={locations} />
+          //   </Tab>
+          // ) : null
+        }
         </Tabs>
       </TabsContainer>
     );
   }
 }
 
-export default sizeMe({ monitorHeight: false })(ContainerTabs);
+export default sizeMe({ monitorHeight: false })(ItemTabs);

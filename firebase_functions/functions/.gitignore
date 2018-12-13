@@ -3,6 +3,4 @@ yarn-error.log
 # Dependency directory
 node_modules
 
-service_account.json
-
-*.json
+service_account*.json

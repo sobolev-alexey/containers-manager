@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Autosuggester from 'react-autosuggest';
+import { remove } from 'lodash';
 import { DataTable, TableBody, TableRow, TableColumn } from 'react-md';
 import '../../assets/scss/autosuggest.scss';
 
@@ -24,15 +25,12 @@ class Autosuggest extends Component {
     }
 
     const regex = new RegExp('^' + escapedValue, 'i');
+    const fields = this.props.project.firebaseFields;
+    remove(fields, field => field === 'timestamp');
 
-    return this.props.items.filter(container => {
-      return (
-        regex.test(container.shipper) ||
-        regex.test(container.containerId) ||
-        regex.test(container.departure) ||
-        regex.test(container.destination) ||
-        regex.test(container.status)
-      );
+    return this.props.items.filter(item => {
+      const result = fields.find(field => regex.test(item[field]));
+      return !!result;
     });
   };
 
@@ -54,17 +52,22 @@ class Autosuggest extends Component {
 
   getSectionSuggestions = section => [section];
 
-  getSuggestionValue = suggestion => suggestion.containerId;
+  getSuggestionValue = suggestion => suggestion.itemId;
 
   renderSuggestion = suggestion => (
     <DataTable plain>
       <TableBody>
-        <TableRow key={suggestion.containerId}>
-          <TableColumn>{suggestion.containerId}</TableColumn>
-          <TableColumn className="md-text-center">
-            {suggestion.departure} &rarr; {suggestion.destination}
-          </TableColumn>
-          <TableColumn className="md-text-right">{suggestion.status}</TableColumn>
+        <TableRow key={suggestion.itemId}>
+          {this.props.project.listPage.body.map((entry, index) => (
+            <TableColumn
+              key={`${suggestion.itemId}-${index}`}
+              className={index === 1 ? 'md-text-center' : index === 2 ? 'md-text-right' : ''}
+            >
+              {typeof entry === 'string'
+                ? suggestion[entry]
+                : entry.map(field => suggestion[field]).join(' → ')}
+            </TableColumn>
+          ))}
         </TableRow>
       </TableBody>
     </DataTable>
@@ -73,7 +76,7 @@ class Autosuggest extends Component {
   render() {
     const { value, suggestions } = this.state;
     const inputProps = {
-      placeholder: 'Search for containers',
+      placeholder: `Search for ${this.props.trackingUnit}s`,
       value,
       onChange: this.onChange,
     };

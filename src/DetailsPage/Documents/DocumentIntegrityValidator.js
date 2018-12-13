@@ -1,10 +1,10 @@
 import { sha256 } from 'js-sha256';
 import axios from 'axios';
 
-export const validateIntegrity = async containerEvent => {
+export const validateIntegrity = async itemEvent => {
   const promises = [];
 
-  containerEvent.documents.forEach(document => {
+  itemEvent.documents.forEach(document => {
     const promise = new Promise((resolve, reject) => {
       try {
         axios
@@ -31,7 +31,7 @@ export const validateIntegrity = async containerEvent => {
   });
 
   await Promise.all(promises)
-    .then(() => containerEvent)
+    .then(() => itemEvent)
     .catch(error => {
       console.log('validateIntegrity error', error);
     });

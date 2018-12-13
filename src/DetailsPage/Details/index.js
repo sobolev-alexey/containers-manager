@@ -2,37 +2,21 @@ import React from 'react';
 import * as moment from 'moment';
 import '../../assets/scss/details.scss';
 
-const ContainerDetails = ({ container }) => {
-  const updated = container ? moment.duration(Date.now() - container.timestamp).humanize() : '';
+const Details = ({ item, fields }) => {
+  const updated = timestamp => moment.duration(Date.now() - timestamp).humanize();
 
   return (
-    <div className="detailSectionWrapper">
-      <div className="detailsSection">
-        <span className="label">Shipper</span>
-        <span className="value">{container.shipper}</span>
-      </div>
-      <div className="detailsSection">
-        <span className="label">Container ID</span>
-        <span className="value">{container.containerId}</span>
-      </div>
-      <div className="detailsSection">
-        <span className="label">Status</span>
-        <span className="value">{container.status}</span>
-      </div>
-      <div className="detailsSection">
-        <span className="label">Load</span>
-        <span className="value">{container.load}</span>
-      </div>
-      <div className="detailsSection">
-        <span className="label">Type</span>
-        <span className="value">{container.type}</span>
-      </div>
-      <div className="detailsSection">
-        <span className="label">Updated</span>
-        <span className="value">{updated} ago</span>
-      </div>
+    <div className="detail-section-wrapper">
+      {fields.body.map((field, index) => (
+        <div className="details-section" key={fields.headers[index]}>
+          <span className="label">{fields.headers[index]}</span>
+          <span className="value">
+            {field === 'timestamp' ? updated(item[field]) : item[field]}
+          </span>
+        </div>
+      ))}
     </div>
   );
 };
 
-export default ContainerDetails;
+export default Details;
