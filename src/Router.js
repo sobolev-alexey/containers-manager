@@ -12,12 +12,14 @@ const store = configureStore();
 const Router = () => (
   <Provider store={store}>
     <BrowserRouter>
-      <Route path="/" component={ListPage} exact />
-      <Route path="/login" component={LoginPage} />
-      <Route path="/new" component={CreateNewPage} />
-      <Route path="/details/:itemId" component={DetailsPage} />
+      <div>
+        <Route path="/" component={ListPage} exact />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/new" component={CreateNewPage} />
+        <Route path="/details/:itemId" component={DetailsPage} />
+      </div>
     </BrowserRouter>
   </Provider>
 );
 
-export default Router
+export default Router;
