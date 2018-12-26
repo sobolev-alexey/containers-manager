@@ -14,10 +14,13 @@ class Header extends Component {
   render() {
     return (
       <div className="header">
-        <span className="header__logo"role="button" onClick={this.logout}>
+        <span className="header__logo">
           <Logo />
         </span>
         {this.props.children}
+        <span className="header__logout" role="button" onClick={this.logout}>
+          Logout
+        </span>
       </div>
     );
   }
