@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Button, DataTable, TableHeader, TableBody, TableRow, TableColumn } from 'react-md';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { storeItems } from '../store/items/actions';
 import Loader from '../SharedComponents/Loader';
 import Header from '../SharedComponents/Header';

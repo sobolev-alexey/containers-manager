@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import sizeMe from 'react-sizeme';
 import { TabsContainer, Tabs, Tab } from 'react-md';
-import { isEmpty, last } from 'lodash';
+// import isEmpty from 'lodash/isEmpty';
+import last from 'lodash/last';
 import StatusList from '../Status';
 import Documents from '../Documents';
 import Temperature from '../Temperature';

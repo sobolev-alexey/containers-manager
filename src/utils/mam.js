@@ -2,7 +2,11 @@ import Mam from 'mam.client.js';
 import { asciiToTrytes, trytesToAscii } from '@iota/converter'
 import { createHttpClient } from '@iota/http-client'
 import { createContext, Reader, Mode } from 'mam.client.js/lib/mam'
-import { isEmpty, uniqBy, pick, find, last } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+import uniqBy from 'lodash/uniqBy';
+import pick from 'lodash/pick';
+import find from 'lodash/find';
+import last from 'lodash/last';
 import { createItem, updateItem } from './firebase';
 import { provider } from '../config.json';
 

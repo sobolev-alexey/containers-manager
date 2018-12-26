@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import sizeMe from 'react-sizeme';
 import { LineChart } from 'react-easy-chart';
 import moment from 'moment';
-import { sortBy, last } from 'lodash';
+import sortBy from 'lodash/sortBy';
+import last from 'lodash/last';
 import '../../assets/scss/temperature.scss';
 
 class Temperature extends Component {

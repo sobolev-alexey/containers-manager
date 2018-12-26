@@ -1,5 +1,5 @@
 import { handle } from 'redux-pack';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { ADD_ITEM, STORE_ITEMS } from '../../actionTypes';
 
 const initialState = {

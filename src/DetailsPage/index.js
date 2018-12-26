@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'react-md';
-import { isEmpty, find, last, uniqBy, pick, upperFirst } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+import upperFirst from 'lodash/upperFirst';
+import find from 'lodash/find';
+import last from 'lodash/last';
+import uniqBy from 'lodash/uniqBy';
+import pick from 'lodash/pick';
 import { toast } from 'react-toastify';
 import { storeItem } from '../store/item/actions';
 import Notification from '../SharedComponents/Notification';

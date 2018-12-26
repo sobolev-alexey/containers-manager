@@ -13,7 +13,7 @@
     "firebase": "^5.7.0",
     "immutable": "^3.8.2",
     "js-sha256": "^0.9.0",
-    "lodash-es": "^4.17.11",
+    "lodash": "^4.17.11",
     "mam.client.js": "iotaledger/mam.client.js",
     "mapbox-gl": "^0.52.0-beta.2",
     "moment": "^2.23.0",
