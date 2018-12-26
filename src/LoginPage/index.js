@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { sha256 } from 'js-sha256';
 import { connect } from 'react-redux';
-import { TextField, SelectField, Button, FontIcon } from 'react-md';
+import { /* TextField, */ SelectField, Button, FontIcon } from 'react-md';
 import { toast } from 'react-toastify';
 import isEmpty from 'lodash/isEmpty';
 import upperFirst from 'lodash/upperFirst';
@@ -85,6 +85,7 @@ class LoginPage extends Component {
               position={SelectField.Positions.BELOW}
               dropdownIcon={<FontIcon>expand_more</FontIcon>}
             />
+            { /*
             <TextField
               ref={password => (this.password = password)}
               id="password"
@@ -92,6 +93,7 @@ class LoginPage extends Component {
               type="password"
               required
             />
+            */ }
             <Loader showLoader={showLoader} />
             <Button raised onClick={this.login} className={`form-button ${showLoader ? 'hidden' : ''}`}>
               Login
