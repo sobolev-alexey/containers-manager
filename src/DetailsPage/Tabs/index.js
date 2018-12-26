@@ -6,6 +6,7 @@ import last from 'lodash/last';
 import StatusList from '../Status';
 import Documents from '../Documents';
 import Temperature from '../Temperature';
+import Explorer from '../Explorer';
 // import Location from '../Location';
 import '../../assets/scss/tabs.scss';
 
@@ -24,6 +25,7 @@ class ItemTabs extends PureComponent {
 
   onTabChange = newActiveTabIndex => {
     this.setState({ activeTabIndex: newActiveTabIndex });
+    this.props.onTabChange(newActiveTabIndex);
   };
 
   render() {
@@ -49,6 +51,9 @@ class ItemTabs extends PureComponent {
           <Tab label="Status">
             <StatusList statuses={statuses} />
           </Tab>
+          <Tab label="Tangle">
+            <Explorer />
+          </Tab>
           {documentStorage && item.documents && item.documents.length > 0 ? (
             <Tab label="Documents">
               <Documents item={item} />
@@ -69,7 +74,7 @@ class ItemTabs extends PureComponent {
           //     <Location data={locations} />
           //   </Tab>
           // ) : null
-        }
+          }
         </Tabs>
       </TabsContainer>
     );

@@ -149,6 +149,10 @@ class DetailsPage extends Component {
     return promise;
   };
 
+  onTabChange = newActiveTabIndex => {
+    this.setState({ activeTabIndex: newActiveTabIndex });
+  };
+
   onUploadComplete = metadata => {
     this.setState({ metadata, fileUploadEnabled: false, activeTabIndex: 1 }, () => {
       this.notifySuccess('File upload complete!');
@@ -207,6 +211,7 @@ class DetailsPage extends Component {
               locationTracking={locationTracking}
               documentStorage={documentStorage}
               temperatureChart={temperatureChart}
+              onTabChange={this.onTabChange}
             />
             <Details item={item} fields={detailsPage} />
           </div>

@@ -1,0 +1,30 @@
+@import 'globals';
+
+@include react-md-everything;
+
+.explorer-content {
+  max-width: 1092px;
+  width: 100%;
+  margin: 20px auto 50px;
+}
+
+.panel {
+  margin-top: 50px;
+}
+
+.loaderWrapper {
+  margin-top: 20px;
+}
+
+@media (max-width: 1092px) {
+  .explorer-content {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .explorer-content {
+    margin-top: 0;
+    padding: 0 10px;
+  }
+}
