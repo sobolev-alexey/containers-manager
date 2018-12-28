@@ -15,7 +15,6 @@ export const validateIntegrity = async document => {
             resolve({
               hashMatch: sha256Hash === document.sha256Hash,
               sizeMatch: response.data.size === document.size,
-              url: document.downloadURL
             });
           };
         })

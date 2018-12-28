@@ -8,22 +8,16 @@ import '../../assets/scss/documents.scss';
 
 class Documents extends Component {
   state = {
-    documents: null,
+    documents: [],
   };
 
   async componentDidMount() {
     const { item } = this.props;
     if (!isEmpty(item)) {
-      console.log(555, item);
-
       item.documents.forEach(async document => {
-        const res = await validateIntegrity(document)
-        console.log(777, res);
+        const result = await validateIntegrity(document)
+        this.setState({ documents: [...this.state.documents, {...document, ...result}] })
       });
-
-      // this.setState({
-      //   documents
-      // }, () => console.log(444, this.state.documents));
     }
   }
 
@@ -52,16 +46,15 @@ class Documents extends Component {
       user,
       project: { documentStorage, trackingUnit }
     } = this.props;
+    const { documents } = this.state
 
-    // const documents =item.documents;
-
-    // console.log(222, item.documents);
+    if (!documents) return <React.Fragment />
 
     return (
       <div className="documents-wrapper">
         <DataTable plain>
           <TableBody>
-            {item.documents.map(doc => (
+            {documents.map(doc => (
               <TableRow key={doc.name}>
                 <TableColumn>
                   <a
@@ -70,10 +63,7 @@ class Documents extends Component {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {doc.name} 1:{doc.hashMatch} 2:{doc.sizeMatch}
-                    {
-                        // console.log(333, doc, doc.md5Hash, doc.size, doc.hashMatch, doc.sizeMatch, doc.hashMatch && doc.sizeMatch)
-                    }
+                    {doc.name}
                   </a>
                 </TableColumn>
                 <TableColumn className="md-text-right">
@@ -91,7 +81,7 @@ class Documents extends Component {
           <FilesUpload
             uploadComplete={onUploadComplete}
             pathTofile={`${trackingUnit.replace(/\s/g, '')}/${item.itemId}`}
-            existingDocuments={item.documents}
+            existingDocuments={documents}
           />
         ) : null}
       </div>
