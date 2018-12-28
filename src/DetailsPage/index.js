@@ -64,7 +64,7 @@ class DetailsPage extends Component {
       history.push('/login');
     }
     if (!itemId || isEmpty(items)) {
-      history.push('/');
+      history.push('/list');
     } else if (isEmpty(item) || item[0].itemId !== itemId) {
       this.retrieveItem(itemId);
     } else {
@@ -127,7 +127,7 @@ class DetailsPage extends Component {
     this.setState({ showLoader: true });
     const promise = new Promise(async (resolve, reject) => {
       try {
-        const itemEvent = await fetchItem(
+        await fetchItem(
           item.mam.root,
           item.mam.secretKey,
           this.storeItemCallback,

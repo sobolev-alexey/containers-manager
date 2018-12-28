@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react';
 import sizeMe from 'react-sizeme';
 import { TabsContainer, Tabs, Tab } from 'react-md';
-// import isEmpty from 'lodash/isEmpty';
+import isEmpty from 'lodash/isEmpty';
 import last from 'lodash/last';
 import StatusList from '../Status';
 import Documents from '../Documents';
 import Temperature from '../Temperature';
 import Explorer from '../Explorer';
-// import Location from '../Location';
+import Location from '../Location';
 import '../../assets/scss/tabs.scss';
 
 class ItemTabs extends PureComponent {
@@ -34,14 +34,14 @@ class ItemTabs extends PureComponent {
       statuses,
       itemEvents,
       size,
-      // fetchComplete,
-      // locationTracking,
+      fetchComplete,
+      locationTracking,
       documentStorage,
       temperatureChart,
       onUploadComplete,
       fileUploadEnabled,
     } = this.props;
-    // const locations = itemEvents.filter(({ position }) => !isEmpty(position));
+    const locations = itemEvents.filter(({ position }) => !isEmpty(position));
 
     return (
       <TabsContainer
@@ -71,15 +71,15 @@ class ItemTabs extends PureComponent {
             </Tab>
           ) : null}
           {
-          //   locationTracking &&
-          // fetchComplete &&
-          // itemEvents &&
-          // last(itemEvents) &&
-          // locations.length > 0 ? (
-          //   <Tab label="Location">
-          //     <Location data={locations} />
-          //   </Tab>
-          // ) : null
+            locationTracking &&
+            fetchComplete &&
+            itemEvents &&
+            last(itemEvents) &&
+            locations.length > 0 ? (
+              <Tab label="Location">
+                <Location data={locations} />
+              </Tab>
+            ) : null
           }
         </Tabs>
       </TabsContainer>
