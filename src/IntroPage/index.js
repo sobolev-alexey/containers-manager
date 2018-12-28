@@ -31,9 +31,9 @@ class IntroPage extends Component {
         <header>
           <Row>
             <Col xs={12} className="d-flex justify-content-between align-items-start">
-              <a href="/">
+              <Link to="/">
                 <img className="logo" src={logoWhiteHorizontal} alt="IOTA" />
-              </a>
+              </Link>
               <nav className="d-flex justify-content-end">
                 <ul>
                   <li>
