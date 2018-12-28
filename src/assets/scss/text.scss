@@ -1,0 +1,76 @@
+h1 {
+  @include font-size(32px);
+  @include media-breakpoint-down(xs) {
+    @include font-size(24px);
+  }
+
+  color: $black;
+  font-family: $font-family-sans-serif;
+  font-weight: 300;
+  line-height: 2;
+}
+
+h2 {
+  @include font-size(32px);
+  @include media-breakpoint-down(xs) {
+    @include font-size(24px);
+  }
+
+  color: $primary;
+  font-family: $font-family-sans-serif;
+  font-weight: bold;
+  line-height: 2.5;
+}
+
+h5 {
+  @include font-size(20px);
+  @include media-breakpoint-down(xs) {
+    @include font-size(16px);
+  }
+
+  color: $primary;
+  font-family: $font-family-sans-serif;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+p {
+  @include font-size(16px);
+  @include media-breakpoint-down(xs) {
+    line-height: 1.5;
+  }
+
+
+  color: var(--body-copy);
+  font-family: $font-family-sans-serif;
+  font-weight: 300;
+  line-height: 2;
+}
+
+.text-responsive-align {
+  @include media-breakpoint-down(xs) {
+    text-align: left !important;
+  }
+
+  margin-bottom: 20px;
+  line-height: 1.5;
+  text-align: right !important;
+}
+
+.text-responsive-align-alt {
+  @include media-breakpoint-down(xs) {
+    text-align: left !important;
+  }
+
+  margin-bottom: 20px;
+  line-height: 1.5;
+  text-align: left !important;
+}
+
+.justify-content-responsive {
+  @include media-breakpoint-down(xs) {
+    justify-content: left !important;
+  }
+
+  justify-content: center !important;
+}
