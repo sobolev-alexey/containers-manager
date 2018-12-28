@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { HashRouter, Route } from 'react-router-dom';
 import configureStore from './store/configure';
 import ListPage from './ListPage';
 import DetailsPage from './DetailsPage';
@@ -12,7 +12,7 @@ const store = configureStore();
 
 const Router = () => (
   <Provider store={store}>
-    <BrowserRouter>
+    <HashRouter>
       <div>
         <Route path="/" component={IntroPage} exact />
         <Route path="/list" component={ListPage} />
@@ -20,7 +20,7 @@ const Router = () => (
         <Route path="/new" component={CreateNewPage} />
         <Route path="/details/:itemId" component={DetailsPage} />
       </div>
-    </BrowserRouter>
+    </HashRouter>
   </Provider>
 );
 
