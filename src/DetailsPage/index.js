@@ -14,8 +14,6 @@ import Loader from '../SharedComponents/Loader';
 import Header from '../SharedComponents/Header';
 import Tabs from './Tabs';
 import Details from './Details';
-import FilesUpload from './Documents/FilesUpload';
-import { validateIntegrity } from './Documents/DocumentIntegrityValidator';
 import { fetchItem, appendItemChannel } from '../utils/mam';
 import { reassignOwnership } from '../utils/firebase';
 import '../assets/scss/detailsPage.scss';
@@ -70,7 +68,6 @@ class DetailsPage extends Component {
     } else if (isEmpty(item) || item[0].itemId !== itemId) {
       this.retrieveItem(itemId);
     } else {
-      await validateIntegrity(last(item));
       this.setState({
         showLoader: false,
         fetchComplete: true,
@@ -137,7 +134,6 @@ class DetailsPage extends Component {
           this.setStateCalback
         );
 
-        await validateIntegrity(itemEvent);
         this.setState({ showLoader: false, fetchComplete: true });
         return resolve();
       } catch (error) {
@@ -211,18 +207,13 @@ class DetailsPage extends Component {
               locationTracking={locationTracking}
               documentStorage={documentStorage}
               temperatureChart={temperatureChart}
+              fileUploadEnabled={fileUploadEnabled}
               onTabChange={this.onTabChange}
+              onUploadComplete={this.onUploadComplete}
             />
             <Details item={item} fields={detailsPage} />
           </div>
         </div>
-        {documentStorage && fileUploadEnabled && user.canUploadDocuments ? (
-          <FilesUpload
-            uploadComplete={this.onUploadComplete}
-            pathTofile={`${trackingUnit.replace(/\s/g, '')}/${item.itemId}`}
-            existingDocuments={item.documents}
-          />
-        ) : null}
         <Notification />
       </div>
     );

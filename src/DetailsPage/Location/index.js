@@ -69,23 +69,20 @@ class Location extends Component {
   updateLine = data => {
     if (!this.mapStyle.hasIn(['sources', data.itemId])) {
       this.mapStyle = this.mapStyle
-        .setIn(['sources', data.itemId], fromJS({ type: 'geojson' }))
+        .setIn(['sources', data.itemId], { type: 'geojson' })
         .set('layers', this.mapStyle.get('layers').push(lineLayer(data.itemId)));
 
-      this.mapStyle = this.mapStyle.setIn(
-        ['sources', data.itemId, 'data'],
-        fromJS({
-          type: 'Feature',
-          geometry: {
-            type: 'LineString',
-            coordinates: [[data.position.lng, data.position.lat]],
-          },
-        })
-      );
+      this.mapStyle = this.mapStyle.setIn(['sources', data.itemId, 'data'], {
+        type: 'Feature',
+        geometry: {
+          type: 'LineString',
+          coordinates: [[data.position.lng, data.position.lat]],
+        },
+      });
     } else {
       this.mapStyle = this.mapStyle.updateIn(
         ['sources', data.itemId, 'data', 'geometry', 'coordinates'],
-        list => fromJS(this.toGeoJson())
+        list => this.toGeoJson()
       );
     }
   };

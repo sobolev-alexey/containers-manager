@@ -34,12 +34,14 @@ class ItemTabs extends PureComponent {
       statuses,
       itemEvents,
       size,
-      fetchComplete,
-      locationTracking,
+      // fetchComplete,
+      // locationTracking,
       documentStorage,
       temperatureChart,
+      onUploadComplete,
+      fileUploadEnabled,
     } = this.props;
-    const locations = itemEvents.filter(({ position }) => !isEmpty(position));
+    // const locations = itemEvents.filter(({ position }) => !isEmpty(position));
 
     return (
       <TabsContainer
@@ -56,7 +58,11 @@ class ItemTabs extends PureComponent {
           </Tab>
           {documentStorage && item.documents && item.documents.length > 0 ? (
             <Tab label="Documents">
-              <Documents item={item} />
+              <Documents
+                item={item}
+                onUploadComplete={onUploadComplete}
+                fileUploadEnabled={fileUploadEnabled}
+              />
             </Tab>
           ) : null}
           {temperatureChart && itemEvents && last(itemEvents) && last(itemEvents).temperature ? (
