@@ -37,7 +37,7 @@ class LoginPage extends Component {
       .then(response => {
         this.props.storeCredentials(response.data);
         this.props.storeEvents(response.data.role);
-        this.props.history.push('/');
+        this.props.history.push('/list');
       })
       .catch(error => {
         this.setState({ showLoader: false });

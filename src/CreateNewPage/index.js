@@ -154,7 +154,7 @@ class CreateItemPage extends Component {
         <Header>
           <div>
             <div>
-              <Link to="/">
+              <Link to="/list">
                 <img src="arrow_left.svg" alt="back" />
               </Link>
               <span>Create new {trackingUnit}</span>
