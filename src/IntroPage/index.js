@@ -21,7 +21,7 @@ class IntroPage extends Component {
               IOTA is set to radically transform international trade and supply chains, improving
               visibility, control and reducing overheads.
             </div>
-            <div className="sub-1">
+            <div className="sub-2">
               <Link to="/login" className="button">
                 Learn how
               </Link>
@@ -50,7 +50,9 @@ class IntroPage extends Component {
           <div className="alternate extra-padding" id="usecases">
             <Row>
               <Col xs={12}>
-                <h2 className="d-flex justify-content-responsive">Use cases for the technology</h2>
+                <h2 className="bold d-flex justify-content-responsive">
+                  Use cases for the technology
+                </h2>
               </Col>
               <Col xs={12} sm={6} className="d-flex flex-column justify-content-center">
                 <h1 className="text-responsive-align">
@@ -149,10 +151,11 @@ class IntroPage extends Component {
               </Col>
             </Row>
           </div>
+          <hr className="section-divider" />
           <div className="inter" id="tryit">
             <Row className="row-header">
               <Col xs={12}>
-                <h2 className="d-flex justify-content-responsive">
+                <h2 className="bold d-flex justify-content-responsive">
                   Try it with a live transaction
                 </h2>
               </Col>
@@ -192,6 +195,26 @@ class IntroPage extends Component {
                   structure in a M2M environment. Machines can identify and understand themselves or
                   a counterpart’s capabilities.
                 </p>
+              </Col>
+            </Row>
+          </div>
+          <hr className="section-divider" />
+          <div className="alternate extra-padding">
+            <Row>
+              <Col xs={12}>
+                <h2 className="bold d-flex justify-content-responsive">Try it with a live transaction</h2>
+              </Col>
+              <Col xs={12} className="d-flex justify-content-center">
+                <p className="d-flex justify-content-responsive">
+                    In the example below, you can communicate with the eCl@ss connected machines using the IOTA Tangle network.
+                    Once connected, each machine displays relevant specifications.
+                    Purchase additional private data using the supplied wallet funds and view your transaction timestamped live on the IOTA Tangle network.
+                </p>
+              </Col>
+              <Col xs={12} className="d-flex justify-content-center">
+                <Link to="/login" className="button demo">
+                  Start the demo
+                </Link>
               </Col>
             </Row>
           </div>

@@ -152,7 +152,7 @@ body {
       width: 12vw;
     }
 
-    .sub-1 {
+    .sub-1, .sub-2 {
       @include media-breakpoint-down(xs) {
         @include font-size(16px);
 
@@ -168,6 +168,10 @@ body {
       font-size: 2vw;
       font-weight: 200;
       text-align: center;
+    }
+
+    .sub-2 {
+      margin-top: 50px;
     }
 
     .button {
@@ -342,6 +346,22 @@ nav {
       }
     }
   }
+
+  .section-divider {
+    margin: 0;
+  }
+
+  .button.demo {
+    color: white;
+    border-radius: 7px;
+    padding: 10px 20px;
+    background: linear-gradient(90deg, rgb(34, 177, 171), rgb(34, 177, 171));
+    outline: none;
+    text-decoration: none;
+    user-select: none;
+    cursor: pointer;
+  }
+
 }
 
 $footer-gradient-start: #3e3e3e;
