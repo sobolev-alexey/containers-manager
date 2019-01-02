@@ -10,4 +10,21 @@
   .md-tab-panel#item-details-panel-1 {
     overflow-y: auto;
   }
+
+  .md-tab {
+    margin: 0 5px;
+    border-radius: 30px;
+    background-color: #f6f6f6;
+    padding: 16px 24px;
+  }
+
+  .md-tab--active {
+    .md-ink-container {
+      border: 2px solid #22b1ab;
+    }
+  }
+
+  .md-tab-indicator {
+    background: none;
+  }
 }
