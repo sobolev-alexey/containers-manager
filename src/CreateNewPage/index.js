@@ -14,6 +14,7 @@ import { storeItem } from '../store/item/actions';
 import { getFirebaseSnapshot, reassignOwnership } from '../utils/firebase';
 import { createItemChannel } from '../utils/mam';
 import '../assets/scss/createItemPage.scss';
+import arrow from '../assets/images/arrow_left.svg';
 import { BrowserQRCodeReader } from '@zxing/library';
 
 const codeReader = new BrowserQRCodeReader();
@@ -155,7 +156,7 @@ class CreateItemPage extends Component {
           <div>
             <div>
               <Link to="/list">
-                <img src="arrow_left.svg" alt="back" />
+                <img src={arrow} alt="back" />
               </Link>
               <span>Create new {trackingUnit}</span>
             </div>

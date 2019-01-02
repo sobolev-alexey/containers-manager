@@ -65,7 +65,7 @@ class ListPage extends Component {
         <Header>
           <p>
             Welcome to {project.projectName},<br />
-            {user.name}
+            {user.name} ({user.role})
           </p>
         </Header>
         {user.canCreateStream ? (
