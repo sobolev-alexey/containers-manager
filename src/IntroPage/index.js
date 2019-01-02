@@ -222,14 +222,6 @@ class IntroPage extends Component {
         <footer>
           <Row>
             <Col>
-              <div className="footer-heading">This Site</div>
-              <a href="#introduction">Introduction</a>
-              <br />
-              <a href="#usecases">The use cases</a>
-              <br />
-              <a href="#tryit">Try it for yourself</a>
-            </Col>
-            <Col>
               <div className="footer-heading">The Foundation</div>
               <a href="https://www.iota.org/the-foundation/our-vision">Our Vision</a>
               <br />
@@ -267,7 +259,7 @@ class IntroPage extends Component {
             </Col>
           </Row>
           <Row>
-            <Col className="footer-text-info">
+            <Col xs={12} sm={4} className="footer-text-info">
               IOTA Foundation
               <br />
               c/o Nextland
@@ -278,7 +270,7 @@ class IntroPage extends Component {
               <br />
               Germany
             </Col>
-            <Col className="footer-text-info">
+            <Col xs={12} sm={8} className="footer-text-info">
               &copy; 2018 IOTA Foundation - Privacy Policy
               <br />
               Email: contact@iota.org
