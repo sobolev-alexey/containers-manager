@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { Link } from "react-router-dom";
 import { logout } from '../../store/user/actions';
 import Logo from '../Logo';
 import '../../assets/scss/header.scss';
@@ -15,7 +16,9 @@ class Header extends Component {
     return (
       <div className="header">
         <span className="header__logo">
-          <Logo />
+          <Link to="/list">
+            <Logo />
+          </Link>
         </span>
         {this.props.children}
         <span className="header__logout" role="button" onClick={this.logout}>

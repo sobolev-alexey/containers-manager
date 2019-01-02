@@ -1,3 +1,5 @@
+@import 'components';
+
 .header {
   height: 160px;
   display: flex;
@@ -7,8 +9,15 @@
   background-image: -moz-linear-gradient(left, rgb(123, 194, 195), rgb(128, 133, 191));
   background-image: -o-linear-gradient(left, rgb(123, 194, 195), rgb(128, 133, 191));
 
-  .header__logo {
-    cursor: pointer;
+  .header__logout {
+    @include button();
+    width: 100px;
+    font-size: 14px;
+    padding: 5px 20px;
+    background: none;
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 
   svg {
