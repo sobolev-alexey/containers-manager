@@ -180,7 +180,7 @@ class DetailsPage extends Component {
         <Header>
           <p>
             Welcome to {trackingUnit} tracking,<br />
-            {user.name || user.role}
+            {user.name} ({user.role})
           </p>
         </Header>
         <div className={`loader-wrapper ${showLoader ? '' : 'hidden'}`}>
