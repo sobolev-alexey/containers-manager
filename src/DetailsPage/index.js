@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { Button } from 'react-md';
 import isEmpty from 'lodash/isEmpty';
 import upperFirst from 'lodash/upperFirst';
@@ -8,20 +9,19 @@ import last from 'lodash/last';
 import uniqBy from 'lodash/uniqBy';
 import pick from 'lodash/pick';
 import { toast } from 'react-toastify';
-import { storeItem } from '../store/item/actions';
+import { storeItem, resetStoredItem } from '../store/item/actions';
 import Notification from '../SharedComponents/Notification';
 import Loader from '../SharedComponents/Loader';
 import Header from '../SharedComponents/Header';
 import Tabs from './Tabs';
 import Details from './Details';
 import { fetchItem, appendItemChannel } from '../utils/mam';
-import { reassignOwnership } from '../utils/firebase';
 import '../assets/scss/detailsPage.scss';
 
-const StatusButtons = ({ statuses, onClick }) => {
+const StatusButtons = ({ statuses, onClick, showLoader }) => {
   if (typeof statuses === 'string') {
     return (
-      <Button className="details-page-button" raised onClick={() => onClick(statuses)}>
+      <Button className={`details-page-button ${showLoader ? 'hidden' : ''}`} raised onClick={() => onClick(statuses)}>
         Confirm {statuses}
       </Button>
     );
@@ -90,8 +90,8 @@ class DetailsPage extends Component {
   };
 
   appendToItem = async status => {
-    const { user, project } = this.props;
-    const { metadata, item } = this.state;
+    const { project } = this.props;
+    const { metadata } = this.state;
     const meta = metadata.length;
     this.setState({ showLoader: true });
     const response = await appendItemChannel(metadata, this.props, this.documentExists, status);
@@ -103,7 +103,6 @@ class DetailsPage extends Component {
         fileUploadEnabled: true,
       });
       this.retrieveItem(response);
-      reassignOwnership(project, user, item, status);
     } else {
       this.setState({ showLoader: false });
       this.notifyError('Something went wrong');
@@ -118,13 +117,16 @@ class DetailsPage extends Component {
     this.setState({ item, statuses });
   };
 
-  retrieveItem = itemId => {
+  retrieveItem = (itemId, resetStoredItems = false) => {
     const {
       items,
       project: { trackingUnit },
     } = this.props;
     const item = find(items, { itemId });
     this.setState({ showLoader: true });
+    if (resetStoredItems) {
+      this.props.resetStoredItem();
+    }
     const promise = new Promise(async (resolve, reject) => {
       try {
         await fetchItem(
@@ -195,7 +197,7 @@ class DetailsPage extends Component {
                   : detailsPage.title.map(field => item[field]).join(' → ')}
               </h1>
               {user.canAppendToStream && !statusUpdated && nextEvents ? (
-                <StatusButtons statuses={nextEvents} onClick={this.appendToItem} />
+                <StatusButtons statuses={nextEvents} onClick={this.appendToItem} showLoader={showLoader} />
               ) : null}
             </div>
             <Tabs
@@ -210,6 +212,7 @@ class DetailsPage extends Component {
               fileUploadEnabled={fileUploadEnabled}
               onTabChange={this.onTabChange}
               onUploadComplete={this.onUploadComplete}
+              onAddTemperatureLocationCallback={this.retrieveItem}
             />
             <Details item={item} fields={detailsPage} />
           </div>
@@ -229,9 +232,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   storeItem: item => dispatch(storeItem(item)),
+  resetStoredItem: () => dispatch(resetStoredItem()),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DetailsPage);
+)(withRouter(DetailsPage));

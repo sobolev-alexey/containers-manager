@@ -39,6 +39,7 @@ class ItemTabs extends PureComponent {
       documentStorage,
       temperatureChart,
       onUploadComplete,
+      onAddTemperatureLocationCallback,
       fileUploadEnabled,
     } = this.props;
     const locations = itemEvents.filter(({ position }) => !isEmpty(position));
@@ -65,9 +66,9 @@ class ItemTabs extends PureComponent {
               />
             </Tab>
           ) : null}
-          {temperatureChart && itemEvents && last(itemEvents) && last(itemEvents).temperature ? (
+          {temperatureChart ? (
             <Tab label="Temperature">
-              <Temperature data={itemEvents} />
+              <Temperature data={itemEvents} callback={onAddTemperatureLocationCallback} />
             </Tab>
           ) : null}
           {
@@ -77,7 +78,7 @@ class ItemTabs extends PureComponent {
             last(itemEvents) &&
             locations.length > 0 ? (
               <Tab label="Location">
-                <Location data={locations} />
+                <Location data={locations} callback={onAddTemperatureLocationCallback} />
               </Tab>
             ) : null
           }

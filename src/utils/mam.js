@@ -192,6 +192,43 @@ export const appendItemChannel = async (metadata, props, documentExists, status)
   return promise;
 };
 
+export const appendTemperatureLocation = async (payload, props) => {
+  const {
+    project,
+    user,
+    item,
+    items,
+    match: {
+      params: { itemId },
+    },
+  } = props;
+  const { mam } = find(items, { itemId });
+
+  const promise = new Promise(async (resolve, reject) => {
+    try {
+      if (payload) {
+        const newItemData = await appendToChannel(payload, mam);
+
+        if (newItemData && !isEmpty(newItemData)) {
+          const eventBody = {};
+          project.firebaseFields.forEach(field => (eventBody[field] = last(item)[field]));
+          eventBody.status = payload.status;
+          eventBody.timestamp = payload.timestamp;
+
+          await updateItem(eventBody, mam, newItemData, user);
+
+          return resolve(itemId);
+        }
+      }
+      return reject();
+    } catch (error) {
+      return reject();
+    }
+  });
+
+  return promise;
+};
+
 const generateSeed = length => {
   if (window.crypto && window.crypto.getRandomValues) {
     const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ9';

@@ -1,11 +1,9 @@
 import firebase from 'firebase';
-import { getNextUsers } from './common';
 import config from '../config.json';
 
 export const initializeFirebaseApp = () => firebase.initializeApp(config);
 export const getItemsReference = () => firebase.database().ref('items');
 const getItemReference = itemId => firebase.database().ref(`items/${itemId}`);
-const getUserReference = userId => firebase.database().ref(`users/${userId}`);
 const getSettingsReference = () => firebase.database().ref('settings');
 const getEventMappingReference = () => firebase.database().ref('roleEventMapping');
 const getRoleEventMappingReference = role => firebase.database().ref(`roleEventMapping/${role}`);
@@ -77,56 +75,9 @@ export const getFirebaseSnapshot = (itemId, onError) => {
   return promise;
 };
 
-const appendItemToNewUser = (userId, itemId) => {
-  try {
-    // Get user reference
-    const userRef = getUserReference(userId);
-
-    userRef
-      .once('value')
-      .then(snapshot => {
-        const user = snapshot.val();
-        const items = user.items || [];
-
-        userRef.update({
-          items: [...items, itemId],
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const removeItemFromCurrentUser = (user, itemId) => {
-  // Get user reference
-  const userRef = getUserReference(user.userId);
-  const items = user.items || [];
-  const index = items.indexOf(itemId);
-  if (index > -1) {
-    items.splice(index, 1);
-  }
-
-  userRef.update({
-    items: [...items],
-  });
-};
-
-export const reassignOwnership = (project, user, item, status, removeFromCurrentOwner = true) => {
-  if (removeFromCurrentOwner) {
-    // for create item set flag to "false"
-    removeItemFromCurrentUser(user, item.itemId);
-  }
-  const newUsers = getNextUsers(project, user, item, status);
-  newUsers.map(newUser => appendItemToNewUser(newUser, item.itemId));
-};
-
 export const createItem = (eventBody, channel, secretKey, userId) => {
   // Create item reference
   const itemsRef = getItemReference(eventBody.itemId);
-  appendItemToNewUser(userId, eventBody.itemId);
 
   itemsRef.set({
     ...eventBody,

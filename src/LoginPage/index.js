@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { sha256 } from 'js-sha256';
 import { connect } from 'react-redux';
-import { /* TextField, */ SelectField, Button, FontIcon } from 'react-md';
+import { SelectField, Button, FontIcon } from 'react-md';
 import { toast } from 'react-toastify';
 import isEmpty from 'lodash/isEmpty';
-import upperFirst from 'lodash/upperFirst';
+// import upperFirst from 'lodash/upperFirst';
 import { storeCredentials, storeEvents } from '../store/user/actions';
 import { storeProjectSettings, storeEventMappings } from '../store/project/actions';
 import Logo from '../SharedComponents/Logo';
@@ -26,9 +26,9 @@ class LoginPage extends Component {
 
   login = event => {
     event.preventDefault();
-    this.setState({ showLoader: true });
     if (!this.username.value) return;
 
+    this.setState({ showLoader: true });
     const username = this.props.project.roleUserMapping[this.username.value.toLowerCase()];
     const password = sha256(username.toLowerCase());
 
@@ -57,7 +57,8 @@ class LoginPage extends Component {
     if (isEmpty(roleUserMapping)) {
       return <div />;
     }
-    const ROLES = Object.keys(roleUserMapping).map(role => upperFirst(role));
+    // const ROLES = Object.keys(roleUserMapping).map(role => upperFirst(role));
+    const ROLES = ["Owner", "Forwarder", "Customs", "Port"]
 
     return (
       <div className="wrapper">
@@ -85,15 +86,6 @@ class LoginPage extends Component {
               position={SelectField.Positions.BELOW}
               dropdownIcon={<FontIcon>expand_more</FontIcon>}
             />
-            { /*
-            <TextField
-              ref={password => (this.password = password)}
-              id="password"
-              label="Enter password"
-              type="password"
-              required
-            />
-            */ }
             <Loader showLoader={showLoader} />
             <Button raised onClick={this.login} className={`form-button ${showLoader ? 'hidden' : ''}`}>
               Login

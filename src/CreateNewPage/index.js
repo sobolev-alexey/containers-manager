@@ -11,7 +11,7 @@ import Header from '../SharedComponents/Header';
 import Notification from '../SharedComponents/Notification';
 import { addItem } from '../store/items/actions';
 import { storeItem } from '../store/item/actions';
-import { getFirebaseSnapshot, reassignOwnership } from '../utils/firebase';
+import { getFirebaseSnapshot } from '../utils/firebase';
 import { createItemChannel } from '../utils/mam';
 import '../assets/scss/createItemPage.scss';
 import arrow from '../assets/images/arrow_left.svg';
@@ -119,7 +119,6 @@ class CreateItemPage extends Component {
 
         await addItem(itemId);
         await storeItem([eventBody]);
-        reassignOwnership(project, user, { itemId, status: previousEvent[0] }, false);
 
         history.push(`/details/${itemId}`);
       } else {
@@ -240,8 +239,8 @@ class CreateItemPage extends Component {
           <Notification />
           <div>
             <Loader showLoader={showLoader} />
-            <CardActions className={`md-cell md-cell--12 ${showLoader ? 'hidden' : ''}`}>
-              <Button className="iota-theme-button" raised onClick={this.createItem}>
+            <CardActions className="md-cell md-cell--12">
+              <Button className={`iota-theme-button ${showLoader ? 'hidden' : ''}`} raised onClick={this.createItem}>
                 Create
               </Button>
             </CardActions>
