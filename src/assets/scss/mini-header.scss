@@ -54,24 +54,33 @@ header {
     flex-direction: column;
     align-self: center;
     color: $white;
+    padding-right: 0;
 
-    h4 {
-      margin-bottom: 0;
-    }
+    .header-cta-wrapper {
+      background-color: #181818;
+      padding: 16px 30px;
 
-    span {
-      @include font-size(14px);
-      @include media-breakpoint-down(xs) {
-        @include font-size(10px);
+      h4 {
+        margin-bottom: 0;
       }
-    }
 
-    .button-wrapper {
-      align-self: center;
+      span {
+        @include font-size(14px);
+        @include media-breakpoint-down(xs) {
+          @include font-size(10px);
+        }
+      }
 
-      button {
-        @include button();
-        width: 160px;
+      .button-wrapper {
+        align-self: center;
+
+        button {
+          @include button();
+          width: 160px;
+          background: rgba(196, 196, 196, 0.4);
+          border: 1px solid $primary;
+          color: rgba(255, 255, 255, 0.4);
+        }
       }
     }
   }

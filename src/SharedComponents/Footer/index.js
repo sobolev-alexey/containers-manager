@@ -4,7 +4,8 @@ import '../../assets/scss/footer.scss';
 
 class Footer extends Component {
 
-  onAnchorClick(anchor) {
+  onAnchorClick(event, anchor) {
+    event.preventDefault();
     const target = document.querySelector(`#${anchor}`);
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
@@ -18,10 +19,11 @@ class Footer extends Component {
                   {
                     this.props.anchors.map(({ anchor, text }) =>
                       <a
+                        href=""
                         key={anchor}
                         className="anchor"
                         tabIndex="1"
-                        onClick={() => this.onAnchorClick(anchor)}
+                        onClick={e => this.onAnchorClick(e, anchor)}
                       >{text}</a>
                     )
                   }

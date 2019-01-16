@@ -1,4 +1,59 @@
 @import 'components';
+@import './mixins';
+
+.login-page {
+  .roles-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 50px;
+    width: auto;
+    min-height: 500px;
+
+    .role-wrapper {
+      background: #f6f6f6;
+      margin: 5px;
+      max-width: 600px;
+      width: auto;
+
+      display: flex;
+      flex-direction: row;
+    }
+
+    .role-icon {
+      width: 92px;
+      height: 87px;
+      border: 1px solid #dadada;
+      box-sizing: border-box;
+      margin: 20px;
+      padding: 15px;
+      border-radius: 46px;
+    }
+
+    .role-name {
+      @include font-size(28px);
+      @include media-breakpoint-down(xs) {
+        @include font-size(18px);
+      }
+
+      color: $secondary;
+      font-family: $font-family-sans-serif;
+      font-weight: 300;
+      line-height: 2;
+      margin-top: 10px;
+    }
+
+    .role-cta {
+      margin: 20px 0;
+
+      .button {
+        outline: none;
+      }
+    }
+  }
+}
+
 
 .wrapper {
   display: flex;
