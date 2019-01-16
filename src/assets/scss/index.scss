@@ -1,14 +1,21 @@
 @import 'globals';
+@import './variables';
 
 @include react-md-everything;
+
+html {
+  background: none !important;
+  font-size: unset !important;
+  min-width: 100%;
+}
 
 body {
   margin: 0;
   padding: 0;
 }
 
-h1, h2, h3, h4, h5, h6, div, span, p, label, input, select, button {
-  font-family: "Nunito Sans";
+h1, h2, h3, h4, h5, h6, div, span, p, label, input, select, section, footer, header, nav, ul, li, button {
+  font-family: $font-family-sans-serif;
 }
 
 .hidden {

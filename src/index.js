@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import WebFontLoader from 'webfontloader';
-import './assets/scss/index.scss';
 import Router from './Router';
 import * as serviceWorker from './serviceWorker';
 import { initializeFirebaseApp } from './utils/firebase';

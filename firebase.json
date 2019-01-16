@@ -45,6 +45,11 @@
     ],
     "redirects": [
       {
+        "source": "/tour",
+        "destination": "/#/tour",
+        "type": 301
+      },
+      {
         "source": "/login",
         "destination": "/#/login",
         "type": 301

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
-import logoWhiteHorizontal from '../assets/images/iota-horizontal-white.svg';
+import Header from '../SharedComponents/MiniHeader';
+import Navigation from '../SharedComponents/Navigation';
+import Footer from '../SharedComponents/Footer';
 import useCasesPlaceholder from '../assets/images/intro/use-cases-placeholder.png';
 import '../assets/scss/intro.scss';
 
@@ -11,56 +13,34 @@ class IntroPage extends Component {
       <React.Fragment>
         <div className="heading-image d-flex justify-content-center align-items-center">
           <div className="overlay d-flex flex-column">
-            <div className="head-2">International shipping is broken</div>
+            <div className="head-1">International shipping</div>
+            <div className="head-2">is slow</div>
             <div className="sep">&nbsp;</div>
             <div className="sub-1">
-              Today's trade is still based on paper documents and antiquated processes.
+              Today’s trade is still based on paper documents and antiquated processes.<br />IOTA is set to radically transform international trade and supply chains,<br />improving visibility, control and reducing overheads.
             </div>
-            <div className="sep">&nbsp;</div>
-            <div className="sub-1">
-              IOTA is set to radically transform international trade and supply chains, improving
-              visibility, control and reducing overheads.
-            </div>
-            <div className="sub-2">
-              <Link to="/login" className="button">
-                Learn how
-              </Link>
-            </div>
+            <Link to="/login" className="button">
+              Try the demo
+            </Link>
           </div>
         </div>
-        <header>
-          <Row>
-            <Col xs={12} className="d-flex justify-content-between align-items-start">
-              <Link to="/">
-                <img className="logo" src={logoWhiteHorizontal} alt="IOTA" />
-              </Link>
-              <nav className="d-flex justify-content-end">
-                <ul>
-                  <li>
-                    <Link to="/login">
-                      Try the demo
-                    </Link>
-                  </li>
-                </ul>
-              </nav>
-            </Col>
-          </Row>
-        </header>
+        <Header className="background-transparent">
+          <Navigation />
+        </Header>
         <div className="content">
-          <div className="alternate extra-padding" id="usecases">
+          <div className="extra-padding" id="problem">
             <Row>
               <Col xs={12}>
-                <h2 className="bold d-flex justify-content-responsive">
-                  Use cases for the technology
+                <h2 className="d-flex justify-content-responsive">
+                  The global problem
                 </h2>
               </Col>
               <Col xs={12} sm={6} className="d-flex flex-column justify-content-center">
                 <h1 className="text-responsive-align">
-                  Secure, private exchange of sensitive product information and specifications
+                  Slow and little trust in information shared
                 </h1>
                 <p className="text-responsive-align">
-                  Using IOTA Masked Authenticated Messaging (MAM), all data is securely encrypted,
-                  preventing unauthorized parties from accessing your important data.
+                  Global trade and supply chains are highly complex and involve many actors – both public and private.<br /><br />Information is pushed from actors to actor, re-keyed into new systems with loss of data integrity and authenticity. Emails, phone calls and uncertainty are the daily details of moving goods.
                 </p>
               </Col>
               <Col xs={12} sm={6} className="d-flex flex-column justify-content-center">
@@ -83,12 +63,10 @@ class IntroPage extends Component {
               </Col>
               <Col xs={12} sm={6} className="d-flex flex-column justify-content-center">
                 <h1 className="text-responsive-align-alt">
-                  Compatibility across product groups and processes
+                  Leads to high costs and in-efficiencies
                 </h1>
                 <p className="text-responsive-align-alt">
-                  eCl@ss catalogue descriptions reduce semantic errors and provide clear data
-                  structure in a M2M environment. Machines can identify and understand themselves or
-                  a counterpart’s capabilities.
+                  As a result, shipping suffers from daily problems such as containers and trucks standing idle, cash flow tied up in goods waiting in ports, delays and a costly lack of coordination.<br /><br />Frequently documents go missing with limited indication of location, visibility of inventory or cargo status.<br /><br />The existing paper process used as a basis for the shipping economy only serves to slow down international trade.
                 </p>
               </Col>
               <Col
@@ -102,70 +80,40 @@ class IntroPage extends Component {
                   alt="Use Cases 2"
                 />
               </Col>
-              <Col xs={12} sm={6} className="d-flex flex-column justify-content-center">
-                <h1 className="text-responsive-align">
-                  Translation support for a borderless digital economy
-                </h1>
-                <p className="text-responsive-align">
-                  eCl@ss enables seamless support for over 16 languages providing reliable data
-                  exchange without ambiguity or translation errors.
-                </p>
-              </Col>
-              <Col xs={12} sm={6} className="d-flex flex-column justify-content-center">
-                <img
-                  className="img-fluid use-cases-3"
-                  src={useCasesPlaceholder}
-                  alt="Use Cases 3"
-                />
-              </Col>
-              <Col
-                xs={12}
-                sm={6}
-                className="d-flex flex-column justify-content-center hidden-xs-down"
-              >
-                <img
-                  className="img-fluid use-cases-4"
-                  src={useCasesPlaceholder}
-                  alt="Use Cases 4"
-                />
-              </Col>
-              <Col xs={12} sm={6} className="d-flex flex-column justify-content-center">
-                <h1 className="text-responsive-align-alt">
-                  Data consistency for flexible and automated supply chains
-                </h1>
-                <p className="text-responsive-align-alt">
-                  The IOTA Tangle is a distributed ledger technology (DLT), recording data exchange
-                  in a secure and immutable log. A tamper-proof, single source of truth.
-                </p>
-              </Col>
-              <Col
-                xs={12}
-                sm={6}
-                className="d-flex flex-column justify-content-center hidden-sm-up"
-              >
-                <img
-                  className="img-fluid use-cases-4"
-                  src={useCasesPlaceholder}
-                  alt="Use Cases 4"
-                />
+            </Row>
+          </div>
+          <div className="alternate extra-padding" id="introduction">
+            <Row>
+              <Col xs={12}>
+                <h2 className="d-flex justify-content-responsive">
+                  Introducing IOTA
+                </h2>
+                <div className="video-container">
+                  <iframe
+                    className="video"
+                    src="https://www.youtube.com/embed/Gr-LstcDcAw"
+                    frameBorder="0"
+                    allow="autoplay; encrypted-media"
+                    allowFullScreen=""
+                    title="Introducing IOTA"
+                  ></iframe>
+                </div>
               </Col>
             </Row>
           </div>
-          <hr className="section-divider" />
-          <div className="inter" id="tryit">
-            <Row className="row-header">
+          <div className="extra-padding" id="solution">
+            <Row>
               <Col xs={12}>
-                <h2 className="bold d-flex justify-content-responsive">
-                  Try it with a live transaction
+                <h2 className="d-flex justify-content-responsive">
+                  The IOTA solution
                 </h2>
               </Col>
               <Col xs={12} sm={6} className="d-flex flex-column justify-content-center">
                 <h1 className="text-responsive-align">
-                  Secure, private exchange of sensitive product information and specifications
+                  The Ledger provides Single-Version-of-Truth
                 </h1>
                 <p className="text-responsive-align">
-                  Using IOTA Masked Authenticated Messaging (MAM), all data is securely encrypted,
-                  preventing unauthorized parties from accessing your important data.
+                  Tomorrow’s supply chain is supported by a distributed ledger where original documents and events are reported in real time and made available to authorized actors. It will provide transparency to the process and allow everyone to piggy-back on the original data.<br /><br />New blockchain solutions have emerged to tackle supply chains challenges. However, these technologies were not created to handle the scale of international trade and transaction fees can quickly become costly.
                 </p>
               </Col>
               <Col xs={12} sm={6} className="d-flex flex-column justify-content-center">
@@ -188,102 +136,54 @@ class IntroPage extends Component {
               </Col>
               <Col xs={12} sm={6} className="d-flex flex-column justify-content-center">
                 <h1 className="text-responsive-align-alt">
-                  Compatibility across product groups and processes
+                  IOTA provides security, integrity and scale-ability
                 </h1>
                 <p className="text-responsive-align-alt">
-                  eCl@ss catalogue descriptions reduce semantic errors and provide clear data
-                  structure in a M2M environment. Machines can identify and understand themselves or
-                  a counterpart’s capabilities.
+                  IOTA Tangle is perfectly suited for this role as it scales with demand and feeless transactions were formed as a fundamental basis of the technology.<br /><br />Additionally, Zero-value transactions can be used to secure integrity of exchanged data privately and immutably using the unique IOTA Masked Authenticated Message (MAM) protocol.<br /><br />To understand how this will revolutionise and reshape trade and supply chain systems, follow the journey of a container in our interactive demo.
                 </p>
+              </Col>
+              <Col
+                xs={12}
+                sm={6}
+                className="d-flex flex-column justify-content-center hidden-sm-up"
+              >
+                <img
+                  className="img-fluid use-cases-2"
+                  src={useCasesPlaceholder}
+                  alt="Use Cases 2"
+                />
               </Col>
             </Row>
           </div>
-          <hr className="section-divider" />
-          <div className="alternate extra-padding">
+          <div className="alternate extra-padding" id="tryit">
             <Row>
-              <Col xs={12}>
-                <h2 className="bold d-flex justify-content-responsive">Try it with a live transaction</h2>
-              </Col>
-              <Col xs={12} className="d-flex justify-content-center">
+              <Col sm={{ size: 8, offset: 2 }} xs={12}>
+                <h2 className="d-flex justify-content-responsive">
+                  Follow the journey of a shipping container
+                </h2>
                 <p className="d-flex justify-content-responsive">
-                    In the example below, you can communicate with the eCl@ss connected machines using the IOTA Tangle network.
-                    Once connected, each machine displays relevant specifications.
-                    Purchase additional private data using the supplied wallet funds and view your transaction timestamped live on the IOTA Tangle network.
+                  Using live transactions on the IOTA Tangle, learn how different actors can have different access privileges<br />(read/write) to shipping documents along the supply chain.
+                </p>
+                <p className="d-flex justify-content-responsive">
+                  All events and data are stored securely with integrity from the IOTA Tangle that completely secures their authenticity, entirely without fees.
                 </p>
               </Col>
               <Col xs={12} className="d-flex justify-content-center">
-                <Link to="/login" className="button demo">
-                  Start the demo
+                <Link to="/login" className="button">
+                  Try the demo
                 </Link>
               </Col>
             </Row>
           </div>
         </div>
-        <footer>
-          <Row>
-            <Col>
-              <div className="footer-heading">The Foundation</div>
-              <a href="https://www.iota.org/the-foundation/our-vision">Our Vision</a>
-              <br />
-              <a href="https://www.iota.org/the-foundation/the-iota-foundation">
-                The IOTA Foundation
-              </a>
-              <br />
-              <a href="https://www.iota.org/the-foundation/team">Meet the Team</a>
-              <br />
-              <a href="https://www.iota.org/the-foundation/work-at-the-iota-foundation">
-                Work at the IOTA Foundation
-              </a>
-            </Col>
-            <Col>
-              <div className="footer-heading">Verticals</div>
-              <a href="https://www.iota.org/verticals/mobility-automotive">
-                Mobility &amp; Automotive
-              </a>
-              <br />
-              <a href="https://www.iota.org/verticals/global-trade-supply-chains">
-                Global Trade &amp; Supply Chains
-              </a>
-              <br />
-              <a href="https://www.iota.org/verticals/ehealth">eHealth</a>
-              <br />
-              <a href="https://www.iota.org/verticals/smart-energy">Smart Energy</a>
-            </Col>
-            <Col>
-              <div className="footer-heading">Research</div>
-              <a href="https://www.iota.org/research/meet-the-tangle">Meet the Tangle</a>
-              <br />
-              <a href="https://www.iota.org/research/academic-papers">Academic Papers</a>
-              <br />
-              <a href="https://www.iota.org/research/roadmap">Research &amp; Development Roadmap</a>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12} sm={4} className="footer-text-info">
-              IOTA Foundation
-              <br />
-              c/o Nextland
-              <br />
-              Strassburgerstraße 55
-              <br />
-              10405 Berlin
-              <br />
-              Germany
-            </Col>
-            <Col xs={12} sm={8} className="footer-text-info">
-              &copy; 2018 IOTA Foundation - Privacy Policy
-              <br />
-              Email: contact@iota.org
-              <br />
-              Board of Directors: Dominik Schiener, David Sønstebø, Ralf Rottmann, Serguei Popov
-              &amp; Sergey Ivancheglo
-              <br />
-              ID/Company No.: 3416/1234/2
-              <br />
-              EU public ID number in the EU Transparency Register: 500027331119-04
-            </Col>
-          </Row>
-        </footer>
+        <Footer
+          anchors={[
+            { anchor: 'problem', text: 'The global problem'},
+            { anchor: 'introduction', text: 'Introducing IOTA'},
+            { anchor: 'solution', text: 'The IOTA solution'},
+            { anchor: 'tryit', text: 'Try the demo'},
+          ]}
+        />
       </React.Fragment>
     );
   }

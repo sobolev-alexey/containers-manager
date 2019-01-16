@@ -1,3 +1,6 @@
+@import './mixins';
+@import './variables';
+
 h1 {
   @include font-size(32px);
   @include media-breakpoint-down(xs) {
@@ -22,6 +25,18 @@ h2 {
   line-height: 2.5;
 }
 
+h4 {
+  @include font-size(22px);
+  @include media-breakpoint-down(xs) {
+    @include font-size(14px);
+  }
+
+  color: $white;
+  font-family: $font-family-sans-serif;
+  font-weight: bold;
+  line-height: 1.75;
+}
+
 h5 {
   @include font-size(20px);
   @include media-breakpoint-down(xs) {
@@ -43,7 +58,7 @@ p {
 
   color: var(--body-copy);
   font-family: $font-family-sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 2;
 }
 
@@ -73,6 +88,7 @@ p {
   }
 
   justify-content: center !important;
+  text-align: center;
 }
 
 .bold {

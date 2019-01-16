@@ -7,6 +7,7 @@ import DetailsPage from './DetailsPage';
 import LoginPage from './LoginPage';
 import CreateNewPage from './CreateNewPage';
 import IntroPage from './IntroPage';
+import TourCompletePage from './TourCompletePage';
 
 const store = configureStore();
 
@@ -15,6 +16,7 @@ const Router = () => (
     <HashRouter>
       <div>
         <Route path="/" component={IntroPage} exact />
+        <Route path="/tour" component={TourCompletePage} />
         <Route path="/list" component={ListPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/new" component={CreateNewPage} />

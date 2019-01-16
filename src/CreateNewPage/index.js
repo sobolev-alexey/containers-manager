@@ -13,6 +13,7 @@ import { addItem } from '../store/items/actions';
 import { storeItem } from '../store/item/actions';
 import { getFirebaseSnapshot } from '../utils/firebase';
 import { createItemChannel } from '../utils/mam';
+import '../assets/scss/index.scss';
 import '../assets/scss/createItemPage.scss';
 import arrow from '../assets/images/arrow_left.svg';
 import { BrowserQRCodeReader } from '@zxing/library';

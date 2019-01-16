@@ -1,3 +1,5 @@
+@import '~bootstrap/scss/bootstrap';
+@import 'components';
 @import './mixins';
 @import './variables';
 @import './text';
@@ -5,8 +7,6 @@
 @import url('https://use.fontawesome.com/releases/v5.0.10/css/all.css');
 
 @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700');
-
-@import '~bootstrap/scss/bootstrap';
 
 :root {
   --black: #1c1e21;
@@ -119,7 +119,7 @@ body {
         @include font-size(51px);
       }
 
-      color: var(--white);
+      color: $white;
       font-size: 5vw;
       font-weight: 300;
       white-space: nowrap;
@@ -137,7 +137,7 @@ body {
         @include font-size(51px);
       }
 
-      color: var(--white);
+      color: $white;
       font-size: 5vw;
       font-weight: 600;
       white-space: nowrap;
@@ -148,138 +148,84 @@ body {
         min-width: 50px;
       }
 
+
       display: inline-block;
       width: 12vw;
+      margin: 2vw 0vw 0vw 0vw;
+      border-top: 2px solid var(--tealish);
     }
 
-    .sub-1, .sub-2 {
+    .sub-1 {
       @include media-breakpoint-down(xs) {
         @include font-size(16px);
 
         text-align: left;
       }
 
-
       @media (min-width: $header-width-constraint) {
         @include font-size(19.5px);
       }
 
-      color: var(--white);
+      color: $white;
       font-size: 2vw;
-      font-weight: 200;
+      font-weight: 300;
       text-align: center;
     }
 
-    .sub-2 {
+    .button {
       margin-top: 50px;
     }
-
-    .button {
-      color: white;
-      border-radius: 7px;
-      padding: 10px 20px;
-      background: linear-gradient(90deg, rgb(34, 177, 171), rgb(34, 177, 171));
-      outline: none;
-      text-decoration: none;
-      user-select: none;
-      cursor: pointer;
-    }
   }
 }
 
-header {
-  position: absolute;
-  top: 0;
-  width: 100%;
-
-  img {
-    font-size: 10px;
-  }
-
-  .logo {
-    @include media-breakpoint-down(xs) {
-      height: 30px;
-      margin: 10px 10px 10px 5px;
-    }
-
-
-    height: 45px;
-    margin: 25px;
-  }
-}
-
-nav {
-  line-height: 1;
-
-  ul {
-    @include media-breakpoint-down(xs) {
-      padding: 10px 15px 10px 10px;
-    }
-
-
-    margin: 0;
-    padding: 13px 30px 13px 40px;
-    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
-    text-align: right;
-
-    li {
-      @include media-breakpoint-down(xs) {
-        margin: 0px 0px 0px 10px;
-      }
-
-
-      display: inline-block;
-      margin: 0px 0px 0px 30px;
-
-      #{$a-tags} {
-        @include font-size(15px);
-
-        height: 17px;
-        color: var(--white);
-        font-family: $font-family-sans-serif;
-        font-weight: 300;
-        text-decoration: none;
-      }
-    }
-  }
+.button {
+  @include button();
 }
 
 .content {
   flex: 1;
+
+  a:not(.button) {
+    color: $primary;
+    font-weight: 600;
+    text-decoration: none;
+    @include font-size(16px);
+    @include media-breakpoint-down(xs) {
+      text-decoration: underline;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 
   .row {
     @include media-breakpoint-down(xs) {
       padding: 0px 10px 20px 10px;
     }
 
-
     max-width: 1280px;
     margin: auto;
     padding: 0px 20px 40px 20px;
+
+    .col,
+    .col-6,
+    .col-12 {
+      @include media-breakpoint-down(xs) {
+        padding: 15px 15px 0px 15px;
+      }
+
+
+      padding: 30px 30px 0px 30px;
+    }
+  }
+
+  &.extra-padding {
+    padding-bottom: 40px;
   }
 
   .alternate {
     background-color: #f6f6f6;
-
-    &.extra-padding {
-      padding-bottom: 40px;
-    }
-
-    .row {
-      max-width: 1280px;
-      margin: auto;
-
-      .col,
-      .col-6,
-      .col-12 {
-        @include media-breakpoint-down(xs) {
-          padding: 15px 15px 0px 15px;
-        }
-
-
-        padding: 30px 30px 0px 30px;
-      }
-    }
   }
 
   .use-cases-1 {
@@ -299,26 +245,6 @@ nav {
 
 
     background-image: url('../images/intro/use-cases-2-retina.jpg');
-    background-size: cover;
-  }
-
-  .use-cases-3 {
-    @include media-breakpoint-down(xs) {
-      background-image: url('../images/intro/use-cases-3.jpg');
-    }
-
-
-    background-image: url('../images/intro/use-cases-3-retina.jpg');
-    background-size: cover;
-  }
-
-  .use-cases-4 {
-    @include media-breakpoint-down(xs) {
-      background-image: url('../images/intro/use-cases-4.jpg');
-    }
-
-
-    background-image: url('../images/intro/use-cases-4-retina.jpg');
     background-size: cover;
   }
 
@@ -347,101 +273,26 @@ nav {
     }
   }
 
-  .section-divider {
-    margin: 0;
+  .video-container {
+    padding-bottom: 30px;
+    display: flex;
+    justify-content: center;
   }
 
-  .button.demo {
-    color: white;
-    border-radius: 7px;
-    padding: 10px 20px;
-    background: linear-gradient(90deg, rgb(34, 177, 171), rgb(34, 177, 171));
-    outline: none;
-    text-decoration: none;
-    user-select: none;
-    cursor: pointer;
-  }
+  .video {
+    width: 50%;
+    height: 330px;
 
-}
-
-$footer-gradient-start: #3e3e3e;
-$footer-gradient-end: #2e2e2e;
-
-footer {
-  @include media-breakpoint-down(xs) {
-    padding: 25px 45px 25px 45px;
-  }
-
-
-  padding: 50px 90px 50px 90px;
-  background-image: linear-gradient(to top, $footer-gradient-start, $footer-gradient-end);
-
-  .footer-heading {
-    @include font-size(24px);
-    @include media-breakpoint-down(xs) {
-      @include font-size(20px);
+    @include media-breakpoint-down(lg) {
+      width: 75%;
     }
 
-
-    color: var(--tealish);
-    font-weight: bold;
-    line-height: 1.75;
-  }
-
-  .row {
-    @include media-breakpoint-down(xs) {
-      padding: 15px 0px 15px 0px;
+    @include media-breakpoint-down(md) {
+      width: 85%;
     }
 
-
-    padding: 30px 0px 30px 0px;
-
-    .col {
-      @include media-breakpoint-down(xs) {
-        padding: 0px 5px 10px 5px;
-      }
-
-
-      padding: 0px 10px 20px 10px;
+    @include media-breakpoint-down(sm) {
+      width: 100%;
     }
   }
-
-  #{$a-tags} {
-    @include font-size(16px);
-    @include media-breakpoint-down(xs) {
-      @include font-size(12px);
-    }
-
-
-    color: #c4c4c4;
-    font-weight: 300;
-    line-height: 2.25;
-    white-space: nowrap;
-  }
-
-  .footer-text-info {
-    @include font-size(15px);
-    @include media-breakpoint-down(xs) {
-      @include font-size(10px);
-    }
-
-
-    color: var(--brown-grey);
-    font-weight: 300;
-    line-height: 1.76;
-  }
-}
-
-.link-large {
-  @include font-size(22px);
-  @include media-breakpoint-down(xs) {
-    @include font-size(18px);
-  }
-
-  margin-left: 15px;
-  white-space: nowrap;
-}
-
-.no-pad {
-  padding: 0px !important;
 }

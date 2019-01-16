@@ -16,6 +16,7 @@ import Header from '../SharedComponents/Header';
 import Tabs from './Tabs';
 import Details from './Details';
 import { fetchItem, appendItemChannel } from '../utils/mam';
+import '../assets/scss/index.scss';
 import '../assets/scss/detailsPage.scss';
 
 const StatusButtons = ({ statuses, onClick, showLoader }) => {
