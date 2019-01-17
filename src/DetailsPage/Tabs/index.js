@@ -57,7 +57,7 @@ class ItemTabs extends PureComponent {
           <Tab label="Tangle">
             <Explorer />
           </Tab>
-          {documentStorage && item.documents && item.documents.length > 0 ? (
+          {documentStorage ? (
             <Tab label="Documents">
               <Documents
                 item={item}

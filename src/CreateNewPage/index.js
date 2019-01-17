@@ -109,7 +109,7 @@ class CreateItemPage extends Component {
         destination: this.destination.value,
         load: this.cargo.value,
         type: this.type.value,
-        owner: id,
+        shipper: id,
         status: previousEvent[0],
       };
       // Format the item ID to remove dashes and parens

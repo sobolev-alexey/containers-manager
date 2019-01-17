@@ -27,45 +27,6 @@ $border-radius-sm: 0px;
 
 $header-width-constraint: 1025px;
 
-html {
-  height: 100%;
-}
-
-body {
-  min-width: 320px;
-  height: 100%;
-  overflow-x: hidden;
-
-  > div {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    min-height: 100%;
-  }
-}
-
-.btn-link {
-  text-decoration: underline;
-}
-
-.modal-body {
-  .row {
-    .col {
-      @include font-size(16px);
-      @include media-breakpoint-down(xs) {
-        @include font-size(12px);
-      }
-    }
-  }
-}
-
-.modal-dialog {
-  @include media-breakpoint-down(xs) {
-    width: 90%;
-    margin: 3%;
-  }
-}
-
 .hidden-xs-down {
   @include media-breakpoint-down(xs) {
     display: none !important;
