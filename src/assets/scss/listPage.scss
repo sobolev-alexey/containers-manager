@@ -1,5 +1,9 @@
 @import 'components';
 
+.list-page {
+  margin-top: 95px;
+}
+
 .cta-wrapper {
   @include cta-wrapper();
 }

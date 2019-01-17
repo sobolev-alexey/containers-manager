@@ -19,7 +19,7 @@ class Footer extends Component {
                   {
                     this.props.anchors.map(({ anchor, text }) =>
                       <a
-                        href=""
+                        href="/"
                         key={anchor}
                         className="anchor"
                         tabIndex="1"

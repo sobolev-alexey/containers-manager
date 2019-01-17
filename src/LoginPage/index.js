@@ -3,7 +3,7 @@ import axios from 'axios';
 import { sha256 } from 'js-sha256';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
-import { Col, Row } from 'reactstrap';
+import { Col } from 'reactstrap';
 import Header from '../SharedComponents/Header';
 import Footer from '../SharedComponents/MiniFooter';
 import Loader from '../SharedComponents/Loader';

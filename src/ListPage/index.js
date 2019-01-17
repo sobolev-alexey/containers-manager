@@ -63,7 +63,7 @@ class ListPage extends Component {
     if (!project || !project.listPage) return <div />;
 
     return (
-      <div className="app">
+      <div className="list-page">
         <Header ctaEnabled>
           <Col xs={4} className="heading">
             <span className="heading-text">
@@ -71,7 +71,7 @@ class ListPage extends Component {
             </span>
           </Col>
         </Header>
-        {user.canCreateStream ? (          
+        {user.canCreateStream ? (
           <div className="cta-wrapper">
             <Button className="button" onClick={() => history.push('/new')}>
               Create new {project.trackingUnit}
