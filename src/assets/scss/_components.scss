@@ -1,9 +1,9 @@
 @import './variables';
 
-@mixin button {
+@mixin button($background-color:linear-gradient(271.79deg, #53ACA8 4.33%, #3C807D 99.65%)) {
   width: 200px;
   height: 55px;
-  background: linear-gradient(271.79deg, #53ACA8 4.33%, #3C807D 99.65%);
+  background: $background-color;
   border-radius: 42px;
   border: none;
   font-weight: 600;

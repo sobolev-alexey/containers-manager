@@ -75,17 +75,15 @@ header {
         align-self: center;
 
         button.primary {
-          @include button();
+          @include button($primary);
           width: 160px;
-          background: $primary;
           border: 1px solid $primary;
           color: $white;
         }
 
         button.secondary {
-          @include button();
+          @include button(rgba(196, 196, 196, 0.4));
           width: 160px;
-          background: rgba(196, 196, 196, 0.4);
           border: 1px solid $primary;
           color: rgba(255, 255, 255, 0.4);
         }

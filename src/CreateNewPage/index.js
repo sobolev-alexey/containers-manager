@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import isEmpty from 'lodash/isEmpty';
 import upperFirst from 'lodash/upperFirst';
+import { Col } from 'reactstrap';
 import { FocusContainer, TextField, SelectField, Button, CardActions, FontIcon } from 'react-md';
 import { toast } from 'react-toastify';
 import Loader from '../SharedComponents/Loader';
@@ -151,16 +152,13 @@ class CreateItemPage extends Component {
       errorText: 'This field is required.',
     };
     return (
-      <div>
-        <Header>
-          <div>
-            <div>
-              <Link to="/list">
-                <img src={arrow} alt="back" />
-              </Link>
-              <span>Create new {trackingUnit}</span>
-            </div>
-          </div>
+      <div className="create-page">
+        <Header ctaEnabled>
+          <Col xs={4} className="heading">
+            <span className="heading-text">
+              Create new {trackingUnit}
+            </span>
+          </Col>
         </Header>
         <div className="create-item-wrapper">
           <FocusContainer
@@ -241,7 +239,10 @@ class CreateItemPage extends Component {
           <div>
             <Loader showLoader={showLoader} />
             <CardActions className="md-cell md-cell--12">
-              <Button className={`iota-theme-button ${showLoader ? 'hidden' : ''}`} raised onClick={this.createItem}>
+              <Link to="/list" className={`button secondary ${showLoader ? 'hidden' : ''}`}>
+                Cancel
+              </Link>
+              <Button className={`button ${showLoader ? 'hidden' : ''}`} onClick={this.createItem}>
                 Create
               </Button>
             </CardActions>
