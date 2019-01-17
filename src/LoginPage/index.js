@@ -4,7 +4,7 @@ import { sha256 } from 'js-sha256';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Col, Row } from 'reactstrap';
-import MiniHeader from '../SharedComponents/MiniHeader';
+import Header from '../SharedComponents/Header';
 import Footer from '../SharedComponents/MiniFooter';
 import Loader from '../SharedComponents/Loader';
 import { storeCredentials, storeEvents } from '../store/user/actions';
@@ -43,35 +43,6 @@ const roles = [
   },
 ]
 
-const Header = () => (
-  <MiniHeader>
-    <Col xs={4} className="heading">
-      <span className="heading-text">
-        Log in to your user role
-      </span>
-    </Col>
-    <Col xs={4} className="logout">
-      <div className="header-cta-wrapper">
-        <Row>
-          <Col xs={5}>
-            <h4>
-              User Role
-            </h4>
-            <span>
-              Logged out
-            </span>
-          </Col>
-          <Col xs={7} className="button-wrapper">
-            <button className="button">
-              Reset demo
-            </button>
-          </Col>
-        </Row>
-      </div>
-    </Col>
-  </MiniHeader>
-);
-
 class LoginPage extends Component {
   state = {
     showLoader: false,
@@ -108,7 +79,13 @@ class LoginPage extends Component {
 
     return (
       <div className="login-page">
-        <Header />
+        <Header ctaEnabled>
+          <Col xs={4} className="heading">
+            <span className="heading-text">
+              Log in to your user role
+            </span>
+          </Col>
+        </Header>
         <div className="cta-wrapper">
           <a className="button" href="https://www.youtube.com/watch?v=Gr-LstcDcAw" target="_blank" rel="noopener noreferrer">
             Need help? Watch the video

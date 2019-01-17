@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
-import Header from '../SharedComponents/MiniHeader';
+import Header from '../SharedComponents/Header';
 import Navigation from '../SharedComponents/Navigation';
 import Footer from '../SharedComponents/Footer';
 import '../assets/scss/intro.scss';

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
+import { Col } from 'reactstrap';
 import { Button, DataTable, TableHeader, TableBody, TableRow, TableColumn } from 'react-md';
 import isEmpty from 'lodash/isEmpty';
 import { storeItems } from '../store/items/actions';
@@ -63,15 +64,16 @@ class ListPage extends Component {
 
     return (
       <div className="app">
-        <Header>
-          <p>
-            Welcome to {project.projectName},<br />
-            {user.name} ({user.role})
-          </p>
+        <Header ctaEnabled>
+          <Col xs={4} className="heading">
+            <span className="heading-text">
+              Welcome to container tracking
+            </span>
+          </Col>
         </Header>
-        {user.canCreateStream ? (
+        {user.canCreateStream ? (          
           <div className="cta-wrapper">
-            <Button className="listPage-button" raised onClick={() => history.push('/new')}>
+            <Button className="button" onClick={() => history.push('/new')}>
               Create new {project.trackingUnit}
             </Button>
           </div>

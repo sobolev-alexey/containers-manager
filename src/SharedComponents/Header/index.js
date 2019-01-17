@@ -1,10 +1,52 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { Col, Row } from 'reactstrap';
+import isEmpty from 'lodash/isEmpty';
+import upperFirst from 'lodash/upperFirst';
 import { logout } from '../../store/user/actions';
-import Logo from '../Logo';
+import { reset } from '../../store/project/actions';
+import logoWhiteHorizontal from '../../assets/images/iota-horizontal-white.svg';
 import '../../assets/scss/header.scss';
+
+const CallToAction = ({ logout, reset, user }) => (
+  <Col xs={4} className="cta">
+    <div className="header-cta-wrapper">
+      <Row>
+        <Col xs={5}>
+          <h4>
+            User Role
+          </h4>
+          {
+            !isEmpty(user) ? (
+              <span>
+                {upperFirst(user.role)}
+              </span>
+            ) : (
+              <span>
+                Logged out
+              </span>
+            )
+          }
+        </Col>
+        <Col xs={7} className="button-wrapper">
+          {
+            !isEmpty(user) ? (
+              <button className="button primary" onClick={logout}>
+                Log out
+              </button>
+            ) : (
+              <button className="button secondary" onClick={reset}>
+                Reset demo
+              </button>
+            )
+          }
+        </Col>
+      </Row>
+    </div>
+  </Col>
+);
 
 class Header extends Component {
   logout = () => {
@@ -12,28 +54,38 @@ class Header extends Component {
     this.props.history.push('/login');
   };
 
+  reset = () => {
+    this.props.reset();
+    this.props.history.push('/');
+  };
+
   render() {
+    const { children, className, ctaEnabled = false, user } = this.props;
     return (
-      <div className="header">
-        <span className="header__logo">
-          <Link to="/list">
-            <Logo />
-          </Link>
-        </span>
-        {this.props.children}
-        <span className="header__logout" role="button" onClick={this.logout}>
-          Logout
-        </span>
-      </div>
+      <header className={className}>
+        <Row>
+          <Col xs={12} className="d-flex justify-content-between align-items-start">
+            <Col xs={4}>
+              <Link to="/">
+                <img className="logo" src={logoWhiteHorizontal} alt="IOTA" />
+              </Link>
+            </Col>
+            { children }
+            { ctaEnabled ? <CallToAction logout={this.logout} reset={this.reset} user={user} /> : null }
+          </Col>
+        </Row>
+      </header>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  logout: () => dispatch(logout()),
+const mapStateToProps = state => ({
+  user: state.user,
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(withRouter(Header));
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch(logout()),
+  reset: () => dispatch(reset()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));
