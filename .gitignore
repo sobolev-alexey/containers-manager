@@ -12,6 +12,4 @@
 
 /src/config*.json
 
-/firebase_functions/appengine
-
 *.log

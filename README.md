@@ -1,44 +1,64 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## IOTA Items Tracking DEMO App
 
-## Available Scripts
+https://item-tracking.firebaseapp.com
 
-In the project directory, you can run:
+## Solution
 
-### `npm start`
+Centralize digital paperwork and item status management into one system, but store data in an immutable secure decentralized ledger.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Provide visibility at all times about item information, inventory, cargo status, owner, route, all digital documents and certificates, GPS location, refer temperature.
+All information is accessible on any device at any time.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Develop an access and rights management system to control who can have read and write access to which parts of the stored data.
 
-### `npm test`
+Ensure documents integrity and authenticity by calculating document checksum on the fly and compare with stored information.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### For item owners:
 
-### `npm run build`
+* simplifies paperwork, enables easy way to provide documents and certificates, even when item is already on the way to the destination
+* enables item position and status monitoring
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### For customs authorities:
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+* simplifies access to item inventory/load information and all related documents and certificates
+* provides access to owner information and simplifies direct contact if required
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### For port authorities and freight forwarders:
 
-### `npm run eject`
+* simplifies access to item route information
+* provides access to temperature sensor information with optional alerting functionality in case of temperature value rise or power outages
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### How it works
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The Demo software is based on an open-sourced IOTA library written in JavaScript.
+Documentation and usage guide are provided.
+https://github.com/iotaledger/mam.client.js
+It is running on a IOTA testnet.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+This library exposes functions for creating a new MAM channel, submitting a new event to the existing channel and retrieving data from the channel.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### Object identity
 
-## Learn More
+Items are represented by data sets where item ID is a key to retrieve the data.
+Once a new item is announced, an MAM stream is created in the background and initial item information is saved in the first event and becomes immutable.
+Users with specific access rights can append new events to the item MAM stream, such as status or location updates. New documents can be added, its metadata is also appended to the stream as a new event.
+Users with read-only access can retrieve data saved in the stream. Our back-office access management software can determine whether a user is allowed to retrieve all events or just a defined subset of events.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+All events saved in the item MAM stream are immutable and encrypted with a strong private key.
+Despite the fact that transactions are stored in a public Tangle, all data is encrypted, and only users who has the stream root address and encryption key can retrieve the saved events and decrypt payload.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### Document handling
+
+We implemented a document integrity validation functionality. Every time a document is saved in the document storage, its metadata like size, last changed date and calculated hash checksum are stored in IOTA distributed ledger. This data is immutable.
+
+While document itself can be modified or overwritten in Google Drive, we retrieve it and calculate its hash checksum in real time. In case there is a difference with the stored values, we'll alarm users and indicate that documents’ content is no longer authentic.
+
+#### Access privileges
+
+Since there is no user management functionality built-in into IOTA protocol, we developed an application (written in React) and a supporting back-office to manage user roles and access rights (Firebase). Different users (organisations) are provided with the relevant "private keys" to unlock different parts of the stored documents pending their authorization level.
+
+The document storage is connected to the same system and currently based on Google Drive.
+
+#### Sensor data
+
+Sensor data from temperature sensors and GPS tracker can be feeded into the same channel and use IOTA library in combination with Firebase Cloud functions to append events to existing item streams.
