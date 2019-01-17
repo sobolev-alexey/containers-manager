@@ -7,6 +7,7 @@ import isEmpty from 'lodash/isEmpty';
 import { storeItems } from '../store/items/actions';
 import Loader from '../SharedComponents/Loader';
 import Header from '../SharedComponents/Header';
+import Footer from '../SharedComponents/MiniFooter';
 import Notification from '../SharedComponents/Notification';
 import Autosuggest from './Autosuggest';
 import '../assets/scss/index.scss';
@@ -120,6 +121,7 @@ class ListPage extends Component {
           </DataTable>
         </div>
         <Notification />
+        <Footer />
       </div>
     );
   }

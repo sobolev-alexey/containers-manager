@@ -15,6 +15,7 @@ import { storeItem, resetStoredItem } from '../store/item/actions';
 import Notification from '../SharedComponents/Notification';
 import Loader from '../SharedComponents/Loader';
 import Header from '../SharedComponents/Header';
+import Footer from '../SharedComponents/MiniFooter';
 import Tabs from './Tabs';
 import Details from './Details';
 import { fetchItem, appendItemChannel } from '../utils/mam';
@@ -226,6 +227,7 @@ class DetailsPage extends Component {
           </div>
         </div>
         <Notification />
+        <Footer />
       </div>
     );
   }

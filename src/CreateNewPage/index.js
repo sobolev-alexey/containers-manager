@@ -9,6 +9,7 @@ import { FocusContainer, TextField, SelectField, Button, CardActions, FontIcon }
 import { toast } from 'react-toastify';
 import Loader from '../SharedComponents/Loader';
 import Header from '../SharedComponents/Header';
+import Footer from '../SharedComponents/MiniFooter';
 import Notification from '../SharedComponents/Notification';
 import { addItem } from '../store/items/actions';
 import { storeItem } from '../store/item/actions';
@@ -247,6 +248,7 @@ class CreateItemPage extends Component {
             </CardActions>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }
