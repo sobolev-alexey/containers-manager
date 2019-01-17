@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Button } from 'react-md';
+import { Link } from 'react-router-dom';
+import { Col } from 'reactstrap';
 import isEmpty from 'lodash/isEmpty';
 import upperFirst from 'lodash/upperFirst';
 import find from 'lodash/find';
@@ -171,7 +173,8 @@ class DetailsPage extends Component {
     } = this.state;
     const {
       user,
-      project: { trackingUnit, documentStorage, locationTracking, temperatureChart, detailsPage },
+      match: { params: { itemId } },
+      project: { documentStorage, locationTracking, temperatureChart, detailsPage },
     } = this.props;
 
     if (!item) return <Loader showLoader={showLoader} />;
@@ -179,12 +182,18 @@ class DetailsPage extends Component {
     const nextEvents = user.nextEvents[item.status.toLowerCase().replace(/[- ]/g, '')];
 
     return (
-      <div>
-        <Header>
-          <p>
-            Welcome to {trackingUnit} tracking,<br />
-            {user.name} ({user.role})
-          </p>
+      <div className="details-page">
+        <Header ctaEnabled>
+          <Col xs={4} className="heading">
+            <span className="heading-text">
+              #{itemId},&nbsp;
+              {
+                typeof detailsPage.title === 'string'
+                  ? item[detailsPage.title]
+                  : detailsPage.title.map(field => item[field]).join(' → ')
+              }
+            </span>
+          </Col>
         </Header>
         <div className={`loader-wrapper ${showLoader ? '' : 'hidden'}`}>
           <Loader showLoader={showLoader} />
@@ -192,11 +201,9 @@ class DetailsPage extends Component {
         <div className="details-wrapper">
           <div className="md-block-centered">
             <div className="route-cta-wrapper">
-              <h1 className="ca-title">
-                {typeof detailsPage.title === 'string'
-                  ? item[detailsPage.title]
-                  : detailsPage.title.map(field => item[field]).join(' → ')}
-              </h1>
+              <Link to="/list" className={`button secondary ${showLoader ? 'hidden' : ''}`}>
+                Back
+              </Link>
               {user.canAppendToStream && !statusUpdated && nextEvents ? (
                 <StatusButtons statuses={nextEvents} onClick={this.appendToItem} showLoader={showLoader} />
               ) : null}
