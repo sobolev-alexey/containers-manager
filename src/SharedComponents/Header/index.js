@@ -5,10 +5,21 @@ import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import isEmpty from 'lodash/isEmpty';
 import upperFirst from 'lodash/upperFirst';
+import Tooltip from '../Tooltip';
 import { logout } from '../../store/user/actions';
 import { reset } from '../../store/project/actions';
 import logoWhiteHorizontal from '../../assets/images/iota-horizontal-white.svg';
 import '../../assets/scss/header.scss';
+
+const tooltip = [{
+  content: (
+    <div className="tooltip-content">
+      You can turn tooltips back on using the reset demo option when you are logged out.
+    </div>
+  ),
+  target: '.reset-cta',
+  placement: 'left'
+}];
 
 const CallToAction = ({ logout, reset, user }) => (
   <Col xs={4} className="cta">
@@ -37,7 +48,7 @@ const CallToAction = ({ logout, reset, user }) => (
                 Log out
               </button>
             ) : (
-              <button className="button secondary" onClick={reset}>
+              <button className="button secondary reset-cta" onClick={reset}>
                 Reset demo
               </button>
             )
@@ -74,6 +85,7 @@ class Header extends Component {
             { ctaEnabled ? <CallToAction logout={this.logout} reset={this.reset} user={user} /> : null }
           </Col>
         </Row>
+        { isEmpty(user) ? <Tooltip tooltip={tooltip} /> : null }
       </header>
     );
   }

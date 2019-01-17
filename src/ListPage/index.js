@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Col } from 'reactstrap';
-import { Button, DataTable, TableHeader, TableBody, TableRow, TableColumn } from 'react-md';
+import { DataTable, TableHeader, TableBody, TableRow, TableColumn } from 'react-md';
 import isEmpty from 'lodash/isEmpty';
 import { storeItems } from '../store/items/actions';
+import Tooltip from '../SharedComponents/Tooltip';
 import Loader from '../SharedComponents/Loader';
 import Header from '../SharedComponents/Header';
 import Footer from '../SharedComponents/MiniFooter';
@@ -12,6 +13,19 @@ import Notification from '../SharedComponents/Notification';
 import Autosuggest from './Autosuggest';
 import '../assets/scss/index.scss';
 import '../assets/scss/listPage.scss';
+
+const tooltip = [
+  {
+    content: (
+      <div className="tooltip-content">
+        As you can see there is already a list of containers moving around in the world, you need to announce a new container for the coffee to Singapore<br /><br />
+        <span className="action">Click on create a new container</span>
+      </div>
+    ),
+    target: '.create-cta',
+    placement: 'right'
+  },
+];
 
 class ListPage extends Component {
   state = {
@@ -74,9 +88,9 @@ class ListPage extends Component {
         </Header>
         {user.canCreateStream ? (
           <div className="cta-wrapper">
-            <Button className="button" onClick={() => history.push('/new')}>
+            <button className="button create-cta" onClick={() => history.push('/new')}>
               Create new {project.trackingUnit}
-            </Button>
+            </button>
           </div>
         ) : null}
         <Loader showLoader={showLoader} />
@@ -122,6 +136,7 @@ class ListPage extends Component {
         </div>
         <Notification />
         <Footer />
+        <Tooltip tooltip={tooltip} />
       </div>
     );
   }

@@ -1,0 +1,37 @@
+@import 'components';
+@import './mixins';
+@import './variables';
+
+.react-joyride__tooltip {
+  h4 {
+    color: $secondary;
+    text-align: left;
+    font-size: 28px !important;
+    font-weight: 300;
+    padding: 0 10px;
+  }
+
+  .tooltip-content {
+    text-align: left;
+    color: $secondary;
+
+    .action {
+      color: $primary;
+      font-weight: 600;
+      @include font-size(16px);
+    }
+  }
+
+  button[data-action~="primary"] {
+    @include button($primary);
+    width: 95px;
+    height: 40px;
+    outline: none;
+    font-size: 19px !important;
+    border-radius: 20px !important;
+  }
+}
+
+button.react-joyride__beacon {
+  outline: none !important;
+}

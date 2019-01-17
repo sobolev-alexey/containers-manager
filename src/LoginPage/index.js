@@ -4,6 +4,7 @@ import { sha256 } from 'js-sha256';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Col } from 'reactstrap';
+import Tooltip from '../SharedComponents/Tooltip';
 import Header from '../SharedComponents/Header';
 import Footer from '../SharedComponents/MiniFooter';
 import Loader from '../SharedComponents/Loader';
@@ -43,9 +44,21 @@ const roles = [
   },
 ]
 
+const tooltip = [{
+  title: "Let's begin",
+  content: (
+    <div className="tooltip-content">
+      Congratulations, you have just sold a full container load of coffee to a buyer in Singapore<br /><br />
+      <span className="action">Log in as Shipper to prepare the shipment</span>
+    </div>
+  ),
+  target: '.shipper-cta',
+  placement: 'right'
+}];
+
 class LoginPage extends Component {
   state = {
-    showLoader: false,
+    showLoader: false
   };
 
   componentDidMount() {
@@ -53,7 +66,8 @@ class LoginPage extends Component {
     this.props.loadEventMappings();
   }
 
-  loginAs = role => {
+  loginAs = (event, role) => {
+    event.preventDefault();
     this.setState({ showLoader: true });
     const password = sha256(role.toLowerCase());
 
@@ -107,8 +121,8 @@ class LoginPage extends Component {
                   </div>
                   <div className="role-cta">
                     <button
-                      className={`button ${showLoader ? 'hidden' : ''}`}
-                      onClick={() => this.loginAs(role.id)}
+                      className={`button ${role.id}-cta ${showLoader ? 'hidden' : ''}`}
+                      onClick={event => this.loginAs(event, role.id)}
                     >
                       Log in
                     </button>
@@ -120,6 +134,7 @@ class LoginPage extends Component {
           }
         </div>
         <Footer />
+        <Tooltip tooltip={tooltip} />
       </div>
     );
   }
