@@ -182,18 +182,23 @@ class CreateItemPage extends Component {
               />
               {qrReader ? (
                 <div className="create-item-wrapper__qr-code-btn-container">
-                  <Button onClick={this.startScanner} raised primary swapTheming>
-                    Start
-                  </Button>
-                  <Button
-                    onClick={this.stopScanner}
-                    raised
-                    secondary
-                    iconChildren="close"
-                    swapTheming
-                  >
-                    Stop
-                  </Button>
+                  {
+                    showQR ? (
+                      <Button
+                        onClick={this.stopScanner}
+                        raised
+                        secondary
+                        iconChildren="close"
+                        swapTheming
+                      >
+                        Stop camera
+                      </Button>
+                    ) : (
+                      <Button onClick={this.startScanner} raised primary swapTheming>
+                        Scan QR code
+                      </Button>
+                    )
+                  }
                 </div>
               ) : null}
             </div>

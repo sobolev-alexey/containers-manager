@@ -84,6 +84,12 @@
     }
   }
 
+  .create-item-wrapper__qr-code-btn-container {
+    button {
+      width: 150px;
+    }
+  }
+
   @media (max-width: 900px) {
     .create-item-wrapper {
       width: 70%;
