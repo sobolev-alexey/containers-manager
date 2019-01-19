@@ -41,6 +41,7 @@ class ItemTabs extends PureComponent {
       onUploadComplete,
       onAddTemperatureLocationCallback,
       fileUploadEnabled,
+      updateTooltipStep,
     } = this.props;
     const locations = itemEvents.filter(({ position }) => !isEmpty(position));
 
@@ -51,14 +52,14 @@ class ItemTabs extends PureComponent {
         onTabChange={this.onTabChange}
       >
         <Tabs tabId="item-details" mobile={size.width <= 768}>
-          <Tab label="Status">
+          <Tab label="Status" onClick={() => updateTooltipStep(5)}>
             <StatusList statuses={statuses} />
           </Tab>
-          <Tab label="Tangle">
+          <Tab label="Tangle" className="tangle-tab" onClick={() => updateTooltipStep(4)}>
             <Explorer />
           </Tab>
           {documentStorage ? (
-            <Tab label="Documents">
+            <Tab label="Documents" className="documents-tab" onClick={() => updateTooltipStep(6)}>
               <Documents
                 item={item}
                 onUploadComplete={onUploadComplete}

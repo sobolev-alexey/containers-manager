@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { withCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import isEmpty from 'lodash/isEmpty';
@@ -44,7 +45,7 @@ const CallToAction = ({ logout, reset, user }) => (
         <Col xs={7} className="button-wrapper">
           {
             !isEmpty(user) ? (
-              <button className="button primary" onClick={logout}>
+              <button className="button primary logout-cta" onClick={logout}>
                 Log out
               </button>
             ) : (
@@ -61,13 +62,22 @@ const CallToAction = ({ logout, reset, user }) => (
 
 class Header extends Component {
   logout = () => {
-    this.props.logout();
-    this.props.history.push('/login');
+    const { cookies, history, logout } = this.props;
+
+    if (Number(cookies.get('tourStep')) === 8) {
+      cookies.set('tourStep', 9, { path: '/' });
+    }
+    logout();
+    history.push('/login');
   };
 
   reset = () => {
-    this.props.reset();
-    this.props.history.push('/');
+    const { cookies, history, reset } = this.props;
+    cookies.remove('tourStep');
+    cookies.remove('containerId');
+    reset();
+    history.push('/');
+
   };
 
   render() {
@@ -85,7 +95,7 @@ class Header extends Component {
             { ctaEnabled ? <CallToAction logout={this.logout} reset={this.reset} user={user} /> : null }
           </Col>
         </Row>
-        { isEmpty(user) ? <Tooltip tooltip={tooltip} /> : null }
+        { isEmpty(user) ? <Tooltip customTooltip={tooltip} /> : null }
       </header>
     );
   }
@@ -100,4 +110,4 @@ const mapDispatchToProps = dispatch => ({
   reset: () => dispatch(reset()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withCookies(Header)));

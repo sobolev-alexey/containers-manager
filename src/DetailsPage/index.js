@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { withCookies } from 'react-cookie';
 import { Button } from 'react-md';
 import { Link } from 'react-router-dom';
 import { Col } from 'reactstrap';
@@ -13,6 +14,7 @@ import pick from 'lodash/pick';
 import { toast } from 'react-toastify';
 import { storeItem, resetStoredItem } from '../store/item/actions';
 import Notification from '../SharedComponents/Notification';
+import Tooltip from '../SharedComponents/Tooltip';
 import Loader from '../SharedComponents/Loader';
 import Header from '../SharedComponents/Header';
 import Footer from '../SharedComponents/MiniFooter';
@@ -25,7 +27,7 @@ import '../assets/scss/detailsPage.scss';
 const StatusButtons = ({ statuses, onClick, showLoader }) => {
   if (typeof statuses === 'string') {
     return (
-      <Button className={`details-page-button ${showLoader ? 'hidden' : ''}`} raised onClick={() => onClick(statuses)}>
+      <Button className={`details-page-button ${statuses.toLowerCase()}-cta ${showLoader ? 'hidden' : ''}`} raised onClick={() => onClick(statuses)}>
         Confirm {statuses}
       </Button>
     );
@@ -156,11 +158,19 @@ class DetailsPage extends Component {
   };
 
   onUploadComplete = metadata => {
+    this.updateTooltipStep(7);
     this.setState({ metadata, fileUploadEnabled: false, activeTabIndex: 2 }, () => {
       this.notifySuccess('File upload complete!');
       this.appendToItem();
     });
   };
+
+  updateTooltipStep = step => {
+    const { cookies } = this.props;
+    if (Number(cookies.get('tourStep')) === (step - 1)) {
+      cookies.set('tourStep', step, { path: '/' });
+    }
+  }
 
   render() {
     const {
@@ -202,7 +212,11 @@ class DetailsPage extends Component {
         <div className="details-wrapper">
           <div className="md-block-centered">
             <div className="route-cta-wrapper">
-              <Link to="/list" className={`button secondary ${showLoader ? 'hidden' : ''}`}>
+              <Link
+                to="/list"
+                className="button secondary back-cta"
+                onClick={() => this.updateTooltipStep(8)}
+              >
                 Back
               </Link>
               {user.canAppendToStream && !statusUpdated && nextEvents ? (
@@ -222,11 +236,13 @@ class DetailsPage extends Component {
               onTabChange={this.onTabChange}
               onUploadComplete={this.onUploadComplete}
               onAddTemperatureLocationCallback={this.retrieveItem}
+              updateTooltipStep={this.updateTooltipStep}
             />
             <Details item={item} fields={detailsPage} />
           </div>
         </div>
         <Notification />
+        <Tooltip />
         <Footer />
       </div>
     );
@@ -248,4 +264,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(DetailsPage));
+)(withRouter(withCookies(DetailsPage)));

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { sha256 } from 'js-sha256';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
+import { withCookies } from 'react-cookie';
 import { Col } from 'reactstrap';
 import Tooltip from '../SharedComponents/Tooltip';
 import Header from '../SharedComponents/Header';
@@ -133,7 +134,7 @@ class LoginPage extends Component {
           }
         </div>
         <Footer />
-        <Tooltip tooltip={tooltip} />
+        <Tooltip />
       </div>
     );
   }
@@ -146,4 +147,4 @@ const mapDispatchToProps = dispatch => ({
   storeEvents: role => dispatch(storeEvents(role)),
 });
 
-export default connect(null, mapDispatchToProps)(LoginPage);
+export default connect(null, mapDispatchToProps)(withCookies(LoginPage));

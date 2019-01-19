@@ -53,6 +53,7 @@ class List extends Component {
           type="switch"
           label="Expand all"
           name="expand-all"
+          className="expand-all"
           checked={expanded}
           onChange={this.toggleExpandedState}
         />

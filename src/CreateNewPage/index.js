@@ -12,6 +12,7 @@ import Loader from '../SharedComponents/Loader';
 import Header from '../SharedComponents/Header';
 import Footer from '../SharedComponents/MiniFooter';
 import Notification from '../SharedComponents/Notification';
+import Tooltip from '../SharedComponents/Tooltip';
 import { addItem } from '../store/items/actions';
 import { storeItem } from '../store/item/actions';
 import { getFirebaseSnapshot } from '../utils/firebase';
@@ -107,6 +108,7 @@ class CreateItemPage extends Component {
     const containerId = this.state.id.replace(/[^0-9a-zA-Z_-]/g, '');
 
     if (Number(cookies.get('tourStep')) === 2) {
+      cookies.set('tourStep', 3, { path: '/' });
       cookies.set('containerId', containerId, { path: '/' });
     }
 
@@ -254,12 +256,13 @@ class CreateItemPage extends Component {
               <Link to="/list" className={`button secondary ${showLoader ? 'hidden' : ''}`}>
                 Cancel
               </Link>
-              <Button className={`button ${showLoader ? 'hidden' : ''}`} onClick={this.createItem}>
+              <button className={`button create-cta ${showLoader ? 'hidden' : ''}`} onClick={this.createItem}>
                 Create
-              </Button>
+              </button>
             </CardActions>
           </div>
         </div>
+        <Tooltip />
         <Footer />
       </div>
     );
@@ -279,4 +282,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(CreateItemPage));
+)(withRouter(withCookies(CreateItemPage)));

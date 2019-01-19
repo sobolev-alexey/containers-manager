@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Col } from 'reactstrap';
+import { withCookies } from 'react-cookie';
+import classNames from 'classnames';
 import { DataTable, TableHeader, TableBody, TableRow, TableColumn } from 'react-md';
 import isEmpty from 'lodash/isEmpty';
 import { storeItems } from '../store/items/actions';
@@ -51,15 +53,26 @@ class ListPage extends Component {
     }
   }
 
+  createNewContainer = () => {
+    const { cookies, history } = this.props;
+    if (Number(cookies.get('tourStep')) === 1) {
+      cookies.set('tourStep', 2, { path: '/' });
+    }
+    history.push('/new');
+  }
+
   notifyError = message => toast.error(message);
 
+  selectContainer = containerId => {
+    const { cookies, user, history } = this.props;
+    if (Number(cookies.get('tourStep')) === 10 && user.role === 'forwarder') {
+      cookies.set('tourStep', 11, { path: '/' });
+    }
+    history.push(`/details/${containerId}`)
+  }
+
   render() {
-    const {
-      project,
-      user,
-      history,
-      items: { data },
-    } = this.props;
+    const { cookies, project, user, history, items: { data } } = this.props;
     const { showLoader } = this.state;
 
     if (!project || !project.listPage) return <div />;
@@ -75,7 +88,7 @@ class ListPage extends Component {
         </Header>
         {user.canCreateStream ? (
           <div className="cta-wrapper">
-            <button className="button create-cta" onClick={() => history.push('/new')}>
+            <button className="button create-new-cta" onClick={this.createNewContainer}>
               Create new {project.trackingUnit}
             </button>
           </div>
@@ -88,7 +101,7 @@ class ListPage extends Component {
             onSelect={item => history.push(`/details/${item.itemId}`)}
             trackingUnit={project.trackingUnit}
           />
-          <DataTable plain>
+          <DataTable plain className="list-all">
             <TableHeader>
               <TableRow>
                 {project.listPage.headers.map((header, index) => (
@@ -129,7 +142,7 @@ class ListPage extends Component {
         </div>
         <Notification />
         <Footer />
-        <Tooltip tooltip={tooltip} />
+        <Tooltip />
       </div>
     );
   }
@@ -148,4 +161,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ListPage);
+)(withCookies(ListPage));
