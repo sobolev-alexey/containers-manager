@@ -11,9 +11,9 @@ class Documents extends Component {
     documents: [],
   };
 
-  async componentDidMount() {
-    const { item } = this.props;
-    if (!isEmpty(item)) {
+  componentWillReceiveProps(nextProps) {
+    const { item } = nextProps;
+    if (!isEmpty(item) && item.documents) {
       item.documents.forEach(async document => {
         const result = await validateIntegrity(document)
         this.setState({ documents: [...this.state.documents, {...document, ...result}] })
@@ -46,7 +46,7 @@ class Documents extends Component {
       user,
       project: { documentStorage, trackingUnit }
     } = this.props;
-    const { documents } = this.state
+    const { documents } = this.state;
 
     if (!documents) return <React.Fragment />
 

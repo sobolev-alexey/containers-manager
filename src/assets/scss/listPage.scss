@@ -1,4 +1,5 @@
 @import 'components';
+@import './variables';
 
 .list-page {
   margin-top: 95px;
@@ -33,5 +34,9 @@
     &.md-text--secondary {
       color: rgb(151, 151, 151);
     }
+  }
+
+  .users-container {
+    background: $light;
   }
 }

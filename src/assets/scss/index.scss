@@ -22,3 +22,7 @@ h1, h2, h3, h4, h5, h6, div, span, p, label, input, select, section, footer, hea
 .hidden {
   display: none !important;
 }
+
+button, a {
+  outline: none !important;
+}

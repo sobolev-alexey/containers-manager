@@ -156,7 +156,7 @@ class DetailsPage extends Component {
   };
 
   onUploadComplete = metadata => {
-    this.setState({ metadata, fileUploadEnabled: false, activeTabIndex: 1 }, () => {
+    this.setState({ metadata, fileUploadEnabled: false, activeTabIndex: 2 }, () => {
       this.notifySuccess('File upload complete!');
       this.appendToItem();
     });

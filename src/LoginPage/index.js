@@ -44,39 +44,38 @@ const roles = [
   },
 ]
 
-const tooltip = [{
-  title: "Let's begin",
-  content: (
-    <div className="tooltip-content">
-      Congratulations, you have just sold a full container load of coffee to a buyer in Singapore<br /><br />
-      <span className="action">Log in as Shipper to prepare the shipment</span>
-    </div>
-  ),
-  target: '.shipper-cta',
-  placement: 'right'
-}];
-
 class LoginPage extends Component {
   state = {
     showLoader: false
   };
 
   componentDidMount() {
-    this.props.loadProjectSettings();
-    this.props.loadEventMappings();
+    const { cookies, loadEventMappings, loadProjectSettings } = this.props;
+    loadProjectSettings();
+    loadEventMappings();
+    const tourStep = cookies.get('tourStep');
+    if (!tourStep) {
+      cookies.set('tourStep', 0, { path: '/' });
+    }
   }
 
   loginAs = (event, role) => {
+    const { cookies, history, storeCredentials, storeEvents } = this.props;
     event.preventDefault();
     this.setState({ showLoader: true });
     const password = sha256(role.toLowerCase());
+    if (role === 'shipper' && Number(cookies.get('tourStep')) === 0) {
+      cookies.set('tourStep', 1, { path: '/' });
+    } else if (role === 'forwarder' && Number(cookies.get('tourStep')) === 9) {
+      cookies.set('tourStep', 10, { path: '/' });
+    }
 
     axios
       .post(`${config.rootURL}/login`, { username: role, password })
       .then(response => {
-        this.props.storeCredentials(response.data);
-        this.props.storeEvents(response.data.role);
-        this.props.history.push('/list');
+        storeCredentials(response.data);
+        storeEvents(response.data.role);
+        history.push('/list');
       })
       .catch(error => {
         this.setState({ showLoader: false });

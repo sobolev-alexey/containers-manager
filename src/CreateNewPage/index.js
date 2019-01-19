@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
+import { withCookies } from 'react-cookie';
 import isEmpty from 'lodash/isEmpty';
 import upperFirst from 'lodash/upperFirst';
 import { Col } from 'reactstrap';
@@ -100,7 +101,14 @@ class CreateItemPage extends Component {
   createItem = async event => {
     event.preventDefault();
     const formError = this.validate();
-    const { history, storeItem, addItem, user, project } = this.props;
+    const { cookies, history, storeItem, addItem, user, project } = this.props;
+
+    // Format the item ID to remove dashes and parens
+    const containerId = this.state.id.replace(/[^0-9a-zA-Z_-]/g, '');
+
+    if (Number(cookies.get('tourStep')) === 2) {
+      cookies.set('containerId', containerId, { path: '/' });
+    }
 
     if (!formError) {
       const { id, previousEvent } = user;
@@ -112,17 +120,16 @@ class CreateItemPage extends Component {
         shipper: id,
         status: previousEvent[0],
       };
-      // Format the item ID to remove dashes and parens
-      const itemId = this.state.id.replace(/[^0-9a-zA-Z_-]/g, '');
-      const firebaseSnapshot = await getFirebaseSnapshot(itemId, this.onError);
+
+      const firebaseSnapshot = await getFirebaseSnapshot(containerId, this.onError);
       if (firebaseSnapshot === null) {
         this.setState({ showLoader: true });
-        const eventBody = await createItemChannel(project, itemId, request, id);
+        const eventBody = await createItemChannel(project, containerId, request, id);
 
-        await addItem(itemId);
+        await addItem(containerId);
         await storeItem([eventBody]);
 
-        history.push(`/details/${itemId}`);
+        history.push(`/details/${containerId}`);
       } else {
         this.notifyError(`${upperFirst(project.trackingUnit)} exists`);
       }

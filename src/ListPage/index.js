@@ -14,19 +14,6 @@ import Autosuggest from './Autosuggest';
 import '../assets/scss/index.scss';
 import '../assets/scss/listPage.scss';
 
-const tooltip = [
-  {
-    content: (
-      <div className="tooltip-content">
-        As you can see there is already a list of containers moving around in the world, you need to announce a new container for the coffee to Singapore<br /><br />
-        <span className="action">Click on create a new container</span>
-      </div>
-    ),
-    target: '.create-cta',
-    placement: 'right'
-  },
-];
-
 class ListPage extends Component {
   state = {
     showLoader: false,
@@ -116,7 +103,13 @@ class ListPage extends Component {
             </TableHeader>
             <TableBody>
               {data.map(item => (
-                <TableRow key={item.itemId} onClick={() => history.push(`/details/${item.itemId}`)}>
+                <TableRow
+                  key={item.itemId}
+                  onClick={() => this.selectContainer(item.itemId)}
+                  className={classNames({
+                    'users-container': item.itemId === cookies.get('containerId'),
+                  })}
+                >
                   {project.listPage.body.map((entry, index) => (
                     <TableColumn
                       key={`${item.itemId}-${index}`}
