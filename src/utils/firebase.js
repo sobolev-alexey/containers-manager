@@ -75,7 +75,7 @@ export const getFirebaseSnapshot = (containerId, onError) => {
   return promise;
 };
 
-export const createItem = (eventBody, channel, secretKey, userId) => {
+export const createItem = (eventBody, channel, secretKey) => {
   // Create item reference
   const itemsRef = getItemReference(eventBody.containerId);
 
@@ -91,7 +91,7 @@ export const createItem = (eventBody, channel, secretKey, userId) => {
   });
 };
 
-export const updateItem = (eventBody, mam, newItemData, user) => {
+export const updateItem = (eventBody, mam, newItemData) => {
   // Create reference
   const itemsRef = getItemReference(eventBody.containerId);
 

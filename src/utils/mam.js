@@ -98,10 +98,10 @@ export const fetchItem = async (initialRoot, secretKey, storeItemCallback, setSt
 const getUniqueStatuses = itemEvents =>
   uniqBy(itemEvents.map(event => pick(event, ['status', 'timestamp'])), 'status');
 
-export const createItemChannel = (project, itemId, request, userId) => {
+export const createItemChannel = (project, containerId, request) => {
   const promise = new Promise(async (resolve, reject) => {
     try {
-      const secretKey = generateSeed(20);
+      const secretKey = generateSeed(81);
       const eventBody = {};
       project.firebaseFields.forEach(field => (eventBody[field] = request[field]));
       eventBody.containerId = containerId;
@@ -120,7 +120,7 @@ export const createItemChannel = (project, itemId, request, userId) => {
 
       if (channel && !isEmpty(channel)) {
         // Create a new item entry using that item ID
-        await createItem(eventBody, channel, secretKey, userId);
+        await createItem(eventBody, channel, secretKey);
       }
 
       return resolve(eventBody);
@@ -137,7 +137,6 @@ export const appendItemChannel = async (metadata, props, documentExists, status)
   const meta = metadata.length;
   const {
     project,
-    user,
     item,
     items,
     match: {
@@ -178,7 +177,7 @@ export const appendItemChannel = async (metadata, props, documentExists, status)
           eventBody.status = newStatus;
           eventBody.timestamp = timestamp;
 
-          await updateItem(eventBody, mam, newItemData, user);
+          await updateItem(eventBody, mam, newItemData);
 
           return resolve(containerId);
         }
@@ -195,7 +194,6 @@ export const appendItemChannel = async (metadata, props, documentExists, status)
 export const appendTemperatureLocation = async (payload, props) => {
   const {
     project,
-    user,
     item,
     items,
     match: {
@@ -215,7 +213,7 @@ export const appendTemperatureLocation = async (payload, props) => {
           eventBody.status = payload.status;
           eventBody.timestamp = payload.timestamp;
 
-          await updateItem(eventBody, mam, newItemData, user);
+          await updateItem(eventBody, mam, newItemData);
 
           return resolve(containerId);
         }

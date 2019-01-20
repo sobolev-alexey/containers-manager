@@ -7,6 +7,10 @@
     @include button(rgba(63, 63, 63, 0.7));
   }
 
+  .bouncing-loader {
+    margin-bottom: 50px;
+  }
+
   .create-item-wrapper {
     max-width: 630px;
     width: 40%;

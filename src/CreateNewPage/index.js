@@ -113,13 +113,13 @@ class CreateItemPage extends Component {
     cookies.set('containerId', containerId, { path: '/' });
 
     if (!formError) {
-      const { id, previousEvent } = user;
+      const { id, name, previousEvent } = user;
       const request = {
         departure: this.departure.value,
         destination: this.destination.value,
         load: this.cargo.value,
         type: this.type.value,
-        shipper: id,
+        shipper: name,
         status: previousEvent[0],
       };
 
