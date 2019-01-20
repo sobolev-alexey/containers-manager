@@ -1,116 +1,325 @@
 {
-  "roleEventMapping": {
-    "customs": {
-      "canAppendToStream": true,
-      "canCreateStream": false,
-      "canUploadDocuments": true,
-      "nextEvents": {
-        "containerdischarged": "Container cleared for import",
-        "gatein": "Container cleared for export"
+  "items" : {
+    "1" : {
+      "departure" : "Rotterdam",
+      "destination" : "Singapore",
+      "containerId" : "1",
+      "mam" : {
+        "next" : "JLZWZAMVHKNAOTUVGWKZFKLUAJKQCGGPZTPKFXZKJNKFRTTI9GKXLRXSUWAWFZEZVBMKXGXXPITEHVPTS",
+        "root" : "UXMXNWROQTFFXTQZJTRFNFPDOCEIWQQNWEMVYIQHRXAGNNGESMZBQPHVATDNLWEERBNANQLCTWWZUM99Z",
+        "secretKey" : "QJCQQSHNPIWQBVMU9RGG",
+        "seed" : "MKXZPJWAURHDQ9J9MDXHNQWBESKIBJEWM9D9MXPPPVRQHEDFGTPQDLOOCECPCVUKOGUPQLMTUKOGFNXHJ",
+        "start" : 5
       },
-      "previousEvent": ["Gate-in", "Container discharged"]
+      "shipper" : "Mr. John Shipper",
+      "status" : "Vessel departure",
+      "timestamp" : 1543046282467
     },
-    "forwarder": {
-      "canAppendToStream": true,
-      "canCreateStream": false,
-      "canUploadDocuments": true,
-      "nextEvents": {
-        "containerannounced": "Gate-in",
-        "containerclearedforimport": "Gate-out"
+    "5" : {
+      "departure" : "Rotterdam",
+      "destination" : "Singapore",
+      "containerId" : "5",
+      "mam" : {
+        "next" : "OHIODZEREHUEOQ9YUHMEOSXML9ADQZXZEASSLFF9EYTCQKNTFZNOODACQNHQUMFSWTKZOTPWECNKZXNHC",
+        "root" : "PJSNOVKOKKEAFWEXMGJNNHMRXROXDOOU9TCMWRWUTJIJXVRUCCVGTCQKBMQSURMWPBJCYZRHMERVHROTC",
+        "secretKey" : "JBARUXLSSMPBXPJEOOKD",
+        "seed" : "XJD9GA9RBCDF9EU9YATQQENHDRNSOVSTYGJNXJVYGXOAPHXWLUZHRB9WHWXYJB9RBQICLOUMYZJMVRIPQ",
+        "start" : 2
       },
-      "previousEvent": ["Container announced", "Container cleared for import"]
+      "shipper" : "Mr. John Shipper",
+      "status" : "Container announced",
+      "timestamp" : 1546962802074
     },
-    "owner": {
-      "canAppendToStream": false,
-      "canCreateStream": true,
-      "canUploadDocuments": true,
-      "nextEvents": {
-        "containerannounced": "Container announced",
-        "gateout": "Container delivered"
+    "6" : {
+      "departure" : "Rotterdam",
+      "destination" : "Singapore",
+      "containerId" : "6",
+      "mam" : {
+        "next" : "GXJ9VXOZWTYCLXG9TAWXWFZWATEHQIXOKQVACSIJAABLISJHLJJEZR9AJMPPFBVUUJCJERTBRGFTVAMGQ",
+        "root" : "HSTPAEHN9LZHAROKHKOMGGTOTHWADXBQSBETRJAHIOFPIGHNGRFJJXJEMIAKBGPFUSGHOAQHPZELJJHHB",
+        "secretKey" : "GFOIQOAIMSZBPGZSHVLN",
+        "seed" : "SVVKTQHBHZGXNQYDTLBAGBNZZJPTYD9QZEF9RJPHQWFEX9OPJFL9WTNVFPXS9WVFUTGFWDDPHPJMYEODC",
+        "start" : 1
       },
-      "previousEvent": ["Container announced", "Gate-out"]
+      "shipper" : "Mr. John Shipper",
+      "status" : "Container announced",
+      "timestamp" : 1546885021652
     },
-    "port": {
-      "canAppendToStream": true,
-      "canCreateStream": false,
-      "canUploadDocuments": true,
-      "nextEvents": {
-        "containerclearedforexport": "Container loaded on vessel",
-        "containerloadedonvessel": "Vessel departure",
-        "vesselarrival": "Container discharged",
-        "vesseldeparture": "Vessel arrival"
+    "7" : {
+      "departure" : "Rotterdam",
+      "destination" : "Singapore",
+      "containerId" : "7",
+      "mam" : {
+        "next" : "QMGSDXERXGBSYNQQLZPRRMUZAICTCQ9S9ZPSPKVYKABHPGJYETYT9FFXVPJWXMYQZHQGCRHAZHPSMSKXR",
+        "root" : "FUWQUGJOYDPPAMTYCBVZ9UHXUUVNXTNQHSNTXJROLTSFKHHETEXDGEIRZBTEDCMVOZWBTZFAIGANAUH9J",
+        "secretKey" : "WKSRNVGMIYLWVIXAJBBN",
+        "seed" : "UFCJGCTRYLQOQEWBN9QMVUVRTFKZSNKIJ9CMSDWVDADVSY9LLQTRTKYBA9FEAQOQJPDUUVBA9HCVRA9ZA",
+        "start" : 1
       },
-      "previousEvent": [
-        "Container cleared for export",
-        "Container loaded on vessel",
-        "Vessel departure",
-        "Vessel arrival"
-      ]
+      "shipper" : "Mr. John Shipper",
+      "status" : "Container announced",
+      "timestamp" : 1528996642226
+    },
+    "8" : {
+      "departure" : "Rotterdam",
+      "destination" : "Singapore",
+      "containerId" : "8",
+      "mam" : {
+        "next" : "MTSHV9HVBLCNKKBALFYIJCICXEVZKNGAJUKOCSBUJJPBQIHZUNBOXNGKQHCGCBBOQPTWGYZLHDUSBRHTT",
+        "root" : "LKPITMMQRPPVAQFOKHFTQLUZJWEVLFENZKCOTHMTLMFEJSNFYKMBRDRBJWOCMGYNAEYVASQGZHH9DHTCY",
+        "secretKey" : "FUTDUT9PRZLDYCWADOGQ",
+        "seed" : "OIYWYTNRGHLTPBIIKRPSPOQIPFHBLELFGDTSWNUDMPGYFYXPOLWYOP9WYY9W9CYRVYAHFSNUZVPCUZLEJ",
+        "start" : 16
+      },
+      "shipper" : "Mr. John Shipper",
+      "status" : "Container announced",
+      "timestamp" : 1546962851223
+    },
+    "9" : {
+      "departure" : "Rotterdam",
+      "destination" : "Singapore",
+      "containerId" : "9",
+      "mam" : {
+        "next" : "AZTSAGNOHTIBJDXBQIBCMJIPJIKAJWEBMMDWWKQ9MOEOTDISGLODBGEDCPOCLNF9OPJM9RHGLBQDLQTLO",
+        "root" : "UGOWZMWREHLQDVGB9ZCYNFW99BMLTIKUPI9NNVDMCYAHEGOSXWAJNWBCQBDGAZOSMSWLIYMHVMZ9RJQWG",
+        "secretKey" : "TESTTESTTESTTEST",
+        "seed" : "MJXDIFFYGTMYPR9LJISLVFBQWCIXMS9HMYPIAZWMPRACZEFU9JJJJRZQQZZVLNIPBNWAKUNMOTRLJTHVS",
+        "start" : 17
+      },
+      "shipper" : "Mr. John Shipper",
+      "status" : "Vessel departure",
+      "timestamp" : 1525871576041
+    },
+    "10" : {
+      "departure" : "Rotterdam",
+      "destination" : "Singapore",
+      "containerId" : "10",
+      "mam" : {
+        "next" : "VZZY9HG9UWBRVIATNUCHLVCJIKNSNXCEGZJH9CHYGBYEYENCOBNOIYIQHLSKBSXKSUFLNYEMR9HVSPRYN",
+        "root" : "EOMSHTKOBEZPJCGYBSZXYXIYDRJPRCRGQNKYZHZNHPVMVKBNVANMCLPQBJZRYMBCXVZEBVDKNXUREXFYX",
+        "secretKey" : "EA9HTOUZYXWHEGLGAAEO",
+        "seed" : "RWJDGMEOVIPPEPECWXRQWEPYAINDMWVHIDZTPDMZ9VLR9RZIBVVIQHFJSOESKQPFL9QFHTNYLQOXAPWEA",
+        "start" : 7
+      },
+      "shipper" : "Mr. John Shipper",
+      "status" : "Vessel departure",
+      "timestamp" : 1546962896581
+    },
+    "11" : {
+      "departure" : "Rotterdam",
+      "destination" : "Singapore",
+      "containerId" : "11",
+      "mam" : {
+        "next" : "EHRHAAMPABFUXMHHWMYFYVNNRZGHUHXKEQTEOIQMMZKHUZUOFMIDIPRPBLHBVKEOYZGYDLTMH9LGOCSUQ",
+        "root" : "PCJEYIZPNAOOEBBUQUYSNYTFXTSDEDYFYKWSSNIHKQFQCA9ERJTALXSVBL9AR9WFBBJWZRFAODKKFFOSB",
+        "secretKey" : "QXKVOPUTHJMKVNI9XOA9",
+        "seed" : "OIYZX9SLDMBWNXSCCXZQBPLUFEPRVDVTIOMYQARMSQNOEOJPAEVOKLDVOILOGWT9YIAIJQVTPLMXVNJRR",
+        "start" : 3
+      },
+      "shipper" : "Mr. John Shipper",
+      "status" : "Gate-in",
+      "timestamp" : 1547939660900
+    },
+    "12" : {
+      "departure" : "Rotterdam",
+      "destination" : "Singapore",
+      "containerId" : "12",
+      "mam" : {
+        "next" : "BJOORKENXXPYOXSLNOLXXVEMNHFLCZWAXBIVPAGRZJCBUKELA9FAYNLYNHXQGQMXNQIBZDESHEKDYNQRW",
+        "root" : "CUYPVGDUMYDFPDTCHZRRBKAPFPQTGIBOYYMJGSDQSTMPPF9ZFYZUGC9QVNOOPGVTMQHAKLNNLMBVPIRVP",
+        "secretKey" : "IDADFYMHXKY9XQKPGWPA",
+        "seed" : "UTVSLODF9ZZRAWLK9YSKTFCC9ZPGOIBXSOXITHEXGRPOGKBJCKICKUFRHPNYQPAS9MPMPOWODOLFGVEAR",
+        "start" : 2
+      },
+      "shipper" : "Mr. John Shipper",
+      "status" : "Gate-in",
+      "timestamp" : 1547939413895
+    },
+    "13" : {
+      "departure" : "Rotterdam",
+      "destination" : "Singapore",
+      "containerId" : "13",
+      "mam" : {
+        "next" : "GAOJVMXKIXPUBTOHZWVXAFFNGZGWOLCXXJNNRIWFYUTSLHCAQDT9OKWADWWPZNGL9DOSALVRXCAZL9GAT",
+        "root" : "L9GLDOXOZAFOUOQPSCVVSORRUIZQRVYAJSEDBSGPFLNWCVQBFBHRAFSSTFEVJETNATHNWKOHBTDUAI9CR",
+        "secretKey" : "OPKEINRSSRL9XGTKM9KE",
+        "seed" : "UTVSLODF9ZZRAWLK9YSKTFCC9ZPGOIBXSOXITHEXGRPOGKBJCKICKUFRHPNYQPAS9MPMPOWODOLFGVEAR",
+        "start" : 4
+      },
+      "shipper" : "Mr. John Shipper",
+      "status" : "Container cleared for export",
+      "timestamp" : 1547939277662
+    },
+    "14" : {
+      "departure" : "Rotterdam",
+      "destination" : "Singapore",
+      "containerId" : "14",
+      "mam" : {
+        "next" : "TWXRXSHNNQSJPW9DSVDSSVKNFX9TBCOTPUZVKWZAQKHKLTQMBUEWGGQ9ZHMPRUHZOOSQALNRZNBZLDKLT",
+        "root" : "IWEGLGNGUTP999MYUEUUCLMIOKIXCOMGSIFJ9SZSHTKYKBZLTAJIS9BAWWOYKAQXNS9MMQJKLRHPNJEZD",
+        "secretKey" : "WC9FNHXYZWZ9UQNJTEVI",
+        "seed" : "OPPMSUUOHWQIFJNQDV9UP9UGAJUCDP9DSFUCLTY9RRDGKMSDIP9VSYFWYYMJSKF9TEKZYVZEHWTNVOYBL",
+        "start" : 2
+      },
+      "shipper" : "Mr. John Shipper",
+      "status" : "Gate-in",
+      "timestamp" : 1547940463721
+    },
+    "20" : {
+      "departure" : "Rotterdam",
+      "destination" : "Singapore",
+      "containerId" : "20",
+      "mam" : {
+        "next" : "RQWYKYLZRLEKASQQTTFLBPTMENKKUIOUAHYFWBBHUE9O9JSVJMITDZDZLSXBBGLGBIGFJYLILTZWBVQRN",
+        "root" : "IQHVDXZNLVSKWDOSJR9YPKJDPYHUCFOHTXNE9ECQQJZUFYGDQAKHDRHPTQJHBWCO9YZGJHJPNEHLJRKZJ",
+        "secretKey" : "EMJDTANX9IGCQPHKFYXC",
+        "seed" : "BPEAMSJKEL9KFNHCGZMXHHC9RWYBSTKOAGAKISBSITZUCPAAIOALXLBNQPOSUEOELNDBYZDZWJITODRGJ",
+        "start" : 6
+      },
+      "shipper" : "Mr. John Shipper",
+      "status" : "Container discharged",
+      "timestamp" : 1546962929367
+    },
+    "30" : {
+      "departure" : "Rotterdam",
+      "destination" : "Singapore",
+      "containerId" : "30",
+      "mam" : {
+        "next" : "IOTAFV9QQCGN9Q9FROXQHNZLA9U9TKRXNYKCZIFIKLXLCVEWJKGNCMJMKZRBQIAWLASBEATULXQRUUKAJ",
+        "root" : "YDFTNXPUE9UAKONHGXJVHSLULOKFSLSVXCGGKBJMFYXKNAKN9QSZYJTHQYVRZJVYELPJIVYXVLZVS9EJC",
+        "secretKey" : "YWWCBWJWPFYAGLKAZS9Y",
+        "seed" : "RERDOQDZMFMQYPTTN9RVGEINBDKKEGUGFPKNAM9IXMSCQBMEIEUSSNOGKKLGHARUHFBCTDMUIFJGQNQAW",
+        "start" : 8
+      },
+      "shipper" : "Mr. John Shipper",
+      "status" : "Vessel departure",
+      "timestamp" : 1547549622448
+    },
+    "123456" : {
+      "departure" : "Rotterdam",
+      "destination" : "Singapore",
+      "containerId" : "123456",
+      "mam" : {
+        "next" : "UHLOGTDCP9RRFWEKMDPEOUYRQ9AOFALIOVNYRQBACNNPZHKK9OXYAHLSUDDINHMJGMRKWKYCCJETUOKWZ",
+        "root" : "NBOUXMDMOXEYYS9MJEERYHDGNY9NY9PYATJZPTMLXVNKWFUUKBVYMGQHDEJRWQTIRHGOYXOZJSTFYWLOI",
+        "secretKey" : "RBSB9VHTBUJTQMVIBXSZ",
+        "seed" : "R9ARPGATEMIUABI9GNZIIAQGYRXPOKUWTGXCDYWJOAN9XOLJQLRQLAMPVR9TGDPIPC9BXMPBOZAPTZILD",
+        "start" : 2
+      },
+      "shipper" : "Mr. John Shipper",
+      "status" : "Container announced",
+      "timestamp" : 1546972590877
+    },
+    "123456789" : {
+      "departure" : "Rotterdam",
+      "destination" : "Singapore",
+      "containerId" : "123456789",
+      "mam" : {
+        "next" : "UEGILF9OVDOQSBNWQ9PIAEDNXGRRMGWZSKDCFUJEID9YNVTRVJXIRLBIIZKKANZUA9WVN9VROYODYVJUV",
+        "root" : "JIFYGGTKHPQASUEUJLJFEVYFQJNGTLVVIEOVVVQSRFLIQFUHDXJGFFEEHZLMYJ9VJJMDOJSYCKKDXBFKN",
+        "secretKey" : "GEDNUJDPMFJQJBXEZGBZ",
+        "seed" : "XPOOQL9WQWBYIBZUTKBHUNPXXQMQJCWSTGFBD9HGEVNAYKTOCNYSARUBBIWILRLTMTNZNPMWFBPFGFDW9",
+        "start" : 5
+      },
+      "shipper" : "Mr. John Shipper",
+      "status" : "Vessel departure",
+      "timestamp" : 1547424852679
     }
   },
-  "settings": {
-    "detailsPage": {
-      "body": ["owner", "itemId", "status", "load", "type", "timestamp"],
-      "headers": ["Shipper", "Container ID", "Status", "Load", "Type", "Last updated"],
-      "title": ["departure", "destination"]
+  "roleEventMapping" : {
+    "customs" : {
+      "canAppendToStream" : true,
+      "canCreateStream" : false,
+      "canUploadDocuments" : true,
+      "nextEvents" : {
+        "containerdischarged" : "Container cleared for import",
+        "gatein" : "Container cleared for export"
+      },
+      "previousEvent" : [ "Gate-in", "Container discharged" ]
     },
-    "documentStorage": true,
-    "fields": [
-      "itemId",
-      "owner",
-      "status",
-      "timestamp",
-      "type",
-      "load",
-      "departure",
-      "destination",
-      "temperature",
-      "position",
-      "documents",
-      "lastPositionIndex"
-    ],
-    "firebaseFields": ["itemId", "owner", "status", "timestamp", "departure", "destination"],
-    "listPage": {
-      "body": ["itemId", ["departure", "destination"], "status"],
-      "headers": ["Container ID", "Route", "Status"]
+    "forwarder" : {
+      "canAppendToStream" : true,
+      "canCreateStream" : false,
+      "canUploadDocuments" : true,
+      "nextEvents" : {
+        "containerannounced" : "Gate-in",
+        "containerclearedforimport" : "Gate-out"
+      },
+      "previousEvent" : [ "Container announced", "Container cleared for import" ]
     },
-    "locationTracking": true,
-    "projectName": "container tracking",
-    "qrReader": true,
-    "roleUserMapping": {
-      "customs": "user003",
-      "forwarder": "user002",
-      "owner": "user001",
-      "port": "user004"
+    "port" : {
+      "canAppendToStream" : true,
+      "canCreateStream" : false,
+      "canUploadDocuments" : true,
+      "nextEvents" : {
+        "containerclearedforexport" : "Container loaded on vessel",
+        "containerloadedonvessel" : "Vessel departure",
+        "vesselarrival" : "Container discharged",
+        "vesseldeparture" : "Vessel arrival"
+      },
+      "previousEvent" : [ "Container cleared for export", "Container loaded on vessel", "Vessel departure", "Vessel arrival" ]
     },
-    "roles": ["owner", "forwarder", "customs", "port"],
-    "temperatureChart": true,
-    "trackingUnit": "container"
+    "shipper" : {
+      "canAppendToStream" : false,
+      "canCreateStream" : true,
+      "canUploadDocuments" : true,
+      "nextEvents" : {
+        "containerannounced" : "Container announced",
+        "gateout" : "Container delivered"
+      },
+      "previousEvent" : [ "Container announced", "Gate-out" ]
+    }
   },
-  "users": {
-    "user001": {
-      "id": "user001",
-      "name": "Mr. John Shipper",
-      "password": "c23162ffc1a535af2ee09588469194816e60cb437e30d78c5617b5d3f1304d6a",
-      "role": "owner"
+  "settings" : {
+    "detailsPage" : {
+      "body" : [ "shipper", "containerId", "status", "load", "type", "timestamp" ],
+      "headers" : [ "Shipper", "Container ID", "Status", "Load", "Type", "Last updated" ],
+      "title" : [ "departure", "destination" ]
     },
-    "user002": {
-      "id": "user002",
-      "name": "Mr. Luigi Logisticano",
-      "password": "e3ce8de04a926e54c5a1f64b1babd835ae2f43eef75354ebd6c9a86b21d8575c",
-      "role": "forwarder"
+    "documentStorage" : true,
+    "fields" : [ "containerId", "shipper", "status", "timestamp", "type", "load", "departure", "destination", "temperature", "position", "documents", "lastPositionIndex" ],
+    "firebaseFields" : [ "containerId", "shipper", "status", "timestamp", "departure", "destination" ],
+    "listPage" : {
+      "body" : [ "containerId", [ "departure", "destination" ], "status" ],
+      "headers" : [ "Container ID", "Route", "Status" ]
     },
-    "user003": {
-      "id": "user003",
-      "name": "Ms. Teresa McCustoms",
-      "password": "1bafcb67e3009476f422803e3bda7fd9773c0f3ffee51162fc2abf83c9c9a000",
-      "role": "customs"
+    "locationTracking" : true,
+    "projectName" : "container tracking",
+    "qrReader" : true,
+    "roleUserMapping" : {
+      "customs" : "customs",
+      "forwarder" : "forwarder",
+      "port" : "port",
+      "shipper" : "shipper"
     },
-    "user004": {
-      "id": "user004",
-      "name": "Mr. Chuck Portstith",
-      "password": "ef892ecf414a9d0497e7cf1636c0b0e47ad31993e11f28127bf0d11e2472f5ef",
-      "role": "port"
+    "roles" : [ "shipper", "forwarder", "customs", "port" ],
+    "temperatureChart" : true,
+    "trackingUnit" : "container"
+  },
+  "users" : {
+    "customs" : {
+      "id" : "customs",
+      "name" : "Ms. Teresa McCustoms",
+      "password" : "45e285133b891bc3bc022fdd5eda0726b15b609396e5b8e734078ab9f5ccdd6b",
+      "role" : "customs"
+    },
+    "forwarder" : {
+      "id" : "forwarder",
+      "name" : "Mr. Luigi Logisticano",
+      "password" : "b4b3e80b5c6c2e35e8a6c9a2437568ddf4eb4f739bfad8427141261a87cb1868",
+      "role" : "forwarder"
+    },
+    "port" : {
+      "id" : "port",
+      "name" : "Mr. Chuck Portsmith",
+      "password" : "f8d397a33fcb9725db96501e653bf3cfa4455c5639482b9936c22b221634d659",
+      "role" : "port"
+    },
+    "shipper" : {
+      "id" : "shipper",
+      "name" : "Mr. John Shipper",
+      "password" : "8be2e28a473f0bf8203d10896b2f14b5d499369e3f5aa1882c098628b58f41ac",
+      "role" : "shipper"
     }
   }
 }
