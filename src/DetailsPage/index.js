@@ -27,7 +27,7 @@ import '../assets/scss/detailsPage.scss';
 const StatusButtons = ({ statuses, onClick, showLoader }) => {
   if (typeof statuses === 'string') {
     return (
-      <Button className={`details-page-button ${statuses.toLowerCase()}-cta ${showLoader ? 'hidden' : ''}`} raised onClick={() => onClick(statuses)}>
+      <Button className={`details-page-button ${statuses.replace(/\s+/g, '-').toLowerCase()} ${showLoader ? 'hidden' : ''}`} raised onClick={() => onClick(statuses)}>
         Confirm {statuses}
       </Button>
     );
@@ -109,6 +109,10 @@ class DetailsPage extends Component {
         fileUploadEnabled: true,
       });
       this.retrieveItem(response);
+      this.updateTooltipStep(12);
+      this.updateTooltipStep(16);
+      this.updateTooltipStep(22);
+      this.updateTooltipStep(23);
     } else {
       this.setState({ showLoader: false });
       this.notifyError('Something went wrong');
@@ -166,9 +170,12 @@ class DetailsPage extends Component {
   };
 
   updateTooltipStep = step => {
-    const { cookies } = this.props;
+    const { cookies, history } = this.props;
     if (Number(cookies.get('tourStep')) === (step - 1)) {
       cookies.set('tourStep', step, { path: '/' });
+    }
+    if (step === 23) {
+      history.push('/tour');
     }
   }
 

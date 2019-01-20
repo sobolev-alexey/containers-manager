@@ -109,8 +109,8 @@ class CreateItemPage extends Component {
 
     if (Number(cookies.get('tourStep')) === 2) {
       cookies.set('tourStep', 3, { path: '/' });
-      cookies.set('containerId', containerId, { path: '/' });
     }
+    cookies.set('containerId', containerId, { path: '/' });
 
     if (!formError) {
       const { id, previousEvent } = user;

@@ -66,6 +66,10 @@ class Header extends Component {
 
     if (Number(cookies.get('tourStep')) === 8) {
       cookies.set('tourStep', 9, { path: '/' });
+    } else if (Number(cookies.get('tourStep')) === 12) {
+      cookies.set('tourStep', 13, { path: '/' });
+    } else if (Number(cookies.get('tourStep')) === 18) {
+      cookies.set('tourStep', 19, { path: '/' });
     }
     logout();
     history.push('/login');

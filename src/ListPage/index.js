@@ -67,6 +67,10 @@ class ListPage extends Component {
     const { cookies, user, history } = this.props;
     if (Number(cookies.get('tourStep')) === 10 && user.role === 'forwarder') {
       cookies.set('tourStep', 11, { path: '/' });
+    } else if (Number(cookies.get('tourStep')) === 14 && user.role === 'customs') {
+      cookies.set('tourStep', 15, { path: '/' });
+    } else if (Number(cookies.get('tourStep')) === 20 && user.role === 'port') {
+      cookies.set('tourStep', 21, { path: '/' });
     }
     history.push(`/details/${containerId}`)
   }

@@ -54,8 +54,8 @@ class Documents extends Component {
       <div className="documents-wrapper">
         <DataTable plain>
           <TableBody>
-            {documents.map(doc => (
-              <TableRow key={doc.name}>
+            {documents.map((doc, index) => (
+              <TableRow key={`${doc.name}-${index}`}>
                 <TableColumn>
                   <a
                     className={`icon ${this.getDocumentIcon(doc)}`}

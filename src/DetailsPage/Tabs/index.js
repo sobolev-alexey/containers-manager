@@ -68,7 +68,7 @@ class ItemTabs extends PureComponent {
             </Tab>
           ) : null}
           {temperatureChart ? (
-            <Tab label="Temperature">
+            <Tab label="Temperature" className="temperature-tab" onClick={() => updateTooltipStep(17)}>
               <Temperature data={itemEvents} callback={onAddTemperatureLocationCallback} />
             </Tab>
           ) : null}

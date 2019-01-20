@@ -102,8 +102,8 @@ export default [
         <span className="action">Click on the "Log out" button</span>
       </div>
     ),
-    target: '.logout-cta',
-    placement: 'left'
+    target: '.header-cta-wrapper',
+    placement: 'bottom'
   },
   {
     // Step 9 - login page
@@ -128,17 +128,6 @@ export default [
     placement: 'top'
   },
   {
-    // Step 10 - list page
-    content: (
-      <div className="tooltip-content">
-        As a freight forwarder, you have been contacted by shipper and informed that a container needs to be moved to the port.<br /><br />
-        <span className="action">Select the container and proceed</span>
-      </div>
-    ),
-    target: '.users-container',
-    placement: 'right'
-  },
-  {
     // Step 11 - details page
     content: (
       <div className="tooltip-content">
@@ -146,7 +135,126 @@ export default [
         <span className="action">Select the the button to confirm Gate-in</span>
       </div>
     ),
-    target: '.gate-in-cta',
-    placement: 'left'
+    target: '.gate-in',
+    placement: 'bottom'
   },
+  {
+    // Step 12 - details page
+    content: (
+      <div className="tooltip-content">
+        Gate-in has been confirmed. You can also check and upload documents to the shared container repository to give full insight (could be Certificate of Origin or the Phytosanitary certificate etc.) These will be accessible by authorized parties at all times.<br /><br />
+        Once all documents have been uploaded or read, click on "Log out" to to change role and issue the customs clearance for export.<br /><br />
+        <span className="action">Click on the "Log out" button</span>
+      </div>
+    ),
+    target: '.header-cta-wrapper',
+    placement: 'bottom'
+  },
+  {
+    // Step 13 - login page
+    content: (
+      <div className="tooltip-content">
+        <span className="action">Change to customs role</span>
+      </div>
+    ),
+    target: '.customs-cta',
+    placement: 'right'
+  },
+  {
+    // Step 14 - list page
+    content: (
+      <div className="tooltip-content">
+        As customs official, you only see the containers already processed or where the status is “Gate-in” and thus awaiting customs clearance for export.<br /><br />
+        <span className="action">Select the container to proceed</span>
+      </div>
+    ),
+    target: '.list-all',
+    placement: 'top'
+  },
+  {
+    // Step 15 - details page
+    content: (
+      <div className="tooltip-content">
+        You have access to prior events for this shipment including uploaded documents, time-stamps for previous events etc. The Tangle serves as the Single-version-of-truth for all actors.<br /><br />
+        <span className="action">Confirm the container is cleared for export</span>
+      </div>
+    ),
+    target: '.container-cleared-for-export',
+    placement: 'bottom'
+  },
+  {
+    // Step 16 - details page
+    content: (
+      <div className="tooltip-content">
+        Container cleared for export! Maybe you want to check the temperature?<br /><br />
+        <span className="action">Go to the temperature tab</span>
+      </div>
+    ),
+    target: '.temperature-tab',
+    placement: 'bottom'
+  },
+  {
+    // Step 17 - details page, temperature tab
+    content: (
+      <div className="tooltip-content">
+        When the container was announced the temperature was logged in as 15° C. But in a live scenario it will be data from a smart sensor that continuously feed into the Tangle to ensure an auditable trace of conditions.<br /><br />
+        <span className="action">Add manually a new temperature value for 14° C</span>
+      </div>
+    ),
+    target: '.detail-section-wrapper',
+    placement: 'top'
+  },
+  {
+    // Step 18 - details page
+    content: (
+      <div className="tooltip-content">
+        An auditable trace of conditions are securely stored in the Tangle for all authorized actors to access. Given the time-stamps it is possible to link any temperature fluctuations to container status and chain-of-custody among actors.<br /><br />
+        <span className="action">Click on the "Log out" button to proceed to last step</span>
+      </div>
+    ),
+    target: '.header-cta-wrapper',
+    placement: 'bottom'
+  },
+  {
+    // Step 19 - login page
+    content: (
+      <div className="tooltip-content">
+        <span className="action">Change to Port role to announce when the container is loaded on vessel.</span>
+      </div>
+    ),
+    target: '.port-cta',
+    placement: 'right'
+  },
+  {
+    // Step 20 - list page
+    content: (
+      <div className="tooltip-content">
+        <span className="action">Select the container to proceed</span>
+      </div>
+    ),
+    target: '.list-all',
+    placement: 'top'
+  },
+  {
+    // Step 21 - details page
+    content: (
+      <div className="tooltip-content">
+        The container is logged and ready to go. Confirm that it is loaded onto vessel & when vessel has departed.<br /><br />
+        <span className="action">Confirm the container is loaded onto vessel</span>
+      </div>
+    ),
+    target: '.container-loaded-on-vessel',
+    placement: 'bottom'
+  },
+  {
+    // Step 22 - details page
+    content: (
+      <div className="tooltip-content">
+        The container is loaded onto vessel.<br /><br />
+        <span className="action">Confirm vessel departure</span>
+      </div>
+    ),
+    target: '.vessel-departure',
+    placement: 'bottom'
+  }
 ];

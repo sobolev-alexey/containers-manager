@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import sizeMe from 'react-sizeme';
 import { withRouter } from 'react-router';
+import { withCookies } from 'react-cookie';
 import { connect } from 'react-redux';
 import { LineChart } from 'react-easy-chart';
 import { TextField, Button } from 'react-md';
@@ -21,7 +22,11 @@ class Temperature extends Component {
     const temperature = this.temperature && this.temperature.value;
     if (!temperature) return;
 
-    const { data, callback } = this.props;
+    const { cookies, data, callback } = this.props;
+    if (Number(cookies.get('tourStep')) === 17) {
+      cookies.set('tourStep', 18, { path: '/' });
+    }
+
     if (data && data[data.length - 1]) {
       const last = data[data.length - 1];
       last.temperature = temperature;
@@ -98,7 +103,7 @@ class Temperature extends Component {
             type="number"
             className={`input-temperature ${showLoader ? 'hidden' : ''}`}
           />
-          <Button raised onClick={this.addTemperature} className={`form-button ${showLoader ? 'hidden' : ''}`}>
+          <Button raised onClick={this.addTemperature} className={`form-button temperature-cta ${showLoader ? 'hidden' : ''}`}>
             Add temperature value
           </Button>
           {
@@ -117,4 +122,4 @@ const mapStateToProps = state => ({
   project: state.project,
 });
 
-export default connect(mapStateToProps)(sizeMe({ monitorHeight: false })(withRouter(Temperature)));
+export default connect(mapStateToProps)(sizeMe({ monitorHeight: false })(withRouter(withCookies(Temperature))));

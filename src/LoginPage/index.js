@@ -69,6 +69,10 @@ class LoginPage extends Component {
       cookies.set('tourStep', 1, { path: '/' });
     } else if (role === 'forwarder' && Number(cookies.get('tourStep')) === 9) {
       cookies.set('tourStep', 10, { path: '/' });
+    } else if (role === 'customs' && Number(cookies.get('tourStep')) === 13) {
+      cookies.set('tourStep', 14, { path: '/' });
+    } else if (role === 'port' && Number(cookies.get('tourStep')) === 19) {
+      cookies.set('tourStep', 20, { path: '/' });
     }
 
     axios
