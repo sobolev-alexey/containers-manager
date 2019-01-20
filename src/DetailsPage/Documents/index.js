@@ -14,9 +14,11 @@ class Documents extends Component {
   componentWillReceiveProps(nextProps) {
     const { item } = nextProps;
     if (!isEmpty(item) && item.documents) {
+      const documents = [];
       item.documents.forEach(async document => {
-        const result = await validateIntegrity(document)
-        this.setState({ documents: [...this.state.documents, {...document, ...result}] })
+        const result = await validateIntegrity(document);
+        documents.push({...document, ...result});
+        this.setState({ documents });
       });
     }
   }

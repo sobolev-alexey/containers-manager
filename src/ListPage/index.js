@@ -79,7 +79,7 @@ class ListPage extends Component {
     const { cookies, project, user, history, items: { data } } = this.props;
     const { showLoader } = this.state;
 
-    if (!project || !project.listPage) return <div />;
+    if (isEmpty(project) || !project.listPage) return <div />;
 
     return (
       <div className="list-page">

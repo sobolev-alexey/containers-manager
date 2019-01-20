@@ -72,7 +72,7 @@ class DetailsPage extends Component {
     if (!containerId || isEmpty(items)) {
       history.push('/list');
     } else if (isEmpty(item) || item[0].containerId !== containerId) {
-      this.retrieveItem(containerId);
+      this.retrieveItem(containerId, true);
     } else {
       this.setState({
         showLoader: false,
