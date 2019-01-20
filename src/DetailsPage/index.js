@@ -63,16 +63,16 @@ class DetailsPage extends Component {
       items,
       history,
       match: {
-        params: { itemId },
+        params: { containerId },
       },
     } = this.props;
     if (isEmpty(user)) {
       history.push('/login');
     }
-    if (!itemId || isEmpty(items)) {
+    if (!containerId || isEmpty(items)) {
       history.push('/list');
-    } else if (isEmpty(item) || item[0].itemId !== itemId) {
-      this.retrieveItem(itemId);
+    } else if (isEmpty(item) || item[0].containerId !== containerId) {
+      this.retrieveItem(containerId);
     } else {
       this.setState({
         showLoader: false,
@@ -127,12 +127,12 @@ class DetailsPage extends Component {
     this.setState({ item, statuses });
   };
 
-  retrieveItem = (itemId, resetStoredItems = false) => {
+  retrieveItem = (containerId, resetStoredItems = false) => {
     const {
       items,
       project: { trackingUnit },
     } = this.props;
-    const item = find(items, { itemId });
+    const item = find(items, { containerId });
     this.setState({ showLoader: true });
     if (resetStoredItems) {
       this.props.resetStoredItem();
@@ -191,7 +191,7 @@ class DetailsPage extends Component {
     } = this.state;
     const {
       user,
-      match: { params: { itemId } },
+      match: { params: { containerId } },
       project: { documentStorage, locationTracking, temperatureChart, detailsPage },
     } = this.props;
 
@@ -204,7 +204,7 @@ class DetailsPage extends Component {
         <Header ctaEnabled>
           <Col xs={4} className="heading">
             <span className="heading-text">
-              #{itemId},&nbsp;
+              #{containerId},&nbsp;
               {
                 typeof detailsPage.title === 'string'
                   ? item[detailsPage.title]

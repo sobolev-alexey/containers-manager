@@ -3,7 +3,7 @@ import config from '../config.json';
 
 export const initializeFirebaseApp = () => firebase.initializeApp(config);
 export const getItemsReference = () => firebase.database().ref('items');
-const getItemReference = itemId => firebase.database().ref(`items/${itemId}`);
+const getItemReference = containerId => firebase.database().ref(`items/${containerId}`);
 const getSettingsReference = () => firebase.database().ref('settings');
 const getEventMappingReference = () => firebase.database().ref('roleEventMapping');
 const getRoleEventMappingReference = role => firebase.database().ref(`roleEventMapping/${role}`);
@@ -53,11 +53,11 @@ export const getEvents = (role, onError) => {
   return promise;
 };
 
-export const getFirebaseSnapshot = (itemId, onError) => {
+export const getFirebaseSnapshot = (containerId, onError) => {
   const promise = new Promise((resolve, reject) => {
     try {
       // Create reference
-      const itemsRef = getItemReference(itemId);
+      const itemsRef = getItemReference(containerId);
 
       itemsRef
         .once('value')
@@ -77,7 +77,7 @@ export const getFirebaseSnapshot = (itemId, onError) => {
 
 export const createItem = (eventBody, channel, secretKey, userId) => {
   // Create item reference
-  const itemsRef = getItemReference(eventBody.itemId);
+  const itemsRef = getItemReference(eventBody.containerId);
 
   itemsRef.set({
     ...eventBody,
@@ -93,7 +93,7 @@ export const createItem = (eventBody, channel, secretKey, userId) => {
 
 export const updateItem = (eventBody, mam, newItemData, user) => {
   // Create reference
-  const itemsRef = getItemReference(eventBody.itemId);
+  const itemsRef = getItemReference(eventBody.containerId);
 
   itemsRef.update({
     ...eventBody,

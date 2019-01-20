@@ -52,15 +52,15 @@ class Autosuggest extends Component {
 
   getSectionSuggestions = section => [section];
 
-  getSuggestionValue = suggestion => suggestion.itemId;
+  getSuggestionValue = suggestion => suggestion.containerId;
 
   renderSuggestion = suggestion => (
     <DataTable plain>
       <TableBody>
-        <TableRow key={suggestion.itemId}>
+        <TableRow key={suggestion.containerId}>
           {this.props.project.listPage.body.map((entry, index) => (
             <TableColumn
-              key={`${suggestion.itemId}-${index}`}
+              key={`${suggestion.containerId}-${index}`}
               className={index === 1 ? 'md-text-center' : index === 2 ? 'md-text-right' : ''}
             >
               {typeof entry === 'string'

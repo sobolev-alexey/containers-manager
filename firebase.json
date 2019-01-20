@@ -65,8 +65,8 @@
         "type": 301
       },
       {
-        "source": "/details/:itemId",
-        "destination": "/#/details/:itemId",
+        "source": "/details/:containerId",
+        "destination": "/#/details/:containerId",
         "type": 301
       }
     ]

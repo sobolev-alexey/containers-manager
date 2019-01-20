@@ -102,7 +102,7 @@ class ListPage extends Component {
           <Autosuggest
             items={data}
             project={project}
-            onSelect={item => history.push(`/details/${item.itemId}`)}
+            onSelect={item => history.push(`/details/${item.containerId}`)}
             trackingUnit={project.trackingUnit}
           />
           <DataTable plain className="list-all">
@@ -121,15 +121,15 @@ class ListPage extends Component {
             <TableBody>
               {data.map(item => (
                 <TableRow
-                  key={item.itemId}
-                  onClick={() => this.selectContainer(item.itemId)}
+                  key={item.containerId || item.itemId}
+                  onClick={() => this.selectContainer(item.containerId)}
                   className={classNames({
-                    'users-container': item.itemId === cookies.get('containerId'),
+                    'users-container': item.containerId === cookies.get('containerId'),
                   })}
                 >
                   {project.listPage.body.map((entry, index) => (
                     <TableColumn
-                      key={`${item.itemId}-${index}`}
+                      key={`${item.containerId}-${index}`}
                       className={
                         index === 1 ? 'md-text-center' : index === 2 ? 'md-text-right' : ''
                       }

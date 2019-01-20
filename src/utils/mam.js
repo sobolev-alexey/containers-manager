@@ -104,7 +104,7 @@ export const createItemChannel = (project, itemId, request, userId) => {
       const secretKey = generateSeed(20);
       const eventBody = {};
       project.firebaseFields.forEach(field => (eventBody[field] = request[field]));
-      eventBody.itemId = itemId;
+      eventBody.containerId = containerId;
       eventBody.timestamp = Date.now();
 
       const messageBody = {
@@ -141,10 +141,10 @@ export const appendItemChannel = async (metadata, props, documentExists, status)
     item,
     items,
     match: {
-      params: { itemId },
+      params: { containerId },
     },
   } = props;
-  const { mam } = find(items, { itemId });
+  const { mam } = find(items, { containerId });
   const { documents } = last(item);
 
   const promise = new Promise(async (resolve, reject) => {
@@ -180,7 +180,7 @@ export const appendItemChannel = async (metadata, props, documentExists, status)
 
           await updateItem(eventBody, mam, newItemData, user);
 
-          return resolve(itemId);
+          return resolve(containerId);
         }
       }
       return reject();
@@ -199,10 +199,10 @@ export const appendTemperatureLocation = async (payload, props) => {
     item,
     items,
     match: {
-      params: { itemId },
+      params: { containerId },
     },
   } = props;
-  const { mam } = find(items, { itemId });
+  const { mam } = find(items, { containerId });
 
   const promise = new Promise(async (resolve, reject) => {
     try {
@@ -217,7 +217,7 @@ export const appendTemperatureLocation = async (payload, props) => {
 
           await updateItem(eventBody, mam, newItemData, user);
 
-          return resolve(itemId);
+          return resolve(containerId);
         }
       }
       return reject();

@@ -80,7 +80,7 @@ class Documents extends Component {
         {documentStorage && fileUploadEnabled && user.canUploadDocuments ? (
           <FilesUpload
             uploadComplete={onUploadComplete}
-            pathTofile={`${trackingUnit.replace(/\s/g, '')}/${item.itemId}`}
+            pathTofile={`${trackingUnit.replace(/\s/g, '')}/${item.containerId}`}
             existingDocuments={documents}
           />
         ) : null}

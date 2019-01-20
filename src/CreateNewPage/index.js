@@ -182,7 +182,7 @@ class CreateItemPage extends Component {
               <TextField
                 value={this.state.id}
                 onChange={this.handleTextChange}
-                id="itemId"
+                id="containerId"
                 label={`${unit} ID`}
                 required
                 type="text"
@@ -275,7 +275,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addItem: itemId => dispatch(addItem(itemId)),
+  addItem: containerId => dispatch(addItem(containerId)),
   storeItem: item => dispatch(storeItem(item)),
 });
 

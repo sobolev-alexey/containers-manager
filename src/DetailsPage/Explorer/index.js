@@ -25,11 +25,11 @@ class Explorer extends Component {
   };
 
   render() {
-    const { item, items, history, match: { params: { itemId } } } = this.props;
-    if (!itemId || isEmpty(items)) {
+    const { item, items, history, match: { params: { containerId } } } = this.props;
+    if (!containerId || isEmpty(items)) {
       history.push('/');
-    } else if (isEmpty(item) || item[0].containerId !== itemId) {
-      this.startFetch(find(items, { itemId }));
+    } else if (isEmpty(item) || item[0].containerId !== containerId) {
+      this.startFetch(find(items, { containerId }));
     }
     const { showLoader } = this.state;
     return (

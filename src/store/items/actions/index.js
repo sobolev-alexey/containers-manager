@@ -1,8 +1,8 @@
 import { ADD_ITEM, STORE_ITEMS } from '../../actionTypes';
 import { getFirebaseSnapshot, getItemsReference } from '../../../utils/firebase';
 
-export const addItem = itemId => {
-  const promise = getFirebaseSnapshot(itemId, console.log);
+export const addItem = containerId => {
+  const promise = getFirebaseSnapshot(containerId, console.log);
   return {
     type: ADD_ITEM,
     promise,

@@ -22,7 +22,7 @@ const Router = () => (
           <Route path="/list" component={ListPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/new" component={CreateNewPage} />
-          <Route path="/details/:itemId" component={DetailsPage} />
+          <Route path="/details/:containerId" component={DetailsPage} />
         </div>
       </HashRouter>
     </Provider>
