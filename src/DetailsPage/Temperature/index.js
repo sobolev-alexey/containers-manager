@@ -49,33 +49,41 @@ class Temperature extends Component {
     const dataSet = sortBy(data, 'timestamp');
     return [
       moment(dataSet[0].timestamp).format('YYYY-MM-DD HH:mm'),
-      moment(last(dataSet).timestamp)
-        .add(1, 'h')
-        .format('YYYY-MM-DD HH:mm'),
+      moment(last(dataSet).timestamp).add(1, 'h').format('YYYY-MM-DD HH:mm'),
     ];
   };
 
   getYRange = data => {
     const temps = data.map(({ temperature }) => temperature);
-    return [Math.ceil(Math.min(...temps) - 1), Math.ceil(Math.max(...temps) + 1)];
+    return [Math.ceil(Math.min(...temps) - 5), Math.ceil(Math.max(...temps) + 5)];
   };
+
+  getFakeData = () => {
+    const temperatures = [15, 12, 10, 13, 15, 17, 18, 15, 14, 12];
+    const data = Array.from(new Array(10), (_, index) => ({
+      timestamp: Date.now() - 3600000 * (10 - index),
+      temperature: temperatures[index]
+    }));
+    return data;
+  }
 
   render() {
     const { showLoader } = this.state;
     const { data, size: { width } } = this.props;
-    let showChart = false, xRange, yRange, temperature
-    if (data && last(data) && last(data).temperature) {
-      showChart = true;
-      const filteredData = data.filter(({ temperature }) => temperature);
-      temperature = this.getTemperatureData(filteredData);
-      xRange = this.getXRange(filteredData);
-      yRange = this.getYRange(filteredData);
+    let xRange, yRange, temperature;
+    let filteredData = data.filter(({ temperature }) => temperature);
+    if (filteredData.length < 2) {
+      filteredData = this.getFakeData().concat(filteredData);
     }
+
+    temperature = this.getTemperatureData(filteredData);
+    xRange = this.getXRange(filteredData);
+    yRange = this.getYRange(filteredData);
 
     return (
       <div className="temperature-chart">
         {
-          showChart && <LineChart
+          <LineChart
             dataPoints
             xType={'time'}
             axes
