@@ -4,6 +4,8 @@ import { sha256 } from 'js-sha256';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { withCookies } from 'react-cookie';
+import upperFirst from 'lodash/upperFirst';
+import isEmpty from 'lodash/isEmpty';
 import { Col } from 'reactstrap';
 import Tooltip from '../SharedComponents/Tooltip';
 import Header from '../SharedComponents/Header';
@@ -11,48 +13,23 @@ import Footer from '../SharedComponents/MiniFooter';
 import Loader from '../SharedComponents/Loader';
 import { storeCredentials, storeEvents } from '../store/user/actions';
 import { storeProjectSettings, storeEventMappings } from '../store/project/actions';
-import shipperIcon from '../assets/images/role-avatars/shipper.svg';
-import forwarderIcon from '../assets/images/role-avatars/forwarder.svg';
-import customsIcon from '../assets/images/role-avatars/customs.svg';
-import portIcon from '../assets/images/role-avatars/port.svg';
+import shipper from '../assets/images/role-avatars/shipper.svg';
+import forwarder from '../assets/images/role-avatars/forwarder.svg';
+import customs from '../assets/images/role-avatars/customs.svg';
+import port from '../assets/images/role-avatars/port.svg';
 import '../assets/scss/loginPage.scss';
 import config from '../config.json';
 
-const roles = [
-  {
-    id: 'shipper',
-    icon: shipperIcon,
-    name: 'Shipper',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'
-  },
-  {
-    id: 'forwarder',
-    icon: forwarderIcon,
-    name: 'Forwarder',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'
-  },
-  {
-    id: 'customs',
-    icon: customsIcon,
-    name: 'Customs',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'
-  },
-  {
-    id: 'port',
-    icon: portIcon,
-    name: 'Port',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'
-  },
-]
+const images = { shipper, forwarder, customs, port }
 
 class LoginPage extends Component {
   state = {
     showLoader: false
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const { cookies, loadEventMappings, loadProjectSettings } = this.props;
-    loadProjectSettings();
+    await loadProjectSettings();
     loadEventMappings();
     const tourStep = cookies.get('tourStep');
     if (!tourStep) {
@@ -94,6 +71,9 @@ class LoginPage extends Component {
 
   render() {
     const { showLoader } = this.state;
+    const { project } = this.props;
+
+    if (isEmpty(project)) return <div />;
 
     return (
       <div className="login-page">
@@ -111,14 +91,14 @@ class LoginPage extends Component {
         </div>
         <div className="roles-wrapper">
           {
-            roles.map(role => (
+            project.roles.map(role => (
               <div className="role-wrapper" key={role.id}>
                 <div className="role-icon">
-                  <img alt={role.name} src={role.icon} />
+                  <img alt={role.name} src={images[role.id]} />
                 </div>
                 <div className="role-info">
                   <div className="role-name">
-                    {role.name}
+                    {upperFirst(role.id)}
                   </div>
                   <div className="role-description">
                     {role.description}
@@ -144,6 +124,10 @@ class LoginPage extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  project: state.project,
+});
+
 const mapDispatchToProps = dispatch => ({
   loadProjectSettings: () => dispatch(storeProjectSettings()),
   loadEventMappings: () => dispatch(storeEventMappings()),
@@ -151,4 +135,4 @@ const mapDispatchToProps = dispatch => ({
   storeEvents: role => dispatch(storeEvents(role)),
 });
 
-export default connect(null, mapDispatchToProps)(withCookies(LoginPage));
+export default connect(mapStateToProps, mapDispatchToProps)(withCookies(LoginPage));
