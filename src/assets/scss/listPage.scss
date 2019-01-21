@@ -9,6 +9,10 @@
   @include cta-wrapper();
 }
 
+.bouncing-loader {
+  margin-bottom: 100px;
+}
+
 .md-data-table--responsive {
   max-width: 1092px;
   margin: 0 auto;

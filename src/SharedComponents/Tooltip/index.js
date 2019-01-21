@@ -7,12 +7,13 @@ import '../../assets/scss/tooltip.scss';
 const Tooltip = ({ cookies, customTooltip = null }) => {
   const stepIndex = Number(cookies.get('tourStep') || 0);
   console.log('Tour step', stepIndex);
-  
+
   return (
     <Joyride
       steps={customTooltip || tooltips}
       stepIndex={!customTooltip ? stepIndex : null}
       hideBackButton
+      disableOverlay
       styles={{
         options: {
           primaryColor: '#603f98',

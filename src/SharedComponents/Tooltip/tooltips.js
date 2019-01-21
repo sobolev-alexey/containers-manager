@@ -62,7 +62,7 @@ export default [
     // Step 5 - details page
     content: (
       <div className="tooltip-content">
-        Your container has been registered. Don't forget to upload key trade documents. These are safely stored and travel digitally with your container twin.<br /><br />
+        Your container has been registered. Do not forget to upload key trade documents. These are safely stored and travel digitally with your container twin.<br /><br />
         <span className="action">Go to the document tab</span>
       </div>
     ),

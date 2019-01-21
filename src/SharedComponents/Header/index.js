@@ -81,7 +81,6 @@ class Header extends Component {
     cookies.remove('containerId');
     reset();
     history.push('/');
-
   };
 
   render() {
