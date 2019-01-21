@@ -87,15 +87,15 @@ footer:not(.footer-mini) {
   justify-content: space-between;
   align-items: center;
   white-space: nowrap;
-  color: var(--brown-grey);
+  color: var(--white);
   @include font-size(16px);
 
   @include media-breakpoint-down(xs) {
     @include font-size(12px);
   }
 
-  .contact {
-    color: var(--white);
+  .copyright {
+    color: var(--brown-grey);
   }
 
   #{$a-tags} {
