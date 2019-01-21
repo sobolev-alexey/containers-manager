@@ -77,10 +77,8 @@ export default [
         <span className="action">Drag & Drop your files into the grey-ish area or browse them to append new document to this container</span>
       </div>
     ),
-    target: '.documents-tab',
-    placement: 'left'
-    // target: '.filepond--wrapper',
-    // placement: 'top'
+    target: '.filepond--wrapper',
+    placement: 'top'
   },
   {
     // Step 7 - details page, documents tab
