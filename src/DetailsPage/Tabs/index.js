@@ -42,41 +42,38 @@ class ItemTabs extends PureComponent {
       updateTooltipStep,
     } = this.props;
     const locations = itemEvents.filter(({ position }) => !isEmpty(position));
+    const { activeTabIndex } = this.state;
+
+    const components = [
+      <StatusList statuses={statuses} />,
+      <Explorer />,
+      <Documents item={item} onUploadComplete={onUploadComplete} fileUploadEnabled={fileUploadEnabled} />,
+      <Temperature data={itemEvents} callback={onAddTemperatureLocationCallback} />,
+      <Location data={locations} callback={onAddTemperatureLocationCallback} />
+    ]
 
     return (
-      <TabsContainer
-        className="tabsWrapper"
-        activeTabIndex={this.state.activeTabIndex}
-        onTabChange={this.onTabChange}
-      >
-        <Tabs tabId="item-details" mobile={size.width <= 768}>
-          <Tab label="Status" onClick={() => updateTooltipStep(5)}>
-            <StatusList statuses={statuses} />
-          </Tab>
-          <Tab label="Tangle" className="tangle-tab" onClick={() => updateTooltipStep(4)}>
-            <Explorer />
-          </Tab>
-          {documentStorage ? (
-            <Tab label="Documents" className="documents-tab" onClick={() => updateTooltipStep(6)}>
-              <Documents
-                item={item}
-                onUploadComplete={onUploadComplete}
-                fileUploadEnabled={fileUploadEnabled}
-              />
-            </Tab>
-          ) : null}
-          {temperatureChart ? (
-            <Tab label="Temperature" className="temperature-tab" onClick={() => updateTooltipStep(17)}>
-              <Temperature data={itemEvents} callback={onAddTemperatureLocationCallback} />
-            </Tab>
-          ) : null}
-          {locationTracking && item.status === 'Vessel departure' ? (
-            <Tab label="Location" className="location-tab" onClick={() => updateTooltipStep(24)}>
-              <Location data={locations} callback={onAddTemperatureLocationCallback} />
-            </Tab>
+      <div className="tabs-wrapper">
+        <TabsContainer
+          activeTabIndex={activeTabIndex}
+          onTabChange={this.onTabChange}
+        >
+          <Tabs tabId="item-details" mobile={size.width <= 768}>
+            <Tab label="Status" onClick={() => updateTooltipStep(5)} />
+            <Tab label="Tangle" className="tangle-tab" onClick={() => updateTooltipStep(4)} />
+            {documentStorage ? (
+              <Tab label="Documents" className="documents-tab" onClick={() => updateTooltipStep(6)} />
             ) : null}
-        </Tabs>
-      </TabsContainer>
+            {temperatureChart ? (
+              <Tab label="Temperature" className="temperature-tab" onClick={() => updateTooltipStep(17)} />
+            ) : null}
+            {locationTracking && item.status === 'Vessel departure' ? (
+              <Tab label="Location" className="location-tab" onClick={() => updateTooltipStep(24)} />
+              ) : null}
+          </Tabs>
+        </TabsContainer>
+        { components[activeTabIndex] }
+      </div>
     );
   }
 }
