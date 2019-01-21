@@ -22,8 +22,11 @@ export const storeItems = user => {
         promises.push(query.once('value'));
       });
 
-      const query = ref.orderByChild('containerId').equalTo('9');
-      promises.push(query.once('value'));
+      if (user.role !== 'port') {
+        // Add additional demo container. Port user will already have it
+        const query = ref.orderByChild('containerId').equalTo('9');
+        promises.push(query.once('value'));
+      }
 
       await Promise.all(promises)
         .then(snapshots => {
