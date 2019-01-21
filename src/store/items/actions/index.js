@@ -16,19 +16,14 @@ export const storeItems = user => {
       const promises = [];
       const ref = getItemsReference();
 
-      switch (user.role) {
-        case 'shipper':
-          const queryByShipper = ref.orderByChild('shipper').equalTo(user.role);
-          promises.push(queryByShipper.once('value'));
-          break;
-        default:
-          const queryByStatus = ref.orderByChild('status');
-          user.previousEvent.forEach(status => {
-            const query = queryByStatus.equalTo(status);
-            promises.push(query.once('value'));
-          });
-          break;
-      }
+      const queryByStatus = ref.orderByChild('status');
+      user.previousEvent.forEach(status => {
+        const query = queryByStatus.equalTo(status);
+        promises.push(query.once('value'));
+      });
+
+      const query = ref.orderByChild('containerId').equalTo('9');
+      promises.push(query.once('value'));
 
       await Promise.all(promises)
         .then(snapshots => {

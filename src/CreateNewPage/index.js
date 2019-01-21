@@ -104,14 +104,6 @@ class CreateItemPage extends Component {
     const formError = this.validate();
     const { cookies, history, storeItem, addItem, user, project } = this.props;
 
-    // Format the item ID to remove dashes and parens
-    const containerId = this.state.id.replace(/[^0-9a-zA-Z_-]/g, '');
-
-    if (Number(cookies.get('tourStep')) === 2) {
-      cookies.set('tourStep', 3, { path: '/' });
-    }
-    cookies.set('containerId', containerId, { path: '/' });
-
     if (!formError) {
       const { id, name, previousEvent } = user;
       const request = {
@@ -123,8 +115,16 @@ class CreateItemPage extends Component {
         status: previousEvent[0],
       };
 
+      // Format the item ID to remove dashes and parens
+      const containerId = this.state.id.replace(/[^0-9a-zA-Z_-]/g, '');
+
       const firebaseSnapshot = await getFirebaseSnapshot(containerId, this.onError);
       if (firebaseSnapshot === null) {
+        if (Number(cookies.get('tourStep')) === 2) {
+          cookies.set('tourStep', 3, { path: '/' });
+        }
+        cookies.set('containerId', containerId, { path: '/' });
+
         this.setState({ showLoader: true });
         const eventBody = await createItemChannel(project, containerId, request, id);
 
