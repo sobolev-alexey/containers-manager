@@ -2,6 +2,10 @@
 @import './mixins';
 @import './variables';
 
+.react-joyride__spotlight {
+    border: 2px solid $primary;
+}
+
 .react-joyride__tooltip {
   h4 {
     color: $secondary;
