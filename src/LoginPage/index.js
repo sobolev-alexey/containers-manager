@@ -11,6 +11,7 @@ import Tooltip from '../SharedComponents/Tooltip';
 import Header from '../SharedComponents/Header';
 import Footer from '../SharedComponents/MiniFooter';
 import Loader from '../SharedComponents/Loader';
+import updateStep from '../utils/cookie';
 import { storeCredentials, storeEvents } from '../store/user/actions';
 import { storeProjectSettings, storeEventMappings } from '../store/project/actions';
 import shipper from '../assets/images/role-avatars/shipper.svg';
@@ -42,15 +43,11 @@ class LoginPage extends Component {
     event.preventDefault();
     this.setState({ showLoader: true });
     const password = sha256(role.toLowerCase());
-    if (role === 'shipper' && Number(cookies.get('tourStep')) === 0) {
-      cookies.set('tourStep', 1, { path: '/' });
-    } else if (role === 'forwarder' && Number(cookies.get('tourStep')) === 9) {
-      cookies.set('tourStep', 10, { path: '/' });
-    } else if (role === 'customs' && Number(cookies.get('tourStep')) === 13) {
-      cookies.set('tourStep', 14, { path: '/' });
-    } else if (role === 'port' && Number(cookies.get('tourStep')) === 19) {
-      cookies.set('tourStep', 20, { path: '/' });
-    }
+
+    role === 'shipper' && updateStep(cookies, 1);
+    role === 'forwarder' && updateStep(cookies, 10);
+    role === 'customs' && updateStep(cookies, 14);
+    role === 'port' && updateStep(cookies, 20);
 
     axios
       .post(`${config.rootURL}/login`, { username: role, password })

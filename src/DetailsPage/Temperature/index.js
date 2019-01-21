@@ -10,6 +10,7 @@ import sortBy from 'lodash/sortBy';
 import last from 'lodash/last';
 import Loader from '../../SharedComponents/Loader';
 import '../../assets/scss/temperature.scss';
+import updateStep from '../../utils/cookie';
 import { appendTemperatureLocation } from '../../utils/mam';
 
 class Temperature extends Component {
@@ -23,9 +24,7 @@ class Temperature extends Component {
     if (!temperature) return;
 
     const { cookies, data, callback } = this.props;
-    if (Number(cookies.get('tourStep')) === 17) {
-      cookies.set('tourStep', 18, { path: '/' });
-    }
+    updateStep(cookies, 18)
 
     if (data && data[data.length - 1]) {
       const last = data[data.length - 1];

@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import sizeMe from 'react-sizeme';
+import { withCookies } from 'react-cookie';
 import { TabsContainer, Tabs, Tab } from 'react-md';
 import isEmpty from 'lodash/isEmpty';
 import StatusList from '../Status';
@@ -7,6 +8,7 @@ import Documents from '../Documents';
 import Temperature from '../Temperature';
 import Explorer from '../Explorer';
 import Location from '../Location';
+import updateStep from '../../utils/cookie';
 import '../../assets/scss/tabs.scss';
 
 class ItemTabs extends PureComponent {
@@ -29,6 +31,7 @@ class ItemTabs extends PureComponent {
 
   render() {
     const {
+      cookies,
       item,
       statuses,
       itemEvents,
@@ -39,7 +42,6 @@ class ItemTabs extends PureComponent {
       onUploadComplete,
       onAddTemperatureLocationCallback,
       fileUploadEnabled,
-      updateTooltipStep,
     } = this.props;
     const locations = itemEvents.filter(({ position }) => !isEmpty(position));
     const { activeTabIndex } = this.state;
@@ -59,16 +61,16 @@ class ItemTabs extends PureComponent {
           onTabChange={this.onTabChange}
         >
           <Tabs tabId="item-details" mobile={size.width <= 768}>
-            <Tab label="Status" onClick={() => updateTooltipStep(5)} />
-            <Tab label="Tangle" className="tangle-tab" onClick={() => updateTooltipStep(4)} />
+            <Tab label="Status" onClick={() => updateStep(cookies, 5)} />
+            <Tab label="Tangle" className="tangle-tab" onClick={() => updateStep(cookies, 4)} />
             {documentStorage ? (
-              <Tab label="Documents" className="documents-tab" onClick={() => updateTooltipStep(6)} />
+              <Tab label="Documents" className="documents-tab" onClick={() => updateStep(cookies, 6)} />
             ) : null}
             {temperatureChart ? (
-              <Tab label="Temperature" className="temperature-tab" onClick={() => updateTooltipStep(17)} />
+              <Tab label="Temperature" className="temperature-tab" onClick={() => updateStep(cookies, 17)} />
             ) : null}
             {locationTracking && item.status === 'Vessel departure' ? (
-              <Tab label="Location" className="location-tab" onClick={() => updateTooltipStep(24)} />
+              <Tab label="Location" className="location-tab" onClick={() => updateStep(cookies, 24)} />
               ) : null}
           </Tabs>
         </TabsContainer>
@@ -78,4 +80,4 @@ class ItemTabs extends PureComponent {
   }
 }
 
-export default sizeMe({ monitorHeight: false })(ItemTabs);
+export default sizeMe({ monitorHeight: false })(withCookies(ItemTabs));

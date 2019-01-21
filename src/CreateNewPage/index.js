@@ -5,6 +5,7 @@ import { withRouter } from 'react-router';
 import { withCookies } from 'react-cookie';
 import isEmpty from 'lodash/isEmpty';
 import upperFirst from 'lodash/upperFirst';
+import updateStep from '../utils/cookie';
 import { Col } from 'reactstrap';
 import { FocusContainer, TextField, SelectField, Button, CardActions, FontIcon } from 'react-md';
 import { toast } from 'react-toastify';
@@ -120,9 +121,7 @@ class CreateItemPage extends Component {
 
       const firebaseSnapshot = await getFirebaseSnapshot(containerId, this.onError);
       if (firebaseSnapshot === null) {
-        if (Number(cookies.get('tourStep')) === 2) {
-          cookies.set('tourStep', 3, { path: '/' });
-        }
+        updateStep(cookies, 3);
         cookies.set('containerId', containerId, { path: '/' });
 
         this.setState({ showLoader: true });

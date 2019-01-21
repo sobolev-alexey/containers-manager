@@ -6,6 +6,7 @@ import { withCookies } from 'react-cookie';
 import classNames from 'classnames';
 import { DataTable, TableHeader, TableBody, TableRow, TableColumn } from 'react-md';
 import isEmpty from 'lodash/isEmpty';
+import updateStep from '../utils/cookie';
 import { storeItems } from '../store/items/actions';
 import Tooltip from '../SharedComponents/Tooltip';
 import Loader from '../SharedComponents/Loader';
@@ -55,23 +56,19 @@ class ListPage extends Component {
 
   createNewContainer = () => {
     const { cookies, history } = this.props;
-    if (Number(cookies.get('tourStep')) === 1) {
-      cookies.set('tourStep', 2, { path: '/' });
-    }
+    updateStep(cookies, 2);
     history.push('/new');
   }
 
   notifyError = message => toast.error(message);
 
   selectContainer = containerId => {
-    const { cookies, user, history } = this.props;
-    if (Number(cookies.get('tourStep')) === 10 && user.role === 'forwarder') {
-      cookies.set('tourStep', 11, { path: '/' });
-    } else if (Number(cookies.get('tourStep')) === 14 && user.role === 'customs') {
-      cookies.set('tourStep', 15, { path: '/' });
-    } else if (Number(cookies.get('tourStep')) === 20 && user.role === 'port') {
-      cookies.set('tourStep', 21, { path: '/' });
-    }
+    const { cookies, history, user: { role } } = this.props;
+
+    role === 'forwarder' && updateStep(cookies, 11);
+    role === 'customs' && updateStep(cookies, 15);
+    role === 'port' && updateStep(cookies, 21);
+
     history.push(`/details/${containerId}`)
   }
 

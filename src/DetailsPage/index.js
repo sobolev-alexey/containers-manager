@@ -13,6 +13,7 @@ import uniqBy from 'lodash/uniqBy';
 import pick from 'lodash/pick';
 import { toast } from 'react-toastify';
 import { storeItem, resetStoredItem } from '../store/item/actions';
+import updateStep from '../utils/cookie';
 import Notification from '../SharedComponents/Notification';
 import Tooltip from '../SharedComponents/Tooltip';
 import Loader from '../SharedComponents/Loader';
@@ -94,7 +95,7 @@ class DetailsPage extends Component {
   };
 
   appendToItem = async status => {
-    const { project } = this.props;
+    const { cookies, project } = this.props;
     const { metadata } = this.state;
     const meta = metadata.length;
     this.setState({ showLoader: true });
@@ -107,10 +108,10 @@ class DetailsPage extends Component {
         fileUploadEnabled: true,
       });
       this.retrieveItem(response);
-      this.updateTooltipStep(12);
-      this.updateTooltipStep(16);
-      this.updateTooltipStep(22);
-      this.updateTooltipStep(23);
+      updateStep(cookies, 12);
+      updateStep(cookies, 16);
+      updateStep(cookies, 22);
+      updateStep(cookies, 23);
     } else {
       this.setState({ showLoader: false });
       this.notifyError('Something went wrong');
@@ -160,19 +161,12 @@ class DetailsPage extends Component {
   };
 
   onUploadComplete = metadata => {
-    this.updateTooltipStep(7);
+    updateStep(this.props.cookies, 7);
     this.setState({ metadata, fileUploadEnabled: false, activeTabIndex: 2 }, () => {
       this.notifySuccess('File upload complete!');
       this.appendToItem();
     });
   };
-
-  updateTooltipStep = step => {
-    const { cookies } = this.props;
-    if (Number(cookies.get('tourStep')) === (step - 1)) {
-      cookies.set('tourStep', step, { path: '/' });
-    }
-  }
 
   render() {
     const {
@@ -184,6 +178,7 @@ class DetailsPage extends Component {
       activeTabIndex,
     } = this.state;
     const {
+      cookies,
       user,
       match: { params: { containerId } },
       project: { documentStorage, locationTracking, temperatureChart, detailsPage },
@@ -216,7 +211,7 @@ class DetailsPage extends Component {
               <Link
                 to="/list"
                 className="button secondary back-cta"
-                onClick={() => this.updateTooltipStep(8)}
+                onClick={() => updateStep(cookies, 8)}
               >
                 Back
               </Link>
@@ -236,7 +231,6 @@ class DetailsPage extends Component {
               onTabChange={this.onTabChange}
               onUploadComplete={this.onUploadComplete}
               onAddTemperatureLocationCallback={this.retrieveItem}
-              updateTooltipStep={this.updateTooltipStep}
             />
             <Details item={item} fields={detailsPage} />
           </div>

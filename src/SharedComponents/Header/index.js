@@ -7,6 +7,7 @@ import { Col, Row } from 'reactstrap';
 import isEmpty from 'lodash/isEmpty';
 import upperFirst from 'lodash/upperFirst';
 import Tooltip from '../Tooltip';
+import updateStep from '../../utils/cookie';
 import { logout } from '../../store/user/actions';
 import { reset } from '../../store/project/actions';
 import logoWhiteHorizontal from '../../assets/images/iota-horizontal-white.svg';
@@ -64,13 +65,9 @@ class Header extends Component {
   logout = () => {
     const { cookies, history, logout } = this.props;
 
-    if (Number(cookies.get('tourStep')) === 8) {
-      cookies.set('tourStep', 9, { path: '/' });
-    } else if (Number(cookies.get('tourStep')) === 12) {
-      cookies.set('tourStep', 13, { path: '/' });
-    } else if (Number(cookies.get('tourStep')) === 18) {
-      cookies.set('tourStep', 19, { path: '/' });
-    }
+    updateStep(cookies, 9);
+    updateStep(cookies, 13);
+    updateStep(cookies, 19);
 
     if (Number(cookies.get('tourStep')) === 24) {
       cookies.remove('tourStep');
