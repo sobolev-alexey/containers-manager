@@ -47,7 +47,6 @@ const StatusButtons = ({ statuses, onClick, showLoader }) => {
 class DetailsPage extends Component {
   state = {
     showLoader: false,
-    fetchComplete: false,
     metadata: [],
     fileUploadEnabled: true,
     statusUpdated: false,
@@ -76,7 +75,6 @@ class DetailsPage extends Component {
     } else {
       this.setState({
         showLoader: false,
-        fetchComplete: true,
         item: last(item),
         statuses: this.getUniqueStatuses(item),
       });
@@ -146,7 +144,7 @@ class DetailsPage extends Component {
           this.setStateCalback
         );
 
-        this.setState({ showLoader: false, fetchComplete: true });
+        this.setState({ showLoader: false });
         return resolve();
       } catch (error) {
         this.setState({ showLoader: false });
@@ -170,12 +168,9 @@ class DetailsPage extends Component {
   };
 
   updateTooltipStep = step => {
-    const { cookies, history } = this.props;
+    const { cookies } = this.props;
     if (Number(cookies.get('tourStep')) === (step - 1)) {
       cookies.set('tourStep', step, { path: '/' });
-    }
-    if (step === 23) {
-      history.push('/tour');
     }
   }
 
@@ -186,7 +181,6 @@ class DetailsPage extends Component {
       statusUpdated,
       statuses,
       item,
-      fetchComplete,
       activeTabIndex,
     } = this.state;
     const {
@@ -235,7 +229,6 @@ class DetailsPage extends Component {
               item={item}
               statuses={statuses}
               itemEvents={this.props.item}
-              fetchComplete={fetchComplete}
               locationTracking={locationTracking}
               documentStorage={documentStorage}
               temperatureChart={temperatureChart}

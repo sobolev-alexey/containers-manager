@@ -71,8 +71,16 @@ class Header extends Component {
     } else if (Number(cookies.get('tourStep')) === 18) {
       cookies.set('tourStep', 19, { path: '/' });
     }
-    logout();
-    history.push('/login');
+
+    if (Number(cookies.get('tourStep')) === 24) {
+      cookies.remove('tourStep');
+      cookies.remove('containerId');
+      logout();
+      history.push('/tour');
+    } else {
+      logout();
+      history.push('/login');
+    }
   };
 
   reset = () => {

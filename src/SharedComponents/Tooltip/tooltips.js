@@ -256,5 +256,27 @@ export default [
     ),
     target: '.vessel-departure',
     placement: 'bottom'
+  },
+  {
+    // Step 23 - details page
+    content: (
+      <div className="tooltip-content">
+        Vessel is on the way to the destination port. You can track location of the vessel.<br /><br />
+        <span className="action">Go to the location tab</span>
+      </div>
+    ),
+    target: '.location-tab',
+    placement: 'bottom'
+  },
+  {
+    // Step 24 - details page
+    content: (
+      <div className="tooltip-content">
+        Congratulations! The shipment is on the way.<br /><br />
+        <span className="action">Click on the "Log out" to complete the tour</span>
+      </div>
+    ),
+    target: '.header-cta-wrapper',
+    placement: 'bottom'
   }
 ];

@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import sizeMe from 'react-sizeme';
 import { TabsContainer, Tabs, Tab } from 'react-md';
 import isEmpty from 'lodash/isEmpty';
-import last from 'lodash/last';
 import StatusList from '../Status';
 import Documents from '../Documents';
 import Temperature from '../Temperature';
@@ -34,7 +33,6 @@ class ItemTabs extends PureComponent {
       statuses,
       itemEvents,
       size,
-      fetchComplete,
       locationTracking,
       documentStorage,
       temperatureChart,
@@ -72,17 +70,11 @@ class ItemTabs extends PureComponent {
               <Temperature data={itemEvents} callback={onAddTemperatureLocationCallback} />
             </Tab>
           ) : null}
-          {
-            locationTracking &&
-            fetchComplete &&
-            itemEvents &&
-            last(itemEvents) &&
-            locations.length > 0 ? (
-              <Tab label="Location">
-                <Location data={locations} callback={onAddTemperatureLocationCallback} />
-              </Tab>
-            ) : null
-          }
+          {locationTracking && item.status === 'Vessel departure' ? (
+            <Tab label="Location" className="location-tab" onClick={() => updateTooltipStep(24)}>
+              <Location data={locations} callback={onAddTemperatureLocationCallback} />
+            </Tab>
+            ) : null}
         </Tabs>
       </TabsContainer>
     );
