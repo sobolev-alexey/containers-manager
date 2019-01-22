@@ -122,7 +122,7 @@ export default [
         <span className="action">Select the container and proceed</span>
       </div>
     ),
-    target: '.list-all',
+    target: '.users-container',
     placement: 'top'
   },
   {
@@ -166,7 +166,7 @@ export default [
         <span className="action">Select the container to proceed</span>
       </div>
     ),
-    target: '.list-all',
+    target: '.users-container',
     placement: 'top'
   },
   {
@@ -230,7 +230,7 @@ export default [
         <span className="action">Select the container to proceed</span>
       </div>
     ),
-    target: '.list-all',
+    target: '.users-container',
     placement: 'top'
   },
   {
