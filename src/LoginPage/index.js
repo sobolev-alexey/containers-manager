@@ -25,7 +25,8 @@ const images = { shipper, forwarder, customs, port }
 
 class LoginPage extends Component {
   state = {
-    showLoader: false
+    showLoader: false,
+    selectedRole: null
   };
 
   async componentDidMount() {
@@ -41,7 +42,7 @@ class LoginPage extends Component {
   loginAs = (event, role) => {
     const { cookies, history, storeCredentials, storeEvents } = this.props;
     event.preventDefault();
-    this.setState({ showLoader: true });
+    this.setState({ showLoader: true, selectedRole: role });
     const password = sha256(role.toLowerCase());
 
     role === 'shipper' && updateStep(cookies, 1);
@@ -57,7 +58,7 @@ class LoginPage extends Component {
         history.push('/list');
       })
       .catch(error => {
-        this.setState({ showLoader: false });
+        this.setState({ showLoader: false, selectedRole: null });
         toast.error(
           error.response && error.response.data && error.response.data.error
             ? error.response.data.error
@@ -67,7 +68,7 @@ class LoginPage extends Component {
   };
 
   render() {
-    const { showLoader } = this.state;
+    const { showLoader, selectedRole } = this.state;
     const { project } = this.props;
 
     if (isEmpty(project)) return <div />;
@@ -107,7 +108,7 @@ class LoginPage extends Component {
                     >
                       Log in
                     </button>
-                    <Loader showLoader={showLoader} />
+                    <Loader showLoader={showLoader && selectedRole === role.id} />
                   </div>
                 </div>
               </div>
