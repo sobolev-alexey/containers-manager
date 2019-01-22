@@ -28,7 +28,7 @@ export default [
     // Step 2 - create new page
     content: (
       <div className="tooltip-content">
-        In order to send your new container, you need to identify and log this so that it can be tracked accordingly.<br /><br />
+        In order to send your new container, you need to identify and log the container so it can be tracked accordingly.<br /><br />
         <span className="action">Name your container and complete the form to create a new shipment</span>
       </div>
     ),
@@ -39,7 +39,7 @@ export default [
     // Step 3 - details page
     content: (
       <div className="tooltip-content">
-        A digital twin of the container is created on the Tangle and a MAM channel is opened, for recording the future events and journey of the container. This allows digital tracking including appending certifications, trade documents and supply chain events, written and accessible by authorised members of the supply chain. No papers and no option to falsify information.<br /><br />
+        A digital twin of the container is created on the Tangle and a MAM channel is opened, for recording the future events and journey of the container. This allows digital tracking including appending certifications, trade documents and supply chain events, written and accessible by authorised members of the supply chain. There is no need for papers and no risk of falsified information.<br /><br />
         <span className="action">Check Tangle to explore the data that has been uploaded to the IOTA Tangle</span>
       </div>
     ),
@@ -50,7 +50,7 @@ export default [
     // Step 4 - details page, tangle tab
     content: (
       <div className="tooltip-content">
-        "Expand all" to see the data current uploaded to Tangle and affiliated to the digital twin of this container.<br /><br />
+        "Expand all" to see the data currently uploaded to Tangle and affiliated to the digital twin of this container.<br /><br />
         A unique MAM data stream has been generated to represent the container. All future events and data will be stored in this MAM channel - making the Tangle the trusted transaction layer between actors.<br /><br />
         <span className="action">Click on "Status" to go back</span>
       </div>
@@ -129,7 +129,7 @@ export default [
     // Step 11 - details page
     content: (
       <div className="tooltip-content">
-        When the container is delivered at the port, you as a freight forwarder need to announce that it is Gate-in into the port area.<br /><br />
+        When the container is delivered at the port, as a freight forwarder you need to announce that it is Gate-in into the port area.<br /><br />
         <span className="action">Select the the button to confirm Gate-in</span>
       </div>
     ),
@@ -173,7 +173,7 @@ export default [
     // Step 15 - details page
     content: (
       <div className="tooltip-content">
-        You have access to prior events for this shipment including uploaded documents, time-stamps for previous events etc. The Tangle serves as the Single-version-of-truth for all actors.<br /><br />
+        You have access to prior events for this shipment including uploaded documents, time-stamps for previous events etc. The Tangle serves as the Single-Version-of-Truth for all actors.<br /><br />
         <span className="action">Confirm the container is cleared for export</span>
       </div>
     ),
@@ -196,7 +196,7 @@ export default [
     content: (
       <div className="tooltip-content">
         When the container was announced the temperature was logged in as 15° C. But in a live scenario it will be data from a smart sensor that continuously feed into the Tangle to ensure an auditable trace of conditions.<br /><br />
-        <span className="action">Add manually a new temperature value for 14° C</span>
+        <span className="action">To illustrate how data can continiously be added, this demo allow to manually add a new temperature value. Try to add 14° C</span>
       </div>
     ),
     target: '.detail-section-wrapper',
@@ -237,7 +237,7 @@ export default [
     // Step 21 - details page
     content: (
       <div className="tooltip-content">
-        The container is logged and ready to go. Confirm that it is loaded onto vessel & when vessel has departed.<br /><br />
+        The container is logged and ready to go: Step 1: Confirm that it is loaded onto vessel & step 2: Confirm when vessel has departed.<br /><br />
         <span className="action">Confirm the container is loaded onto vessel</span>
       </div>
     ),
