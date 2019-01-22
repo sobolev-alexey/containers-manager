@@ -82,26 +82,7 @@ class IntroPage extends Component {
               </Col>
             </Row>
           </div>
-          <div className="alternate extra-padding" id="introduction">
-            <Row>
-              <Col xs={12}>
-                <h2 className="d-flex justify-content-responsive">
-                  Introducing IOTA
-                </h2>
-                <div className="video-container">
-                  <iframe
-                    className="video"
-                    src="https://www.youtube.com/embed/Gr-LstcDcAw"
-                    frameBorder="0"
-                    allow="autoplay; encrypted-media"
-                    allowFullScreen=""
-                    title="Introducing IOTA"
-                  ></iframe>
-                </div>
-              </Col>
-            </Row>
-          </div>
-          <div className="extra-padding" id="solution">
+          <div className="alternate extra-padding" id="solution">
             <Row>
               <Col xs={12}>
                 <h2 className="d-flex justify-content-responsive">
@@ -155,7 +136,7 @@ class IntroPage extends Component {
               </Col>
             </Row>
           </div>
-          <div className="alternate extra-padding" id="tryit">
+          <div className="extra-padding" id="tryit">
             <Row>
               <Col sm={{ size: 8, offset: 2 }} xs={12}>
                 <h2 className="d-flex justify-content-responsive">
@@ -179,7 +160,6 @@ class IntroPage extends Component {
         <Footer
           anchors={[
             { anchor: 'problem', text: 'The global problem'},
-            { anchor: 'introduction', text: 'Introducing IOTA'},
             { anchor: 'solution', text: 'The IOTA solution'},
             { anchor: 'tryit', text: 'Try the demo'},
           ]}

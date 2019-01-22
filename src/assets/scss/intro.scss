@@ -233,27 +233,4 @@ $header-width-constraint: 1025px;
       }
     }
   }
-
-  .video-container {
-    padding-bottom: 30px;
-    display: flex;
-    justify-content: center;
-  }
-
-  .video {
-    width: 50%;
-    height: 330px;
-
-    @include media-breakpoint-down(lg) {
-      width: 75%;
-    }
-
-    @include media-breakpoint-down(md) {
-      width: 85%;
-    }
-
-    @include media-breakpoint-down(sm) {
-      width: 100%;
-    }
-  }
 }
