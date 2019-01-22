@@ -239,7 +239,7 @@ class DetailsPage extends Component {
           </div>
         </div>
         <Notification />
-        <Tooltip fetchComplete={fetchComplete} />
+        <Tooltip fetchComplete={fetchComplete} activeTabIndex={activeTabIndex} />
         <Footer />
       </div>
     );

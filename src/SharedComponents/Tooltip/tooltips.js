@@ -199,8 +199,8 @@ export default [
         <span className="action">To illustrate how data can continiously be added, this demo allow to manually add a new temperature value. Try to add 14° C</span>
       </div>
     ),
-    target: '.detail-section-wrapper',
-    placement: 'top'
+    target: '.temperature-cta',
+    placement: 'right'
   },
   {
     // Step 18 - details page

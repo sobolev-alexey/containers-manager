@@ -8,7 +8,8 @@ import '../../assets/scss/tooltip.scss';
 class Tooltip extends Component {
   static defaultProps = {
     customTooltip: null,
-    fetchComplete: null
+    fetchComplete: null,
+    activeTabIndex: null,
   }
 
   state = {
@@ -23,13 +24,31 @@ class Tooltip extends Component {
     }
   }
 
+  // scrollIntoView = () => {
+  //   const target = document.querySelector('html');
+  //   target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // }
+
   render() {
-    const { cookies, customTooltip, fetchComplete } = this.props;
+    const { cookies, customTooltip, fetchComplete, activeTabIndex } = this.props;
     const stepIndex = Number(cookies.get('tourStep') || 0);
     console.log('Tour step', stepIndex);
 
     if (fetchComplete === false) {
       return null;
+    }
+
+    // if (fetchComplete !== null) {
+    //   this.scrollIntoView();
+    // }
+
+    let run = true;
+    if (stepIndex === 4 && activeTabIndex !== 1) {
+      run = false;
+    } else if (stepIndex === 6 && activeTabIndex !== 2) {
+      run = false;
+    } else if (stepIndex === 17 && activeTabIndex !== 3) {
+      run = false;
     }
 
     return (
@@ -40,6 +59,7 @@ class Tooltip extends Component {
           callback={this.removeAutostart}
           hideBackButton
           spotlightClicks
+          run={run}
           styles={{
             options: {
               overlayColor: 'transparent',
