@@ -48,6 +48,7 @@ const StatusButtons = ({ statuses, onClick, showLoader }) => {
 class DetailsPage extends Component {
   state = {
     showLoader: false,
+    fetchComplete: false,
     metadata: [],
     fileUploadEnabled: true,
     statusUpdated: false,
@@ -76,6 +77,7 @@ class DetailsPage extends Component {
     } else {
       this.setState({
         showLoader: false,
+        fetchComplete: true,
         item: last(item),
         statuses: this.getUniqueStatuses(item),
       });
@@ -145,7 +147,7 @@ class DetailsPage extends Component {
           this.setStateCalback
         );
 
-        this.setState({ showLoader: false });
+        this.setState({ showLoader: false, fetchComplete: true });
         return resolve();
       } catch (error) {
         this.setState({ showLoader: false });
@@ -175,6 +177,7 @@ class DetailsPage extends Component {
       statusUpdated,
       statuses,
       item,
+      fetchComplete,
       activeTabIndex,
     } = this.state;
     const {
@@ -236,7 +239,7 @@ class DetailsPage extends Component {
           </div>
         </div>
         <Notification />
-        <Tooltip />
+        <Tooltip fetchComplete={fetchComplete} />
         <Footer />
       </div>
     );

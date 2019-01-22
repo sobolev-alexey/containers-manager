@@ -8,6 +8,7 @@ import '../../assets/scss/tooltip.scss';
 class Tooltip extends Component {
   static defaultProps = {
     customTooltip: null,
+    fetchComplete: null
   }
 
   state = {
@@ -23,9 +24,13 @@ class Tooltip extends Component {
   }
 
   render() {
-    const { cookies, customTooltip } = this.props;
+    const { cookies, customTooltip, fetchComplete } = this.props;
     const stepIndex = Number(cookies.get('tourStep') || 0);
     console.log('Tour step', stepIndex);
+
+    if (fetchComplete === false) {
+      return null;
+    }
 
     return (
       <ErrorBoundary>
@@ -35,7 +40,6 @@ class Tooltip extends Component {
           callback={this.removeAutostart}
           hideBackButton
           spotlightClicks
-          // disableOverlay
           styles={{
             options: {
               overlayColor: 'transparent',
