@@ -103,6 +103,12 @@ class DetailsPage extends Component {
     this.setState({ showLoader: true });
     const response = await appendItemChannel(metadata, this.props, this.documentExists, status);
     if (response) {
+      updateStep(cookies, 7);
+      status === 'Gate-in' && updateStep(cookies, 12);
+      status === 'Container cleared for export' && updateStep(cookies, 16);
+      status === 'Container loaded on vessel' && updateStep(cookies, 22);
+      status === 'Vessel departure' && updateStep(cookies, 23);
+
       this.notifySuccess(`${upperFirst(project.trackingUnit)} ${meta ? '' : 'status '}updated`);
       this.setState({
         showLoader: false,
@@ -110,10 +116,6 @@ class DetailsPage extends Component {
         fileUploadEnabled: true,
       });
       this.retrieveItem(response);
-      updateStep(cookies, 12);
-      updateStep(cookies, 16);
-      updateStep(cookies, 22);
-      updateStep(cookies, 23);
     } else {
       this.setState({ showLoader: false });
       this.notifyError('Something went wrong');
@@ -163,7 +165,6 @@ class DetailsPage extends Component {
   };
 
   onUploadComplete = metadata => {
-    updateStep(this.props.cookies, 7);
     this.setState({ metadata, fileUploadEnabled: false, activeTabIndex: 2 }, () => {
       this.notifySuccess('File upload complete!');
       this.appendToItem();

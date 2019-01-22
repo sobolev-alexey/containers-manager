@@ -89,7 +89,7 @@ export default [
       </div>
     ),
     target: '.back-cta',
-    placement: 'right'
+    placement: 'bottom'
   },
   {
     // Step 8 - list page
@@ -200,7 +200,7 @@ export default [
       </div>
     ),
     target: '.temperature-cta',
-    placement: 'right'
+    placement: 'bottom'
   },
   {
     // Step 18 - details page

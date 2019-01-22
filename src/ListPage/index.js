@@ -143,7 +143,7 @@ class ListPage extends Component {
         </div>
         <Notification />
         <Footer />
-        <Tooltip />
+        <Tooltip fetchComplete={!showLoader} />
       </div>
     );
   }

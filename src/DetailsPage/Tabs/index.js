@@ -67,7 +67,7 @@ class ItemTabs extends PureComponent {
               <Tab label="Documents" className="documents-tab" onClick={() => updateStep(cookies, 6)} />
             ) : null}
             {temperatureChart ? (
-              <Tab label="Temperature" className="temperature-tab" onClick={() => updateStep(cookies, 17)} />
+              <Tab label="Temperature" className="temperature-tab" />
             ) : null}
             {locationTracking && item.status === 'Vessel departure' ? (
               <Tab label="Location" className="location-tab" onClick={() => updateStep(cookies, 24)} />
