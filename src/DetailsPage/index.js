@@ -12,6 +12,7 @@ import last from 'lodash/last';
 import uniqBy from 'lodash/uniqBy';
 import pick from 'lodash/pick';
 import { toast } from 'react-toastify';
+import { storeItems } from '../store/items/actions';
 import { storeItem, resetStoredItem } from '../store/item/actions';
 import updateStep from '../utils/cookie';
 import Notification from '../SharedComponents/Notification';
@@ -73,7 +74,7 @@ class DetailsPage extends Component {
     if (!containerId || isEmpty(items)) {
       history.push('/list');
     } else if (isEmpty(item) || item[0].containerId !== containerId) {
-      this.retrieveItem(containerId, true);
+      this.retrieveItem(containerId);
     } else {
       this.setState({
         showLoader: false,
@@ -130,16 +131,12 @@ class DetailsPage extends Component {
     this.setState({ item, statuses });
   };
 
-  retrieveItem = (containerId, resetStoredItems = false) => {
-    const {
-      items,
-      project: { trackingUnit },
-    } = this.props;
+  retrieveItem = (containerId) => {
+    const { items, user, project: { trackingUnit } } = this.props;
     const item = find(items, { containerId });
     this.setState({ showLoader: true });
-    if (resetStoredItems) {
-      this.props.resetStoredItem();
-    }
+    this.props.resetStoredItem();
+    this.props.storeItems(user);
     const promise = new Promise(async (resolve, reject) => {
       try {
         await fetchItem(
@@ -256,6 +253,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   storeItem: item => dispatch(storeItem(item)),
+  storeItems: user => dispatch(storeItems(user)),
   resetStoredItem: () => dispatch(resetStoredItem()),
 });
 
