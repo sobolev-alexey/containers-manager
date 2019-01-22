@@ -16,16 +16,21 @@ export const storeItems = user => {
       const promises = [];
       const ref = getItemsReference();
 
-      const queryByStatus = ref.orderByChild('status');
-      user.previousEvent.forEach(status => {
-        const query = queryByStatus.equalTo(status);
-        promises.push(query.once('value'));
-      });
+      if (user.role === 'shipper') {
+        // Add containers of the shiiper
+        promises.push(ref.once('value'));
+      } else {
+        const queryByStatus = ref.orderByChild('status');
+        user.previousEvent.forEach(status => {
+          const query = queryByStatus.equalTo(status);
+          promises.push(query.once('value'));
+        });
 
-      if (user.role !== 'port') {
-        // Add additional demo container. Port user will already have it
-        const query = ref.orderByChild('containerId').equalTo('9');
-        promises.push(query.once('value'));
+        if (user.role !== 'port') {
+          // Add additional demo container. Port user will already have it
+          const query = ref.orderByChild('containerId').equalTo('9');
+          promises.push(query.once('value'));
+        }
       }
 
       await Promise.all(promises)
