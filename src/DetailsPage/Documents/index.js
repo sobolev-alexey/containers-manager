@@ -11,8 +11,15 @@ class Documents extends Component {
     documents: [],
   };
 
+  componentDidMount() {
+    this.generateDocumentList(this.props.item);
+  }
+
   componentWillReceiveProps(nextProps) {
-    const { item } = nextProps;
+    this.generateDocumentList(nextProps.item);
+  }
+
+  generateDocumentList = item => {
     if (!isEmpty(item) && item.documents) {
       const documents = [];
       item.documents.forEach(async document => {
