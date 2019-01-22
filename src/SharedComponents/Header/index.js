@@ -54,6 +54,7 @@ class Header extends Component {
   logout = () => {
     const { cookies, history, logout } = this.props;
 
+    logout();
     updateStep(cookies, 9);
     updateStep(cookies, 13);
     updateStep(cookies, 19);
@@ -61,10 +62,8 @@ class Header extends Component {
     if (Number(cookies.get('tourStep')) === 24) {
       cookies.remove('tourStep');
       cookies.remove('containerId');
-      logout();
       history.push('/tour');
     } else {
-      logout();
       history.push('/login');
     }
   };
