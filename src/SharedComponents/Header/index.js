@@ -70,11 +70,11 @@ class Header extends Component {
   };
 
   reset = () => {
-    const { cookies, history, reset } = this.props;
+    const { cookies, reset } = this.props;
     cookies.remove('tourStep');
     cookies.remove('containerId');
     reset();
-    history.push('/');
+    window.location.reload();
   };
 
   render() {
