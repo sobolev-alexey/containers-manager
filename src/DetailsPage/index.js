@@ -101,7 +101,7 @@ class DetailsPage extends Component {
     const { cookies, project } = this.props;
     const { metadata } = this.state;
     const meta = metadata.length;
-    this.setState({ showLoader: true });
+    this.setState({ showLoader: true, fetchComplete: false });
     const response = await appendItemChannel(metadata, this.props, this.documentExists, status);
     if (response) {
       updateStep(cookies, 7);
