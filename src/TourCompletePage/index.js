@@ -10,7 +10,7 @@ class IntroPage extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="heading-image d-flex justify-content-center align-items-center">
+        <div className="heading-image end d-flex justify-content-center align-items-center">
           <div className="overlay d-flex flex-column">
             <div className="head-1">Congratulations</div>
             <div className="head-2">The shipment is on the way</div>

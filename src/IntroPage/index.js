@@ -99,9 +99,9 @@ class IntroPage extends Component {
               </Col>
               <Col xs={12} sm={6} className="d-flex flex-column justify-content-center">
                 <img
-                  className="img-fluid use-cases-1"
+                  className="img-fluid use-cases-3"
                   src={useCasesPlaceholder}
-                  alt="Use Cases 1"
+                  alt="Use Cases 3"
                 />
               </Col>
               <Col
@@ -110,9 +110,9 @@ class IntroPage extends Component {
                 className="d-flex flex-column justify-content-center hidden-xs-down"
               >
                 <img
-                  className="img-fluid use-cases-2"
+                  className="img-fluid use-cases-4"
                   src={useCasesPlaceholder}
-                  alt="Use Cases 2"
+                  alt="Use Cases 4"
                 />
               </Col>
               <Col xs={12} sm={6} className="d-flex flex-column justify-content-center">

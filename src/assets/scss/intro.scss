@@ -42,17 +42,25 @@ $header-width-constraint: 1025px;
 .heading-image {
   @include media-breakpoint-down(xs) {
     min-height: 400px;
-    background-image: url('../images/intro/header.jpg');
+    background-image: url('../images/intro/1x_Header_Main.png');
     background-position: right center;
   }
 
 
   min-height: calc(350 * ((100vw - 800px) / 800) + 350px);
   background-color: var(--black);
-  background-image: url('../images/intro/header-retina.jpg');
+  background-image: url('../images/intro/2x_Header_Main.png');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
+
+  &.end {
+    background-image: url('../images/intro/2x_Header_End.png');
+
+    @include media-breakpoint-down(xs) {
+      background-image: url('../images/intro/1x_Header_End.png');
+    }
+  }
 
   .overlay {
     @include media-breakpoint-down(xs) {
@@ -191,21 +199,41 @@ $header-width-constraint: 1025px;
 
   .use-cases-1 {
     @include media-breakpoint-down(xs) {
-      background-image: url('../images/intro/use-cases-1.jpg');
+      background-image: url('../images/intro/1x_Graphic_01.png');
     }
 
 
-    background-image: url('../images/intro/use-cases-1-retina.jpg');
+    background-image: url('../images/intro/2x_Graphic_01.png');
     background-size: cover;
   }
 
   .use-cases-2 {
     @include media-breakpoint-down(xs) {
-      background-image: url('../images/intro/use-cases-2.jpg');
+      background-image: url('../images/intro/1x_Graphic_02.png');
     }
 
 
-    background-image: url('../images/intro/use-cases-2-retina.jpg');
+    background-image: url('../images/intro/2x_Graphic_02.png');
+    background-size: cover;
+  }
+
+  .use-cases-3 {
+    @include media-breakpoint-down(xs) {
+      background-image: url('../images/intro/1x_Graphic_03.png');
+    }
+
+
+    background-image: url('../images/intro/2x_Graphic_03.png');
+    background-size: cover;
+  }
+
+  .use-cases-4 {
+    @include media-breakpoint-down(xs) {
+      background-image: url('../images/intro/1x_Graphic_04.png');
+    }
+
+
+    background-image: url('../images/intro/2x_Graphic_04.png');
     background-size: cover;
   }
 
