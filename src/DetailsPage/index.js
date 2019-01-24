@@ -49,6 +49,7 @@ const StatusButtons = ({ statuses, onClick, showLoader }) => {
 class DetailsPage extends Component {
   state = {
     showLoader: false,
+    loaderHint: null,
     fetchComplete: false,
     metadata: [],
     fileUploadEnabled: true,
@@ -101,7 +102,7 @@ class DetailsPage extends Component {
     const { cookies, project } = this.props;
     const { metadata } = this.state;
     const meta = metadata.length;
-    this.setState({ showLoader: true, fetchComplete: false });
+    this.setState({ showLoader: true, fetchComplete: false, loaderHint: 'Updating Tangle' });
     const response = await appendItemChannel(metadata, this.props, this.documentExists, status);
     if (response) {
       updateStep(cookies, 8);
@@ -115,10 +116,11 @@ class DetailsPage extends Component {
         showLoader: false,
         metadata: [],
         fileUploadEnabled: true,
+        loaderHint: null
       });
       this.retrieveItem(response);
     } else {
-      this.setState({ showLoader: false });
+      this.setState({ showLoader: false, loaderHint: null });
       this.notifyError('Something went wrong');
     }
   };
@@ -134,7 +136,7 @@ class DetailsPage extends Component {
   retrieveItem = (containerId) => {
     const { items, user, project: { trackingUnit } } = this.props;
     const item = find(items, { containerId });
-    this.setState({ showLoader: true });
+    this.setState({ showLoader: true, loaderHint: 'Fetching data' });
     this.props.resetStoredItem();
     this.props.storeItems(user);
     const promise = new Promise(async (resolve, reject) => {
@@ -146,10 +148,10 @@ class DetailsPage extends Component {
           this.setStateCalback
         );
 
-        this.setState({ showLoader: false, fetchComplete: true });
+        this.setState({ showLoader: false, fetchComplete: true, loaderHint: null });
         return resolve();
       } catch (error) {
-        this.setState({ showLoader: false });
+        this.setState({ showLoader: false, loaderHint: null });
         return reject(this.notifyError(`Error loading ${trackingUnit} data`));
       }
     });
@@ -172,6 +174,7 @@ class DetailsPage extends Component {
     const {
       fileUploadEnabled,
       showLoader,
+      loaderHint,
       statusUpdated,
       statuses,
       item,
@@ -204,7 +207,7 @@ class DetailsPage extends Component {
           </Col>
         </Header>
         <div className={`loader-wrapper ${showLoader ? '' : 'hidden'}`}>
-          <Loader showLoader={showLoader} />
+          <Loader showLoader={showLoader} text={loaderHint} />
         </div>
         <div className="details-wrapper">
           <div className="md-block-centered">

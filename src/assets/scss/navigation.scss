@@ -6,9 +6,12 @@ nav {
 
   ul {
     @include media-breakpoint-down(xs) {
-      padding: 10px 15px 10px 10px;
+      display: none;
     }
 
+    @include media-breakpoint-down(sm) {
+      padding: 13px 20px 13px 15px;
+    }
 
     margin: 0;
     padding: 13px 30px 13px 40px;
@@ -16,10 +19,9 @@ nav {
     text-align: right;
 
     li {
-      @include media-breakpoint-down(xs) {
-        margin: 0px 0px 0px 10px;
+      @include media-breakpoint-down(sm) {
+        margin: 0px 0px 0px 20px;
       }
-
 
       display: inline-block;
       margin: 0px 0px 0px 30px;

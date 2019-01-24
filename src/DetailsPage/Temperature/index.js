@@ -15,7 +15,8 @@ import { appendTemperatureLocation } from '../../utils/mam';
 
 class Temperature extends Component {
   state = {
-    showLoader: false
+    showLoader: false,
+    loaderHint: null
   };
 
   componentDidMount() {
@@ -33,9 +34,9 @@ class Temperature extends Component {
       const last = data[data.length - 1];
       last.temperature = temperature;
       last.timestamp = Date.now();
-      this.setState({ showLoader: true });
+      this.setState({ showLoader: true, loaderHint: 'Updating Tangle' });
       const result = await appendTemperatureLocation(last, this.props);
-      this.setState({ showLoader: false });
+      this.setState({ showLoader: false, loaderHint: null });
       updateStep(cookies, 19);
       callback(result, true);
     }
@@ -71,7 +72,7 @@ class Temperature extends Component {
   }
 
   render() {
-    const { showLoader } = this.state;
+    const { showLoader, loaderHint } = this.state;
     const { data, size: { width } } = this.props;
     let xRange, yRange, temperature;
     let filteredData = data.filter(({ temperature }) => temperature);
@@ -118,7 +119,11 @@ class Temperature extends Component {
             Add temperature value
           </Button>
           {
-            showLoader && (<div className="loader-wrapper"><Loader showLoader={showLoader} /></div>)
+            showLoader ? (
+              <div className="loader-wrapper">
+                <Loader showLoader={showLoader} text={loaderHint} />
+              </div>
+            ) : null
           }
         </form>
       </div>
