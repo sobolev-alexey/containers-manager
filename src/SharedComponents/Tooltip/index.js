@@ -45,9 +45,9 @@ class Tooltip extends Component {
     let run = true;
     if (stepIndex === 4 && activeTabIndex !== 1) {
       run = false;
-    } else if (stepIndex === 6 && activeTabIndex !== 2) {
+    } else if (stepIndex === 7 && activeTabIndex !== 2) {
       run = false;
-    } else if (stepIndex === 17 && activeTabIndex !== 3) {
+    } else if (stepIndex === 18 && activeTabIndex !== 3) {
       run = false;
     }
 

@@ -104,11 +104,11 @@ class DetailsPage extends Component {
     this.setState({ showLoader: true, fetchComplete: false });
     const response = await appendItemChannel(metadata, this.props, this.documentExists, status);
     if (response) {
-      updateStep(cookies, 7);
-      status === 'Gate-in' && updateStep(cookies, 12);
-      status === 'Container cleared for export' && updateStep(cookies, 16);
-      status === 'Container loaded on vessel' && updateStep(cookies, 22);
-      status === 'Vessel departure' && updateStep(cookies, 23);
+      updateStep(cookies, 8);
+      status === 'Gate-in' && updateStep(cookies, 13);
+      status === 'Container cleared for export' && updateStep(cookies, 17);
+      status === 'Container loaded on vessel' && updateStep(cookies, 23);
+      status === 'Vessel departure' && updateStep(cookies, 24);
 
       this.notifySuccess(`${upperFirst(project.trackingUnit)} ${meta ? '' : 'status '}updated`);
       this.setState({
@@ -212,7 +212,7 @@ class DetailsPage extends Component {
               <Link
                 to="/list"
                 className="button secondary back-cta"
-                onClick={() => updateStep(cookies, 8)}
+                onClick={() => updateStep(cookies, 9)}
               >
                 Back
               </Link>

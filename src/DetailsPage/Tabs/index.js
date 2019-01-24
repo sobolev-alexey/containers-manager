@@ -61,16 +61,16 @@ class ItemTabs extends PureComponent {
           onTabChange={this.onTabChange}
         >
           <Tabs tabId="item-details" mobile={size.width <= 768}>
-            <Tab label="Status" onClick={() => updateStep(cookies, 5)} />
+            <Tab label="Status" className="status-tab" onClick={() => updateStep(cookies, 6)} />
             <Tab label="Tangle" className="tangle-tab" onClick={() => updateStep(cookies, 4)} />
             {documentStorage ? (
-              <Tab label="Documents" className="documents-tab" onClick={() => updateStep(cookies, 6)} />
+              <Tab label="Documents" className="documents-tab" onClick={() => updateStep(cookies, 7)} />
             ) : null}
             {temperatureChart ? (
               <Tab label="Temperature" className="temperature-tab" />
             ) : null}
             {locationTracking && item.status === 'Vessel departure' ? (
-              <Tab label="Location" className="location-tab" onClick={() => updateStep(cookies, 24)} />
+              <Tab label="Location" className="location-tab" onClick={() => updateStep(cookies, 25)} />
               ) : null}
           </Tabs>
         </TabsContainer>

@@ -46,9 +46,9 @@ class LoginPage extends Component {
     const password = sha256(role.toLowerCase());
 
     role === 'shipper' && updateStep(cookies, 1);
-    role === 'forwarder' && updateStep(cookies, 10);
-    role === 'customs' && updateStep(cookies, 14);
-    role === 'port' && updateStep(cookies, 20);
+    role === 'forwarder' && updateStep(cookies, 11);
+    role === 'customs' && updateStep(cookies, 15);
+    role === 'port' && updateStep(cookies, 21);
 
     axios
       .post(`${config.rootURL}/login`, { username: role, password })

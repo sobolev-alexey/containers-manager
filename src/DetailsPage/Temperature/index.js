@@ -19,7 +19,7 @@ class Temperature extends Component {
   };
 
   componentDidMount() {
-    updateStep(this.props.cookies, 17);
+    updateStep(this.props.cookies, 18);
   }
 
   addTemperature = async event => {
@@ -36,7 +36,7 @@ class Temperature extends Component {
       this.setState({ showLoader: true });
       const result = await appendTemperatureLocation(last, this.props);
       this.setState({ showLoader: false });
-      updateStep(cookies, 18);
+      updateStep(cookies, 19);
       callback(result, true);
     }
   }

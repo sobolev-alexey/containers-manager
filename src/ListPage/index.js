@@ -65,9 +65,9 @@ class ListPage extends Component {
   selectContainer = containerId => {
     const { cookies, history, user: { role } } = this.props;
 
-    role === 'forwarder' && updateStep(cookies, 11);
-    role === 'customs' && updateStep(cookies, 15);
-    role === 'port' && updateStep(cookies, 21);
+    role === 'forwarder' && updateStep(cookies, 12);
+    role === 'customs' && updateStep(cookies, 16);
+    role === 'port' && updateStep(cookies, 22);
 
     history.push(`/details/${containerId}`)
   }

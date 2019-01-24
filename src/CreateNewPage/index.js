@@ -182,6 +182,7 @@ class CreateItemPage extends Component {
                 value={this.state.id}
                 onChange={this.handleTextChange}
                 id="containerId"
+                className="input-containerId"
                 label={`${unit} ID`}
                 required
                 type="text"
