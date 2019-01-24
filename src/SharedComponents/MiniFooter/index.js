@@ -12,7 +12,7 @@ export default ({ children }) => (
       </Col>
       <Col xs={12} sm={12} md={4} className="d-flex justify-content-center">
         <span>
-          <Link to="/tour">Finish demo? Learn more about IOTA & Trade</Link>
+          <Link to="/tour">Liked the demo? Learn more about IOTA & Trade</Link>
         </span>
       </Col>
       <Col xs={12} sm={12} md={4} className="d-flex justify-content-end">

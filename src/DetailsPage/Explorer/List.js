@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { withCookies } from 'react-cookie';
 import { ExpansionList, ExpansionPanel, Switch } from 'react-md';
 import MessageContent from './MessageContent';
+import updateStep from '../../utils/cookie';
 import '../../assets/scss/explorer.scss';
 
 class List extends Component {
@@ -33,6 +35,7 @@ class List extends Component {
   };
 
   toggleExpandedState = expanded => {
+    updateStep(this.props.cookies, 5);
     if (!expanded) {
       this.setState({ expanded, expandedPanels: [] });
     } else {
@@ -75,4 +78,4 @@ class List extends Component {
   }
 }
 
-export default List;
+export default withCookies(List);

@@ -60,7 +60,7 @@ class Tooltip extends Component {
           hideBackButton
           spotlightClicks
           run={run}
-          disableOverlay={stepIndex === 6}
+          disableOverlay={stepIndex === 7}
           styles={{
             options: {
               overlayColor: 'transparent',

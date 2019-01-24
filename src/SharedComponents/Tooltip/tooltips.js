@@ -6,7 +6,8 @@ export default [
     title: "Let's begin",
     content: (
       <div className="tooltip-content">
-        Congratulations, you have just sold a full container load of coffee to a buyer in Singapore<br /><br />
+        Congratulations, you have just sold a full container load of coffee to a buyer in Singapore.<br />
+        Now it's time to ship it.<br /><br />
         <span className="action">Log in as Shipper to prepare the shipment</span>
       </div>
     ),
@@ -17,7 +18,7 @@ export default [
     // Step 1 - list page
     content: (
       <div className="tooltip-content">
-        As you can see there is already a list of containers moving around in the world, you need to announce a new container for the coffee to Singapore<br /><br />
+        As you can see there is already a list of containers moving around the world, you need to announce a new container for the coffee to Singapore<br /><br />
         <span className="action">Click on create a new container</span>
       </div>
     ),
@@ -66,7 +67,7 @@ export default [
       </div>
     ),
     target: '.status-tab',
-    placement: 'right'
+    placement: 'bottom'
   },
   {
     // Step 6 - details page
@@ -84,7 +85,7 @@ export default [
     content: (
       <div className="tooltip-content">
         Start by adding any document format in pdf, jpg, or word. You will see your file securely and privately stored, associated with the digital container twin.<br /><br />
-        <span className="action">Drag & Drop your files into the grey-ish area or browse them to append new document to this container</span>
+        <span className="action">Drag & Drop your files into this area or browse them to append new document to this container</span>
       </div>
     ),
     target: '.filepond--wrapper',

@@ -14,7 +14,7 @@ class IntroPage extends Component {
         <div className="heading-image d-flex justify-content-center align-items-center">
           <div className="overlay d-flex flex-column">
             <div className="head-1">International shipping</div>
-            <div className="head-2">is slow</div>
+            <div className="head-2">is a Black Box</div>
             <div className="sep">&nbsp;</div>
             <div className="sub-1">
               Today’s trade is still based on paper documents and antiquated processes.<br />IOTA is set to radically transform international trade and supply chains,<br />improving visibility, control and reducing overheads.
