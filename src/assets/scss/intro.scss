@@ -104,10 +104,8 @@ $header-width-constraint: 1025px;
     .head-2 {
       @include media-breakpoint-down(xs) {
         @include font-size(30px);
-
         text-align: left;
       }
-
 
       @media (min-width: $header-width-constraint) {
         @include font-size(51px);
@@ -116,6 +114,7 @@ $header-width-constraint: 1025px;
       color: $white;
       font-size: 5vw;
       font-weight: 600;
+      text-align: center;
     }
 
     .sep {

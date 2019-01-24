@@ -13,8 +13,8 @@ class IntroPage extends Component {
       <React.Fragment>
         <div className="heading-image d-flex justify-content-center align-items-center">
           <div className="overlay d-flex flex-column">
-            <div className="head-1">International shipping</div>
-            <div className="head-2">is a Black Box</div>
+            <div className="head-1">How IOTA is</div>
+            <div className="head-2">Revolutionizing International Trade</div>
             <div className="sep">&nbsp;</div>
             <div className="sub-1">
               Today’s trade is still based on paper documents and antiquated processes.<br />IOTA is set to radically transform international trade and supply chains,<br />improving visibility, control and reducing overheads.
