@@ -1,5 +1,11 @@
+@import '~bootstrap/scss/bootstrap';
+
 .md-tabs {
   margin-bottom: 30px;
+  padding: 0 !important;
+  @include media-breakpoint-down(sm) {
+    padding: 16px !important;
+  }
 }
 
 .md-tab-label {

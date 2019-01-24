@@ -1,3 +1,4 @@
+@import '~bootstrap/scss/bootstrap';
 @import 'components';
 @import './variables';
 
@@ -31,12 +32,22 @@
     width: 33.3%;
     height: 81px;
 
+    @include media-breakpoint-down(xs) {
+      font-size: 14px;
+    }
+
     &.md-text {
       color: rgb(63, 63, 63);
     }
 
     &.md-text--secondary {
       color: rgb(151, 151, 151);
+    }
+
+    &:first-child {
+      @include media-breakpoint-down(xs) {
+        padding-right: 10px;
+      }
     }
   }
 
