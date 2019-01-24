@@ -41,9 +41,10 @@ $header-width-constraint: 1025px;
 
 .heading-image {
   @include media-breakpoint-down(xs) {
-    min-height: 400px;
+    min-height: 550px;
     background-image: url('../images/intro/1x_Header_Main.png');
-    background-position: right center;
+    background-position: 70%;
+    background-size: auto;
   }
 
 
@@ -63,16 +64,19 @@ $header-width-constraint: 1025px;
   }
 
   .overlay {
+    @include media-breakpoint-only(md) {
+      margin: 70px 20px 30px 20px;
+    }
+
+    @include media-breakpoint-down(sm) {
+      margin: 80px 20px 30px 20px;
+    }
+
     @include media-breakpoint-down(xs) {
       align-items: flex-start !important;
       max-width: 90%;
-      margin: 5px;
+      margin: 70px 30px 30px 25px;
     }
-
-    @include media-breakpoint-down(md) {
-      margin: 60px 20px 30px 20px;
-    }
-
 
     @media (min-width: $header-width-constraint) {
       max-width: 700px;
@@ -117,6 +121,7 @@ $header-width-constraint: 1025px;
     .sep {
       @include media-breakpoint-down(xs) {
         min-width: 50px;
+        margin-top: 15px;
       }
 
 
@@ -149,6 +154,10 @@ $header-width-constraint: 1025px;
       @include media-breakpoint-down(md) {
         margin-top: 30px;
       }
+
+      @include media-breakpoint-down(xs) {
+        background: linear-gradient(271.79deg, #b530ee 4.33%, #0088ff 99.65%);
+      }
     }
   }
 }
@@ -176,7 +185,7 @@ $header-width-constraint: 1025px;
 
   .row {
     @include media-breakpoint-down(xs) {
-      padding: 0px 10px 20px 10px;
+      padding: 15px 15px 0px 15px;
     }
 
     max-width: 1280px;
@@ -190,17 +199,22 @@ $header-width-constraint: 1025px;
         padding: 15px 15px 0px 15px;
       }
 
-
       padding: 30px 30px 0px 30px;
     }
   }
 
-  &.extra-padding {
+  .extra-padding {
     padding-bottom: 40px;
   }
 
   .alternate {
     background-color: #f6f6f6;
+  }
+
+  .img-fluid {
+    @include media-breakpoint-down(xs) {
+      margin-bottom: 20px;
+    }
   }
 
   .use-cases-1 {

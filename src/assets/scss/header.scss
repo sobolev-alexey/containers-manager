@@ -20,11 +20,10 @@ header {
   }
 
   .logo {
-    @include media-breakpoint-down(sm) {
-      height: 30px;
-      margin: 10px 10px 10px 5px;
+    @include media-breakpoint-down(xs) {
+      height: 45px;
+      margin: 20px 10px 10px 5px;
     }
-
 
     height: 45px;
     margin: 25px;

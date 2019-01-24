@@ -16,7 +16,9 @@ h1 {
 h2 {
   @include font-size(32px);
   @include media-breakpoint-down(xs) {
-    @include font-size(24px);
+    @include font-size(28px);
+    margin: 10px 0 0;
+    line-height: 1.5;
   }
 
   color: $primary;
@@ -85,6 +87,7 @@ p {
 .justify-content-responsive {
   @include media-breakpoint-down(xs) {
     justify-content: left !important;
+    text-align: left;
   }
 
   justify-content: center !important;

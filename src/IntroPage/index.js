@@ -129,9 +129,9 @@ class IntroPage extends Component {
                 className="d-flex flex-column justify-content-center hidden-sm-up"
               >
                 <img
-                  className="img-fluid use-cases-2"
+                  className="img-fluid use-cases-4"
                   src={useCasesPlaceholder}
-                  alt="Use Cases 2"
+                  alt="Use Cases 4"
                 />
               </Col>
             </Row>
