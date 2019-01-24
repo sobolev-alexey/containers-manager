@@ -1,4 +1,5 @@
 @import 'components';
+@import '~bootstrap/scss/bootstrap';
 
 .details-page {
   margin-top: 110px;
@@ -8,7 +9,7 @@
   }
 
   .loader-wrapper {
-    height: 30px;
+    height: 130px;
     width: 100%;
     margin: 30px auto;
   }
@@ -29,14 +30,19 @@
       justify-content: space-between;
       margin: 50px 0;
 
+      @include media-breakpoint-down(sm) {
+        flex-direction: column;
+      }
+
       @media (max-width: 768px) {
         margin: 20px;
       }
 
       .ca-title {
-        font-size: 40px;
+        font-size: 22px;
         font-weight: 700;
         color: rgb(63,63,63);
+        margin: 25px 0 20px;
       }
 
       .details-page-button {
@@ -51,8 +57,8 @@
         @media (max-width: 768px) {
           white-space: normal;
           line-height: unset;
-          height: auto;
-          padding: 5px 26px;
+          padding: 12px 26px;
+          height: 100%;
         }
       }
     }

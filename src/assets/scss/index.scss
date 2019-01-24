@@ -1,5 +1,6 @@
 @import 'globals';
 @import './variables';
+@import '~bootstrap/scss/mixins/breakpoints';
 
 @include react-md-everything;
 
@@ -25,4 +26,28 @@ h1, h2, h3, h4, h5, h6, div, span, p, label, input, select, section, footer, hea
 
 button, a {
   outline: none !important;
+}
+
+.hidden-xs-down {
+  @include media-breakpoint-down(xs) {
+    display: none !important;
+  }
+}
+
+.hidden-sm-down {
+  @include media-breakpoint-down(sm) {
+    display: none !important;
+  }
+}
+
+.hidden-md-down {
+  @include media-breakpoint-down(md) {
+    display: none !important;
+  }
+}
+
+.hidden-sm-up {
+  @include media-breakpoint-up(sm) {
+    display: none !important;
+  }
 }

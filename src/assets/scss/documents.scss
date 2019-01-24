@@ -1,3 +1,5 @@
+@import '~bootstrap/scss/bootstrap';
+
 .documents-wrapper {
   max-width: 1092px;
   width: 100%;
@@ -10,7 +12,17 @@
       border-bottom: none;
     }
 
+    .md-table-column--adjusted {
+      @include media-breakpoint-down(xs) {
+        padding-right: 20px;
+      }
+    }
+
     .md-table-column {
+      @include media-breakpoint-down(xs) {
+        width: 90%;
+      }
+
       a {
         text-decoration: none;
         font-size: 18px;

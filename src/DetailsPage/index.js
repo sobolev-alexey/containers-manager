@@ -192,17 +192,22 @@ class DetailsPage extends Component {
 
     const nextEvents = user.nextEvents[item.status.toLowerCase().replace(/[- ]/g, '')];
 
+    const containerHeading = (
+      <React.Fragment>
+        {
+          typeof detailsPage.title === 'string'
+            ? item[detailsPage.title]
+            : detailsPage.title.map(field => item[field]).join(' → ')
+        }
+      </React.Fragment>
+    )
+
     return (
       <div className="details-page">
         <Header ctaEnabled>
-          <Col xs={4} className="heading">
+          <Col md={3} xl={4} className="heading hidden-md-down">
             <span className="heading-text">
-              #{containerId},&nbsp;
-              {
-                typeof detailsPage.title === 'string'
-                  ? item[detailsPage.title]
-                  : detailsPage.title.map(field => item[field]).join(' → ')
-              }
+              #{containerId},&nbsp;{ containerHeading }
             </span>
           </Col>
         </Header>
@@ -219,6 +224,11 @@ class DetailsPage extends Component {
               >
                 Back
               </Link>
+              <h3 className="ca-title">
+                #{containerId}
+                <br />
+                { containerHeading }
+              </h3>
               {user.canAppendToStream && !statusUpdated && nextEvents ? (
                 <StatusButtons statuses={nextEvents} onClick={this.appendToItem} showLoader={showLoader} />
               ) : null}

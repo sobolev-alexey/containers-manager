@@ -81,7 +81,7 @@ class ListPage extends Component {
     return (
       <div className="list-page">
         <Header ctaEnabled>
-          <Col xs={4} className="heading">
+          <Col md={3} xl={4} className="heading hidden-md-down">
             <span className="heading-text">
               Welcome to container tracking
             </span>

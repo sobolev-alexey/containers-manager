@@ -22,7 +22,7 @@ header {
   .logo {
     @include media-breakpoint-down(xs) {
       height: 45px;
-      margin: 20px 10px 10px 5px;
+      margin: 20px 10px 20px 5px;
     }
 
     height: 45px;
@@ -59,6 +59,10 @@ header {
       background-color: #181818;
       padding: 16px 30px;
 
+      @include media-breakpoint-down(sm) {
+        background-color: unset;
+      }
+
       h4 {
         margin-bottom: 0;
       }
@@ -85,6 +89,15 @@ header {
           width: 160px;
           border: 1px solid $primary;
           color: rgba(255, 255, 255, 0.4);
+        }
+
+        button.primary, button.secondary {
+          @include media-breakpoint-down(xs) {
+            line-height: 37px;
+            height: 40px;
+            font-size: 15px;
+            width: 100px;
+          }
         }
       }
     }

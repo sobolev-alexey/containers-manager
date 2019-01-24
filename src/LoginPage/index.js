@@ -76,7 +76,7 @@ class LoginPage extends Component {
     return (
       <div className="login-page">
         <Header ctaEnabled>
-          <Col xs={4} className="heading">
+          <Col md={3} xl={4} className="heading hidden-md-down">
             <span className="heading-text">
               Log in to your user role
             </span>

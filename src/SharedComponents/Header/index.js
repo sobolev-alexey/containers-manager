@@ -13,10 +13,10 @@ import logoWhiteHorizontal from '../../assets/images/iota-horizontal-white.svg';
 import '../../assets/scss/header.scss';
 
 const CallToAction = ({ logout, reset, user }) => (
-  <Col xs={4} className="cta">
+  <Col xs={6} lg={5} xl={4} className="cta">
     <div className="header-cta-wrapper">
       <Row>
-        <Col xs={5}>
+        <Col xs={5} className="hidden-sm-down">
           <h4>
             User Role
           </h4>

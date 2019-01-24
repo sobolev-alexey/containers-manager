@@ -10,7 +10,7 @@ nav {
     }
 
     @include media-breakpoint-down(sm) {
-      padding: 13px 20px 13px 15px;
+      padding: 13px 15px 13px 0;
     }
 
     margin: 0;
@@ -20,7 +20,7 @@ nav {
 
     li {
       @include media-breakpoint-down(sm) {
-        margin: 0px 0px 0px 20px;
+        margin: 0px 0px 0px 18px;
       }
 
       display: inline-block;

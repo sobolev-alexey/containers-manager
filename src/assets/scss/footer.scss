@@ -90,8 +90,45 @@ footer:not(.footer-mini) {
   color: var(--white);
   @include font-size(16px);
 
+  .hidden-lg-down {
+    @include media-breakpoint-down(lg) {
+      display: none !important;
+    }
+  }
+
+  .hidden-xl-up {
+    @include media-breakpoint-up(xl) {
+      display: none !important;
+    }
+  }
+
+  .justify-content-end {
+    align-items: flex-end;
+
+    @include media-breakpoint-down(sm) {
+      align-items: flex-start;
+      flex: 0;
+    }
+  }
+
+  .justify-content-responsive {
+    @include media-breakpoint-down(lg) {
+      justify-content: left !important;
+      text-align: left;
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    line-height: 2;
+    height: 135px;
+  }
+
   @include media-breakpoint-down(xs) {
-    @include font-size(12px);
+    @include font-size(14px);
+    padding: 20px;
   }
 
   .copyright {

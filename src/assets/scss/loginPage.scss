@@ -3,7 +3,7 @@
 
 .login-page {
   margin-top: 95px;
-  
+
   .roles-wrapper {
     display: flex;
     flex-direction: row;
@@ -44,6 +44,10 @@
       font-weight: 300;
       line-height: 2;
       margin-top: 10px;
+    }
+
+    .role-description {
+      padding-right: 20px;
     }
 
     .role-cta {
