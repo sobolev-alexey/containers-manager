@@ -37,7 +37,17 @@ export default [
     placement: 'top'
   },
   {
-    // Step 3 - details page
+    // Step 3 - create new page
+    content: (
+      <div className="tooltip-content">
+        <span className="tooltip-action">Create a new container and store data on the Tangle</span>
+      </div>
+    ),
+    target: '.create-cta',
+    placement: 'right'
+  },
+  {
+    // Step 4 - details page
     content: (
       <div className="tooltip-content">
         A digital twin of the container is created on the Tangle and a MAM channel is opened, for recording the future events and journey of the container. This allows digital tracking including appending certifications, trade documents and supply chain events, written and accessible by authorised members of the supply chain. There is no need for papers and no risk of falsified information.<br /><br />
@@ -48,7 +58,7 @@ export default [
     placement: 'bottom'
   },
   {
-    // Step 4 - details page, tangle tab
+    // Step 5 - details page, tangle tab
     content: (
       <div className="tooltip-content">
         "Expand all" to see the data currently uploaded to Tangle and affiliated to the digital twin of this container.<br /><br />
@@ -60,7 +70,7 @@ export default [
     placement: 'right'
   },
   {
-    // Step 5 - details page
+    // Step 6 - details page
     content: (
       <div className="tooltip-content">
         <span className="tooltip-action">Click on "Status" to go back</span>
@@ -70,7 +80,7 @@ export default [
     placement: 'bottom'
   },
   {
-    // Step 6 - details page
+    // Step 7 - details page
     content: (
       <div className="tooltip-content">
         Your container has been registered. Do not forget to upload key trade documents. These are safely stored and travel digitally with your container twin.<br /><br />
@@ -81,7 +91,7 @@ export default [
     placement: 'bottom'
   },
   {
-    // Step 7 - details page, documents tab
+    // Step 8 - details page, documents tab
     content: (
       <div className="tooltip-content">
         Start by adding any document format in pdf, jpg, or word. You will see your file securely and privately stored, associated with the digital container twin.<br /><br />
@@ -92,7 +102,7 @@ export default [
     placement: 'top'
   },
   {
-    // Step 8 - details page, documents tab
+    // Step 9 - details page, documents tab
     content: (
       <div className="tooltip-content">
         Your documents have been uploaded and verified (checkmark symbol shown). You can check to see that your document has been registered on the tangle (TANGLE TAB) and when ready switch back to the dashboard of all containers.<br /><br />
@@ -103,7 +113,7 @@ export default [
     placement: 'bottom'
   },
   {
-    // Step 9 - list page
+    // Step 10 - list page
     content: (
       <div className="tooltip-content">
         You have announced the container for all actors to see and it is added to your list of containers. The list provides overview of all containers and their current status.<br /><br />
@@ -115,7 +125,7 @@ export default [
     placement: 'bottom'
   },
   {
-    // Step 10 - login page
+    // Step 11 - login page
     content: (
       <div className="tooltip-content">
         Change to a freight forwarder role to manage logistics for moving container from shipper to port.<br /><br />
@@ -126,7 +136,7 @@ export default [
     placement: 'right'
   },
   {
-    // Step 11 - list page
+    // Step 12 - list page
     content: (
       <div className="tooltip-content">
         As a freight forwarder, you have been contacted by shipper and informed that a container needs to be moved to the port.<br /><br />
@@ -137,7 +147,7 @@ export default [
     placement: 'top'
   },
   {
-    // Step 12 - details page
+    // Step 13 - details page
     content: (
       <div className="tooltip-content">
         When the container is delivered at the port, as a freight forwarder you need to announce that it is Gate-in into the port area.<br /><br />
@@ -148,7 +158,7 @@ export default [
     placement: 'bottom'
   },
   {
-    // Step 13 - details page
+    // Step 14 - details page
     content: (
       <div className="tooltip-content">
         Gate-in has been confirmed. You can also check and upload documents to the shared container repository to give full insight (could be Certificate of Origin or the Phytosanitary certificate etc.) These will be accessible by authorized parties at all times.<br /><br />
@@ -160,7 +170,7 @@ export default [
     placement: 'bottom'
   },
   {
-    // Step 14 - login page
+    // Step 15 - login page
     content: (
       <div className="tooltip-content">
         <span className="tooltip-action">Change to customs role</span>
@@ -170,7 +180,7 @@ export default [
     placement: 'right'
   },
   {
-    // Step 15 - list page
+    // Step 16 - list page
     content: (
       <div className="tooltip-content">
         As customs official, you only see the containers already processed or where the status is “Gate-in” and thus awaiting customs clearance for export.<br /><br />
@@ -181,7 +191,7 @@ export default [
     placement: 'top'
   },
   {
-    // Step 16 - details page
+    // Step 17 - details page
     content: (
       <div className="tooltip-content">
         You have access to prior events for this shipment including uploaded documents, time-stamps for previous events etc. The Tangle serves as the Single-Version-of-Truth for all actors.<br /><br />
@@ -192,7 +202,7 @@ export default [
     placement: 'bottom'
   },
   {
-    // Step 17 - details page
+    // Step 18 - details page
     content: (
       <div className="tooltip-content">
         Container cleared for export! Maybe you want to check the temperature?<br /><br />
@@ -203,7 +213,7 @@ export default [
     placement: 'bottom'
   },
   {
-    // Step 18 - details page, temperature tab
+    // Step 19 - details page, temperature tab
     content: (
       <div className="tooltip-content">
         When the container was announced the temperature was logged in as 15° C. But in a live scenario it will be data from a smart sensor that continuously feed into the Tangle to ensure an auditable trace of conditions.<br /><br />
@@ -214,7 +224,7 @@ export default [
     placement: 'bottom'
   },
   {
-    // Step 19 - details page
+    // Step 20 - details page
     content: (
       <div className="tooltip-content">
         An auditable trace of conditions are securely stored in the Tangle for all authorized actors to access. Given the time-stamps it is possible to link any temperature fluctuations to container status and chain-of-custody among actors.<br /><br />
@@ -225,7 +235,7 @@ export default [
     placement: 'bottom'
   },
   {
-    // Step 20 - login page
+    // Step 21 - login page
     content: (
       <div className="tooltip-content">
         <span className="tooltip-action">Change to Port role to announce when the container is loaded on vessel.</span>
@@ -235,7 +245,7 @@ export default [
     placement: 'right'
   },
   {
-    // Step 21 - list page
+    // Step 22 - list page
     content: (
       <div className="tooltip-content">
         <span className="tooltip-action">Select the container to proceed</span>
@@ -245,7 +255,7 @@ export default [
     placement: 'top'
   },
   {
-    // Step 22 - details page
+    // Step 23 - details page
     content: (
       <div className="tooltip-content">
         The container is logged and ready to go: Step 1: Confirm that it is loaded onto vessel & step 2: Confirm when vessel has departed.<br /><br />
@@ -256,7 +266,7 @@ export default [
     placement: 'bottom'
   },
   {
-    // Step 23 - details page
+    // Step 24 - details page
     content: (
       <div className="tooltip-content">
         The container is loaded onto vessel.<br /><br />
@@ -267,7 +277,7 @@ export default [
     placement: 'bottom'
   },
   {
-    // Step 24 - details page
+    // Step 25 - details page
     content: (
       <div className="tooltip-content">
         Vessel is on the way to the destination port. You can track location of the vessel.<br /><br />
@@ -278,7 +288,7 @@ export default [
     placement: 'bottom'
   },
   {
-    // Step 25 - details page
+    // Step 26 - details page
     content: (
       <div className="tooltip-content">
         Congratulations! The shipment is on the way.<br /><br />

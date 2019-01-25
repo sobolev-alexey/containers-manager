@@ -47,6 +47,10 @@ class CreateItemPage extends Component {
     }
   }
 
+  onBlur = () => {
+    updateStep(this.props.cookies, 3);
+  }
+
   notifySuccess = message => toast.success(message);
   notifyError = message => toast.error(message);
 
@@ -121,7 +125,7 @@ class CreateItemPage extends Component {
 
       const firebaseSnapshot = await getFirebaseSnapshot(containerId, this.onError);
       if (firebaseSnapshot === null) {
-        updateStep(cookies, 3);
+        updateStep(cookies, 4);
         cookies.set('containerId', containerId, { path: '/' });
 
         this.setState({ showLoader: true });
@@ -170,7 +174,7 @@ class CreateItemPage extends Component {
         </Header>
         <div className="create-item-wrapper">
           <FocusContainer
-            focusOnMount
+            // focusOnMount
             containFocus
             component="form"
             className="md-grid"
@@ -181,6 +185,7 @@ class CreateItemPage extends Component {
               <TextField
                 value={this.state.id}
                 onChange={this.handleTextChange}
+                onBlur={this.onBlur}
                 id="containerId"
                 className="input-containerId"
                 label={`${unit} ID`}

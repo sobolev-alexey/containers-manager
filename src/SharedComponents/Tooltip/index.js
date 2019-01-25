@@ -59,11 +59,11 @@ class Tooltip extends Component {
     }
 
     let run = true;
-    if (stepIndex === 4 && activeTabIndex !== 1) {
+    if (stepIndex === 5 && activeTabIndex !== 1) {
       run = false;
-    } else if (stepIndex === 7 && activeTabIndex !== 2) {
+    } else if (stepIndex === 8 && activeTabIndex !== 2) {
       run = false;
-    } else if (stepIndex === 18 && activeTabIndex !== 3) {
+    } else if (stepIndex === 19 && activeTabIndex !== 3) {
       run = false;
     }
 
@@ -93,7 +93,7 @@ class Tooltip extends Component {
             hideBackButton
             spotlightClicks
             run={run}
-            disableOverlay={stepIndex === 7}
+            disableOverlay={stepIndex === 3 || stepIndex === 8}
             styles={{
               options: {
                 overlayColor: 'transparent',

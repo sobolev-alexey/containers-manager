@@ -35,7 +35,7 @@ class List extends Component {
   };
 
   toggleExpandedState = expanded => {
-    updateStep(this.props.cookies, 5);
+    updateStep(this.props.cookies, 6);
     if (!expanded) {
       this.setState({ expanded, expandedPanels: [] });
     } else {

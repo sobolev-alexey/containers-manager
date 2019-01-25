@@ -105,11 +105,11 @@ class DetailsPage extends Component {
     this.setState({ showLoader: true, fetchComplete: false, loaderHint: 'Updating Tangle' });
     const response = await appendItemChannel(metadata, this.props, this.documentExists, status);
     if (response) {
-      updateStep(cookies, 8);
-      status === 'Gate-in' && updateStep(cookies, 13);
-      status === 'Container cleared for export' && updateStep(cookies, 17);
-      status === 'Container loaded on vessel' && updateStep(cookies, 23);
-      status === 'Vessel departure' && updateStep(cookies, 24);
+      updateStep(cookies, 9);
+      status === 'Gate-in' && updateStep(cookies, 14);
+      status === 'Container cleared for export' && updateStep(cookies, 18);
+      status === 'Container loaded on vessel' && updateStep(cookies, 24);
+      status === 'Vessel departure' && updateStep(cookies, 25);
 
       this.notifySuccess(`${upperFirst(project.trackingUnit)} ${meta ? '' : 'status '}updated`);
       this.setState({
@@ -220,7 +220,7 @@ class DetailsPage extends Component {
               <Link
                 to="/list"
                 className="button secondary back-cta"
-                onClick={() => updateStep(cookies, 9)}
+                onClick={() => updateStep(cookies, 10)}
               >
                 Back
               </Link>

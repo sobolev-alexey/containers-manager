@@ -55,11 +55,11 @@ class Header extends Component {
     const { cookies, history, logout } = this.props;
 
     logout();
-    updateStep(cookies, 10);
-    updateStep(cookies, 14);
-    updateStep(cookies, 20);
+    updateStep(cookies, 11);
+    updateStep(cookies, 15);
+    updateStep(cookies, 21);
 
-    if (Number(cookies.get('tourStep')) === 25) {
+    if (Number(cookies.get('tourStep')) === 26) {
       cookies.remove('tourStep');
       cookies.remove('containerId');
       history.push('/tour');
