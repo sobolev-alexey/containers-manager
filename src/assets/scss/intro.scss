@@ -84,7 +84,7 @@ $header-width-constraint: 1025px;
 
     align-items: center !important;
     max-width: 70vw;
-    margin: 40px 20px 10px 20px;
+    margin: 40px 20px;
 
     .head-1 {
       @include media-breakpoint-down(xs) {
