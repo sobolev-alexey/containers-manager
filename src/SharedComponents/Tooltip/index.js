@@ -22,7 +22,6 @@ class Tooltip extends Component {
   };
 
   callback = ({ action, index }) => {
-    console.log('callback', action);
     if (action === 'update') {
       this.setState({ showMobileTooltip: true })
     }
@@ -100,6 +99,14 @@ class Tooltip extends Component {
                 primaryColor: '#603f98',
                 textColor: '#3f3f3f',
                 zIndex: 1000,
+              },
+              overlay: {
+                mixBlendMode: 'normal'
+              },
+              spotlight: {
+                border: '2px solid #603f98',
+                backgroundColor: 'transparent',
+                borderRadius: [0, 1, 3, 4, 6, 7, 9, 11, 13, 15, 17, 18, 21, 23, 24, 25].includes(stepIndex) ? '100vw' : '4px'
               }
             }}
             floaterProps={{

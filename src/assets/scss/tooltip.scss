@@ -2,15 +2,6 @@
 @import './mixins';
 @import './variables';
 
-.react-joyride__spotlight {
-    border: 2px solid $primary;
-    background-color: transparent !important;
-}
-
-.react-joyride__overlay {
-    mix-blend-mode: normal !important;
-}
-
 .react-joyride__tooltip {
   h4 {
     color: $secondary;
