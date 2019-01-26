@@ -5,7 +5,6 @@ import { createContext, Reader, Mode } from 'mam.client.js/lib/mam'
 import isEmpty from 'lodash/isEmpty';
 import uniqBy from 'lodash/uniqBy';
 import pick from 'lodash/pick';
-import find from 'lodash/find';
 import last from 'lodash/last';
 import { createItem, updateItem } from './firebase';
 import { provider } from '../config.json';
@@ -143,7 +142,7 @@ export const appendItemChannel = async (metadata, props, documentExists, status)
       params: { containerId },
     },
   } = props;
-  const { mam } = find(items, { containerId });
+  const { mam } = items[containerId];
   const { documents } = last(item);
 
   const promise = new Promise(async (resolve, reject) => {
@@ -200,12 +199,13 @@ export const appendTemperatureLocation = async (payload, props) => {
       params: { containerId },
     },
   } = props;
-  const { mam } = find(items, { containerId });
+  const container = items[containerId];
+  if (!container) return containerId;
 
   const promise = new Promise(async (resolve, reject) => {
     try {
       if (payload) {
-        const newItemData = await appendToChannel(payload, mam);
+        const newItemData = await appendToChannel(payload, container.mam);
 
         if (newItemData && !isEmpty(newItemData)) {
           const eventBody = {};
@@ -213,7 +213,7 @@ export const appendTemperatureLocation = async (payload, props) => {
           eventBody.status = payload.status;
           eventBody.timestamp = payload.timestamp;
 
-          await updateItem(eventBody, mam, newItemData);
+          await updateItem(eventBody, container.mam, newItemData);
 
           return resolve(containerId);
         }

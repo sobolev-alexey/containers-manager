@@ -134,7 +134,7 @@ class Temperature extends Component {
 const mapStateToProps = state => ({
   user: state.user,
   item: state.item,
-  items: state.items.data,
+  items: state.items,
   project: state.project,
 });
 

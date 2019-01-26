@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import isEmpty from 'lodash/isEmpty';
-import find from 'lodash/find';
 import { fetch } from './MAM';
 import List from './List';
 import Loader from '../../SharedComponents/Loader';
@@ -29,7 +28,7 @@ class Explorer extends Component {
     if (!containerId || isEmpty(items)) {
       history.push('/');
     } else if (isEmpty(item) || item[0].containerId !== containerId) {
-      this.startFetch(find(items, { containerId }));
+      this.startFetch(items[containerId]);
     }
     const { showLoader } = this.state;
     return (
@@ -45,7 +44,7 @@ class Explorer extends Component {
 
 const mapStateToProps = state => ({
   item: state.item,
-  items: state.items.data,
+  items: state.items,
 });
 
 export default connect(mapStateToProps)(withRouter(Explorer));

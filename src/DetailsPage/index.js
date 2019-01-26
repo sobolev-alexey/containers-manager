@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { Col } from 'reactstrap';
 import isEmpty from 'lodash/isEmpty';
 import upperFirst from 'lodash/upperFirst';
-import find from 'lodash/find';
 import last from 'lodash/last';
 import uniqBy from 'lodash/uniqBy';
 import pick from 'lodash/pick';
@@ -133,12 +132,14 @@ class DetailsPage extends Component {
     this.setState({ item, statuses });
   };
 
-  retrieveItem = (containerId) => {
+  retrieveItem = (containerId, resetItems = true) => {
     const { items, user, project: { trackingUnit } } = this.props;
-    const item = find(items, { containerId });
+    const item = items[containerId];
     this.setState({ showLoader: true, loaderHint: 'Fetching data' });
     this.props.resetStoredItem();
-    this.props.storeItems(user);
+    if (resetItems) {
+      this.props.storeItems(user, containerId);
+    }
     const promise = new Promise(async (resolve, reject) => {
       try {
         await fetchItem(
@@ -244,7 +245,7 @@ class DetailsPage extends Component {
               fileUploadEnabled={fileUploadEnabled}
               onTabChange={this.onTabChange}
               onUploadComplete={this.onUploadComplete}
-              onAddTemperatureLocationCallback={this.retrieveItem}
+              onAddTemperatureLocationCallback={containerId => this.retrieveItem(containerId, false)}
             />
             <Details item={item} fields={detailsPage} />
           </div>
@@ -260,13 +261,13 @@ class DetailsPage extends Component {
 const mapStateToProps = state => ({
   user: state.user,
   item: state.item,
-  items: state.items.data,
+  items: state.items,
   project: state.project,
 });
 
 const mapDispatchToProps = dispatch => ({
   storeItem: item => dispatch(storeItem(item)),
-  storeItems: user => dispatch(storeItems(user)),
+  storeItems: (user, containerId) => dispatch(storeItems(user, containerId)),
   resetStoredItem: () => dispatch(resetStoredItem()),
 });
 

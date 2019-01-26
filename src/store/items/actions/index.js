@@ -1,3 +1,4 @@
+import isEmpty from 'lodash/isEmpty';
 import { ADD_ITEM, STORE_ITEMS } from '../../actionTypes';
 import { getFirebaseSnapshot, getItemsReference } from '../../../utils/firebase';
 
@@ -9,10 +10,10 @@ export const addItem = containerId => {
   };
 };
 
-export const storeItems = user => {
+export const storeItems = (user, containerId = null) => {
   const promise = new Promise(async (resolve, reject) => {
     try {
-      const results = [];
+      const results = {};
       const promises = [];
       const ref = getItemsReference();
 
@@ -33,12 +34,23 @@ export const storeItems = user => {
         }
       }
 
+      if (containerId) {
+        // Add a container under review, which status was already changed
+        const query = ref.orderByChild('containerId').equalTo(containerId);
+        promises.push(query.once('value'));
+      }
+
+      // const newResults = {}
       await Promise.all(promises)
         .then(snapshots => {
           snapshots.forEach(snapshot => {
             const val = snapshot.val();
             if (val) {
-              results.push(...Object.values(val));
+              Object.values(val).forEach(result => {
+                if (!results[result.containerId]) {
+                  results[result.containerId] = result;
+                }
+              });
             }
           });
         })
@@ -46,7 +58,7 @@ export const storeItems = user => {
           return reject({ error: 'Loading items failed' });
         });
 
-      if (results.length > 0) {
+      if (!isEmpty(results)) {
         return resolve({ data: results, error: null });
       } else {
         return reject({ error: 'No items found' });

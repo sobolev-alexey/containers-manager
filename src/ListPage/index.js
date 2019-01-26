@@ -27,7 +27,7 @@ class ListPage extends Component {
     if (isEmpty(user) || isEmpty(project)) {
       history.push('/login');
     } else {
-      if (isEmpty(items.data) && user.previousEvent) {
+      if (isEmpty(items) && user.previousEvent) {
         this.setState({ showLoader: true });
         this.props.storeItems(user);
       }
@@ -35,21 +35,19 @@ class ListPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const {
-      items: { data, error },
-    } = nextProps;
-    if (error) {
-      this.notifyError(error);
+    const { items } = nextProps;
+    if (items.error) {
+      this.notifyError(items.error);
     }
     if (
-      isEmpty(this.props.items.data) &&
+      isEmpty(this.props.items) &&
       nextProps.user.previousEvent &&
       !this.props.user.previousEvent
     ) {
       this.setState({ showLoader: true });
       this.props.storeItems(nextProps.user);
     }
-    if (!isEmpty(data) || !isEmpty(this.props.items.data) || this.props.user.previousEvent) {
+    if (!isEmpty(this.props.items) || this.props.user.previousEvent) {
       this.setState({ showLoader: false });
     }
   }
@@ -73,7 +71,7 @@ class ListPage extends Component {
   }
 
   render() {
-    const { cookies, project, user, history, items: { data } } = this.props;
+    const { cookies, project, user, history, items } = this.props;
     const { showLoader } = this.state;
 
     if (isEmpty(project) || !project.listPage) return <div />;
@@ -97,7 +95,7 @@ class ListPage extends Component {
         <Loader showLoader={showLoader} />
         <div className={`md-block-centered ${showLoader ? 'hidden' : ''}`}>
           <Autosuggest
-            items={data}
+            items={Object.values(items)}
             project={project}
             onSelect={item => history.push(`/details/${item.containerId}`)}
             trackingUnit={project.trackingUnit}
@@ -116,7 +114,7 @@ class ListPage extends Component {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data.map(item => (
+              {Object.values(items).map(item => (
                 <TableRow
                   key={item.containerId || item.itemId}
                   onClick={() => this.selectContainer(item.containerId)}
