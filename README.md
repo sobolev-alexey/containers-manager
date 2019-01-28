@@ -62,3 +62,11 @@ The document storage is connected to the same system and currently based on Goog
 #### Sensor data
 
 Sensor data from temperature sensors and GPS tracker can be feeded into the same channel and use IOTA library in combination with Firebase Cloud functions to append events to existing container streams.
+
+
+## Testing
+
+Once approved, the testing will be conducted with
+<p align='left'>
+<img src='/src/assets/images/Browserstack-logo.svg' width='300' alt='BrowserStack'>
+</p>
