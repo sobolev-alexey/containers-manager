@@ -83,7 +83,7 @@ class LoginPage extends Component {
           </Col>
         </Header>
         <div className="cta-wrapper">
-          <a className="button" href="https://www.youtube.com/watch?v=Gr-LstcDcAw" target="_blank" rel="noopener noreferrer">
+          <a className="button" href="https://www.youtube.com/watch?v=o5jX8VAyzUs" target="_blank" rel="noopener noreferrer">
             Need help? Watch the video
           </a>
         </div>
