@@ -25,7 +25,7 @@ const publish = async data => {
     updateMamState(message.state);
 
     // Attach the payload.
-    await Mam.attach(message.payload, message.address);
+    await Mam.attach(message.payload, message.address, 3, 9);
 
     return { root: message.root, state: message.state };
   } catch (error) {
