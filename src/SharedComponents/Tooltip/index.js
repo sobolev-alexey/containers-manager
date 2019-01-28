@@ -5,6 +5,7 @@ import _get from 'lodash/get';
 import _last from 'lodash/last';
 import ErrorBoundary from '../ErrorBoundary';
 import tooltips from './tooltips';
+import updateStep from '../../utils/cookie';
 import '../../assets/scss/tooltip.scss';
 import close from '../../assets/images/tooltip-close.svg';
 
@@ -22,11 +23,14 @@ class Tooltip extends Component {
   };
 
   callback = ({ action, index }) => {
-    if (action === 'update') {
+    const { cookies } = this.props;
+    if (action === 'skip') {
+      updateStep(cookies, index + 1);
+      this.setState({ tooltips })
+      this.setState({ showMobileTooltip: true, tooltips })
+    } else if (action === 'update') {
       this.setState({ showMobileTooltip: true })
-    }
-
-    if (action === 'close') {
+    } else if (action === 'close') {
       const newTooltips = this.state.tooltips;
       delete newTooltips[index].disableBeacon;
       this.setState({ tooltips: newTooltips, showMobileTooltip: false })
@@ -102,6 +106,7 @@ class Tooltip extends Component {
             callback={this.callback}
             getHelpers={this.helpers}
             hideBackButton
+            showSkipButton={stepIndex === 8}
             spotlightClicks
             run={run}
             disableOverlay={stepIndex === 3 || stepIndex === 8}
