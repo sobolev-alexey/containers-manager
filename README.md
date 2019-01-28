@@ -67,4 +67,7 @@ Sensor data from temperature sensors and GPS tracker can be feeded into the same
 ## Testing
 
 Once approved, the testing will be conducted with
-![BrowserStack](/src/assets/images/Browserstack-logo.svg)
+<!-- ![BrowserStack](/src/assets/images/Browserstack-logo.svg) -->
+<p align='left'>
+<img src='/src/assets/images/Browserstack-logo.svg' width='400' alt='BrowserStack'>
+</p>
