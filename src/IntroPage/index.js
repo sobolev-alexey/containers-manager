@@ -19,7 +19,7 @@ class IntroPage extends Component {
             <div className="sub-1">
               Today’s trade is still based on paper documents and antiquated processes.<br />IOTA is set to radically transform international trade and supply chains,<br />improving visibility, control and reducing overheads.
             </div>
-            <Link to="/login" className="button">
+            <Link to="/login" className="button intro-button">
               Try the demo
             </Link>
           </div>
@@ -150,7 +150,7 @@ class IntroPage extends Component {
                 </p>
               </Col>
               <Col xs={12} className="d-flex justify-content-center">
-                <Link to="/login" className="button">
+                <Link to="/login" className="button intro-button">
                   Try the demo
                 </Link>
               </Col>

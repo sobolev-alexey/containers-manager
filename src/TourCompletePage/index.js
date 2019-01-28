@@ -48,19 +48,19 @@ class IntroPage extends Component {
                   Vision
                </p>
                 <p>
-                  <Link to="/">See our short film</Link> about our vision for the future of trade enabled by IOTA.
+                  <a target="_blank" rel="noopener noreferrer" href="https://www.iota.org/verticals/global-trade-supply-chains">See our short film</a> about our vision for the future of trade enabled by IOTA.
                 </p>
                 <p className="bold">
                   Technical
                </p>
                 <p>
-                  <a href="https://blog.iota.org/the-challenges-facing-todays-supply-chains-aaa9d3d9fc6d">See our Blueprint</a> for more information on how this was build and can be modified for bespoke solutions in your industry.
+                  <a target="_blank" rel="noopener noreferrer" href="https://github.com/michelenati/IOTA-Blueprints/blob/master/IF-Blueprint-Trade_Facilitation.pdf">See our Blueprint</a> for more information on how this was build and can be modified for bespoke solutions in your industry.
                 </p>
                 <p className="bold">
                   Context
                </p>
                 <p>
-                  Read our blogposts on about trade and supply chains: <a href="https://blog.iota.org/the-challenges-facing-todays-supply-chains-aaa9d3d9fc6d">The challenges facing today’s supply chains</a> & <a href="https://blog.iota.org/the-challenges-facing-todays-supply-chains-aaa9d3d9fc6d">Applying IOTA in Global Trade and Supply Chains: Mission Possible.</a>
+                  Read our blogposts on about trade and supply chains: <a target="_blank" rel="noopener noreferrer" href="https://blog.iota.org/the-challenges-facing-todays-supply-chains-aaa9d3d9fc6d">The challenges facing today’s supply chains</a> & <a target="_blank" rel="noopener noreferrer" href="https://blog.iota.org/applying-iota-in-global-trade-and-supply-chains-mission-possible-32c659d69547">Applying IOTA in Global Trade and Supply Chains: Mission Possible.</a>
                 </p>
                 <p className="bold">
                   Play more
@@ -83,7 +83,7 @@ class IntroPage extends Component {
                 </p>
               </Col>
               <Col xs={12} className="d-flex justify-content-center">
-                <a href="mailto:jens@iota.org" className="button">
+                <a href="mailto:jens@iota.org" className="button intro-button">
                   Email
                 </a>
               </Col>

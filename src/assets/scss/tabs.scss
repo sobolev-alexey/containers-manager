@@ -5,6 +5,9 @@
   padding: 0 !important;
   @include media-breakpoint-down(sm) {
     padding: 16px !important;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
   }
 }
 
@@ -23,6 +26,10 @@
   border-radius: 30px;
   background-color: #f6f6f6;
   padding: 16px 24px;
+
+  @include media-breakpoint-down(sm) {
+    margin: 5px 0;
+  }
 }
 
 .md-tab--active {

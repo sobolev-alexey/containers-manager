@@ -25,7 +25,7 @@ import { BrowserQRCodeReader } from '@zxing/library';
 const codeReader = new BrowserQRCodeReader();
 
 const PORTS = ['Rotterdam', 'Singapore'];
-const CARGO = ['Car', 'Consumer Goods', 'Heavy Machinery', 'Pharma'];
+const CARGO = ['Car', 'Coffee', 'Heavy Machinery', 'Pharma'];
 const TYPE = ['Dry storage', 'Refrigerated'];
 
 class CreateItemPage extends Component {

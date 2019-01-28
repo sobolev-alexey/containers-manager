@@ -64,7 +64,7 @@ class List extends Component {
           {messages.map((message, index) => (
             <ExpansionPanel
               key={index}
-              label={index}
+              label={`Step ${index}`}
               footer={null}
               expanded={this.state.expandedPanels.includes(index)}
               onExpandToggle={toggleOpen => this.onExpandToggle(toggleOpen, index)}

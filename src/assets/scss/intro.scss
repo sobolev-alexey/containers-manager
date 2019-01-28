@@ -147,22 +147,19 @@ $header-width-constraint: 1025px;
       text-align: center;
     }
 
-    .button {
+    .intro-button {
       margin-top: 50px;
 
       @include media-breakpoint-down(md) {
         margin-top: 30px;
       }
-
-      @include media-breakpoint-down(xs) {
-        background: linear-gradient(271.79deg, #b530ee 4.33%, #0088ff 99.65%);
-      }
     }
   }
 }
 
-.button {
+.intro-button {
   @include button();
+  background: #663a9d;
 }
 
 .content {

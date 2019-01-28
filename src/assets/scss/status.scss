@@ -1,3 +1,5 @@
+@import '~bootstrap/scss/bootstrap';
+
 .status-wrapper {
   display: flex;
   flex-direction: row;
@@ -7,6 +9,12 @@
   @media (max-width: 1092px) {
     margin: 0 20px;
   }
+
+  @include media-breakpoint-down(sm) {
+    flex-direction: column;
+    align-items: center;
+  }
+
 
   .status {
     min-width: 198px;
@@ -21,6 +29,11 @@
     position: relative;
     margin: 12px 6px;
     padding: 0 20px;
+
+    @include media-breakpoint-down(sm) {
+      width: 300px;
+      max-width: unset;
+    }
 
     &:not(:first-child):before {
       content: "";

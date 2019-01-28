@@ -220,8 +220,8 @@ export default [
         <span className="tooltip-action">To illustrate how data can continiously be added, this demo allow to manually add a new temperature value. Try to add 14° C</span>
       </div>
     ),
-    target: '.temperature-cta',
-    placement: 'bottom'
+    target: '.add-new',
+    placement: 'left'
   },
   {
     // Step 20 - details page
