@@ -54,7 +54,7 @@ class IntroPage extends Component {
                   Technical
                </p>
                 <p>
-                  <a target="_blank" rel="noopener noreferrer" href="https://github.com/michelenati/IOTA-Blueprints/blob/master/IF-Blueprint-Trade_Facilitation.pdf">See our Blueprint</a> for more information on how this was build and can be modified for bespoke solutions in your industry.
+                  <a target="_blank" rel="noopener noreferrer" href="https://github.com/michelenati/IOTA-Blueprints/blob/master/IF-Blueprint-International_Trade_demo.pdf">See our Blueprint</a> for more information on how this was build and can be modified for bespoke solutions in your industry.
                 </p>
                 <p className="bold">
                   Context
