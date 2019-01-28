@@ -132,14 +132,12 @@ class DetailsPage extends Component {
     this.setState({ item, statuses });
   };
 
-  retrieveItem = (containerId, resetItems = true) => {
+  retrieveItem = containerId => {
     const { items, user, project: { trackingUnit } } = this.props;
     const item = items[containerId];
     this.setState({ showLoader: true, loaderHint: 'Fetching data' });
     this.props.resetStoredItem();
-    if (resetItems) {
-      this.props.storeItems(user, containerId);
-    }
+    this.props.storeItems(user, containerId);
     const promise = new Promise(async (resolve, reject) => {
       try {
         await fetchItem(
@@ -245,7 +243,7 @@ class DetailsPage extends Component {
               fileUploadEnabled={fileUploadEnabled}
               onTabChange={this.onTabChange}
               onUploadComplete={this.onUploadComplete}
-              onAddTemperatureLocationCallback={containerId => this.retrieveItem(containerId, false)}
+              onAddTemperatureLocationCallback={containerId => this.retrieveItem(containerId)}
             />
             <Details item={item} fields={detailsPage} />
           </div>

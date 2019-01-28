@@ -38,7 +38,7 @@ class Temperature extends Component {
       const result = await appendTemperatureLocation(last, this.props);
       this.setState({ showLoader: false, loaderHint: null });
       updateStep(cookies, 20);
-      callback(result, true);
+      callback(result);
     }
   }
 
