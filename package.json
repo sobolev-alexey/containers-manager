@@ -21,6 +21,7 @@
     "moment": "^2.23.0",
     "node-sass": "^4.11.0",
     "react": "^16.7.0-alpha.1",
+    "react-app-polyfill": "^0.2.0",
     "react-autosuggest": "^9.4.2",
     "react-cookie": "^3.0.8",
     "react-dom": "^16.7.0-alpha.1",
@@ -56,12 +57,8 @@
     "extends": "react-app"
   },
   "browserslist": [
-    "> 1%",
-    "last 5 versions",
-    "not dead",
-    "not ie <= 9",
-    "not op_mini all",
-    "IE 10",
-    "IE 11"
+    "> 2%",
+    "last 2 versions",
+    "edge >= 16"
   ]
 }

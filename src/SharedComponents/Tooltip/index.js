@@ -66,6 +66,18 @@ class Tooltip extends Component {
       run = false;
     }
 
+    let roundedBorder = false;
+    if ([0, 1, 3, 4, 6, 7, 9, 11, 13, 15, 17, 18, 21, 23, 24, 25].includes(stepIndex)) {
+      roundedBorder = true;
+    }
+
+    const spotlightStyles = {
+      border: '2px solid #603f98',
+      backgroundColor: 'transparent',
+      borderRadius: roundedBorder ? '100vw' : '4px',
+      boxShadow: 'unset'
+    }
+
     return (
       <React.Fragment>
         {
@@ -103,10 +115,14 @@ class Tooltip extends Component {
               overlay: {
                 mixBlendMode: 'normal'
               },
+              overlayLegacy: {
+                mixBlendMode: 'normal'
+              },
               spotlight: {
-                border: '2px solid #603f98',
-                backgroundColor: 'transparent',
-                borderRadius: [0, 1, 3, 4, 6, 7, 9, 11, 13, 15, 17, 18, 21, 23, 24, 25].includes(stepIndex) ? '100vw' : '4px'
+                ...spotlightStyles
+              },
+              spotlightLegacy: {
+                ...spotlightStyles
               }
             }}
             floaterProps={{
