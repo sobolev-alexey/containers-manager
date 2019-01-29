@@ -9,7 +9,6 @@ import Temperature from '../Temperature';
 import Explorer from '../Explorer';
 import Location from '../Location';
 import updateStep from '../../utils/cookie';
-import '../../assets/scss/tabs.scss';
 
 class ItemTabs extends PureComponent {
   state = {

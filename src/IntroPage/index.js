@@ -5,7 +5,6 @@ import Header from '../SharedComponents/Header';
 import Navigation from '../SharedComponents/Navigation';
 import Footer from '../SharedComponents/Footer';
 import useCasesPlaceholder from '../assets/images/intro/use-cases-placeholder.png';
-import '../assets/scss/intro.scss';
 
 class IntroPage extends Component {
   render() {

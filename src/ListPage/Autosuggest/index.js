@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Autosuggester from 'react-autosuggest';
 import remove from 'lodash/remove';
 import { DataTable, TableBody, TableRow, TableColumn } from 'react-md';
-import '../../assets/scss/autosuggest.scss';
 
 class Autosuggest extends Component {
   constructor() {

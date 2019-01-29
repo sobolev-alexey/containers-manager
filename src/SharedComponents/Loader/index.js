@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../assets/scss/loader.scss';
 
 export default ({ showLoader, text = null }) => (
   <React.Fragment>

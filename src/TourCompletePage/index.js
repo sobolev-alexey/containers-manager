@@ -4,7 +4,6 @@ import { Col, Row } from 'reactstrap';
 import Header from '../SharedComponents/Header';
 import Navigation from '../SharedComponents/Navigation';
 import Footer from '../SharedComponents/Footer';
-import '../assets/scss/intro.scss';
 
 class IntroPage extends Component {
   render() {

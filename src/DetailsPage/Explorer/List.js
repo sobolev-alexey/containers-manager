@@ -3,7 +3,6 @@ import { withCookies } from 'react-cookie';
 import { ExpansionList, ExpansionPanel, Switch } from 'react-md';
 import MessageContent from './MessageContent';
 import updateStep from '../../utils/cookie';
-import '../../assets/scss/explorer.scss';
 
 class List extends Component {
   state = {

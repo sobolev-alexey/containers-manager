@@ -1,9 +1,30 @@
-@import 'components';
 @import 'globals';
-@import './variables';
-@import '~bootstrap/scss/mixins/breakpoints';
 
-@include react-md-everything;
+@import './header';
+@import './footer';
+@import './loader';
+@import './notification';
+@import './tooltip';
+
+@import './loginPage';
+
+@import './listPage';
+@import './autosuggest';
+
+@import './createItemPage';
+
+@import './detailsPage';
+@import './details';
+@import './documents';
+@import './explorer';
+@import './fileUpload';
+@import './status';
+@import './tabs';
+@import './temperature';
+
+@import './intro';
+@import './navigation';
+@import './text';
 
 html {
   background: none !important;

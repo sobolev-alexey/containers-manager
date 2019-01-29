@@ -14,8 +14,6 @@ import Header from '../SharedComponents/Header';
 import Footer from '../SharedComponents/MiniFooter';
 import Notification from '../SharedComponents/Notification';
 import Autosuggest from './Autosuggest';
-import '../assets/scss/index.scss';
-import '../assets/scss/listPage.scss';
 
 class ListPage extends Component {
   state = {

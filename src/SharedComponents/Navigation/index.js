@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../assets/scss/navigation.scss';
 
 export default () => (
   <nav className="d-flex justify-content-end">

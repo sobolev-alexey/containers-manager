@@ -7,7 +7,6 @@ import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import Notification from '../../SharedComponents/Notification';
 import { getFileStorageReference } from '../../utils/firebase';
-import '../../assets/scss/fileUpload.scss';
 
 registerPlugin(FilePondImagePreview);
 

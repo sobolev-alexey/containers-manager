@@ -10,7 +10,6 @@ import updateStep from '../../utils/cookie';
 import { logout } from '../../store/user/actions';
 import { reset } from '../../store/project/actions';
 import logoWhiteHorizontal from '../../assets/images/iota-horizontal-white.svg';
-import '../../assets/scss/header.scss';
 
 const CallToAction = ({ logout, reset, user }) => (
   <Col xs={6} lg={5} xl={4} className="cta">

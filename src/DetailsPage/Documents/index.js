@@ -4,7 +4,6 @@ import isEmpty from 'lodash/isEmpty';
 import { DataTable, TableBody, TableRow, TableColumn, FontIcon } from 'react-md';
 import FilesUpload from './FilesUpload';
 import { validateIntegrity } from './DocumentIntegrityValidator';
-import '../../assets/scss/documents.scss';
 
 class Documents extends Component {
   state = {

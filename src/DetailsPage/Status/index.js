@@ -1,6 +1,5 @@
 import React from 'react';
 import * as moment from 'moment';
-import '../../assets/scss/status.scss';
 
 const roles = {
   'Container announced': 'Shipper',

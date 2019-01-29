@@ -1,44 +1,3 @@
-@import '~bootstrap/scss/bootstrap';
-@import 'components';
-@import './mixins';
-@import './variables';
-@import './text';
-
-@import url('https://use.fontawesome.com/releases/v5.0.10/css/all.css');
-
-@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700');
-
-:root {
-  --black: #1c1e21;
-  --blueberry: #{$primary};
-  --body-copy: #696f76;
-  --brown-grey: #8e8e8e;
-  --gunmetal-grey: #{$secondary};
-  --jade: #1e9a93;
-  --light-grey: #c4c4c4;
-  --sand-grey: #f3f2f1;
-  --tealish: #20a49d;
-}
-
-// Bootstrap overrides
-$border-radius: 0px;
-$border-radius-lg: 0px;
-$border-radius-sm: 0px;
-
-$header-width-constraint: 1025px;
-
-.hidden-xs-down {
-  @include media-breakpoint-down(xs) {
-    display: none !important;
-  }
-}
-
-.hidden-sm-up {
-  @include media-breakpoint-up(sm) {
-    display: none !important;
-  }
-}
-
 .heading-image {
   @include media-breakpoint-down(xs) {
     min-height: 550px;
@@ -157,7 +116,7 @@ $header-width-constraint: 1025px;
   }
 }
 
-.intro-button {
+.button.intro-button {
   @include button();
   background: #663a9d;
 }

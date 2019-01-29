@@ -1,7 +1,6 @@
 import React from 'react';
 import { Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import '../../assets/scss/footer.scss';
 
 export default ({ children }) => (
   <footer className="footer-mini">

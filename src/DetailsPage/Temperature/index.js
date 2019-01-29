@@ -9,7 +9,6 @@ import moment from 'moment';
 import sortBy from 'lodash/sortBy';
 import last from 'lodash/last';
 import Loader from '../../SharedComponents/Loader';
-import '../../assets/scss/temperature.scss';
 import updateStep from '../../utils/cookie';
 import { appendTemperatureLocation } from '../../utils/mam';
 

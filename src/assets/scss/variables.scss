@@ -11,6 +11,7 @@ $light: #f8f9fa;
 $dark: #343434;
 $black: #000000;
 $white: #ffffff;
+$teal: #20a49d;
 
 $a-tags: 'a, a:active, a:hover, a:visited';
 
@@ -20,4 +21,23 @@ $grid-breakpoints: (
   md: 768px,
   lg: 992px,
   xl: 1200px
-)
+);
+
+:root {
+  --black: #1c1e21;
+  --blueberry: #{$primary};
+  --body-copy: #696f76;
+  --brown-grey: #8e8e8e;
+  --gunmetal-grey: #{$secondary};
+  --jade: #1e9a93;
+  --light-grey: #c4c4c4;
+  --sand-grey: #f3f2f1;
+  --tealish: #{$teal};
+}
+
+// Bootstrap overrides
+$border-radius: 0px;
+$border-radius-lg: 0px;
+$border-radius-sm: 0px;
+
+$header-width-constraint: 1025px;

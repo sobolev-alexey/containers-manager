@@ -18,7 +18,6 @@ import shipper from '../assets/images/role-avatars/shipper.svg';
 import forwarder from '../assets/images/role-avatars/forwarder.svg';
 import customs from '../assets/images/role-avatars/customs.svg';
 import port from '../assets/images/role-avatars/port.svg';
-import '../assets/scss/loginPage.scss';
 import config from '../config.json';
 
 const images = { shipper, forwarder, customs, port }

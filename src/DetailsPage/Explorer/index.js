@@ -5,7 +5,6 @@ import isEmpty from 'lodash/isEmpty';
 import { fetch } from './MAM';
 import List from './List';
 import Loader from '../../SharedComponents/Loader';
-import '../../assets/scss/explorer.scss';
 
 class Explorer extends Component {
   state = {

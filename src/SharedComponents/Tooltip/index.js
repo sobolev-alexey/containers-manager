@@ -6,7 +6,6 @@ import _last from 'lodash/last';
 import ErrorBoundary from '../ErrorBoundary';
 import tooltips from './tooltips';
 import updateStep from '../../utils/cookie';
-import '../../assets/scss/tooltip.scss';
 import close from '../../assets/images/tooltip-close.svg';
 
 class Tooltip extends Component {
@@ -26,8 +25,6 @@ class Tooltip extends Component {
     const { cookies } = this.props;
     if (action === 'skip') {
       updateStep(cookies, index + 1);
-      this.setState({ tooltips })
-      this.setState({ showMobileTooltip: true, tooltips })
     } else if (action === 'update') {
       this.setState({ showMobileTooltip: true })
     } else if (action === 'close') {

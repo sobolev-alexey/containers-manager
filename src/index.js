@@ -5,6 +5,7 @@ import WebFontLoader from 'webfontloader';
 import Router from './Router';
 import * as serviceWorker from './serviceWorker';
 import { initializeFirebaseApp } from './utils/firebase';
+import './assets/scss/index.scss';
 
 WebFontLoader.load({
   google: {
