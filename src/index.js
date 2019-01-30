@@ -18,6 +18,7 @@ WebFontLoader.load({
 initializeFirebaseApp();
 
 ReactGA.initialize(trackingID); // (trackingID, { debug: true })
+ReactGA.set({ anonymizeIp: true });
 
 ReactDOM.render(<Router />, document.getElementById('root'));
 

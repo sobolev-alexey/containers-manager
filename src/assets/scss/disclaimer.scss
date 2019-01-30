@@ -23,11 +23,15 @@
     }
   }
 
-  .disclaimer-link {
+  .disclaimer-link, .disclaimer-link:hover, .disclaimer-link:visited {
     font-weight: 900;
     font-size: 18px;
     color: $primary;
     text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
 
     @include media-breakpoint-down(xs) {
       font-size: 90% !important;

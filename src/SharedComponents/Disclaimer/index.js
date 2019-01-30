@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactGA from 'react-ga';
 import { withCookies } from 'react-cookie';
 
 class Disclaimer extends React.Component {
@@ -24,7 +25,13 @@ class Disclaimer extends React.Component {
         <span className="disclaimer-text">
           This website uses cookies to ensure you get the best experience on our
           website.&nbsp;
-          <a className="disclaimer-link" href="https://www.iota.org/research/privacy-policy">Learn more</a>
+          <ReactGA.OutboundLink
+            className="disclaimer-link"
+            eventLabel="https://www.iota.org/research/privacy-policy"
+            to="https://www.iota.org/research/privacy-policy"
+          >
+          Learn more
+          </ReactGA.OutboundLink>
         </span>
         <button className="button intro-button" onClick={this.dismiss}>Dismiss</button>
       </div>
