@@ -14,7 +14,10 @@ class IntroPage extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <div className="intro-page">
+        <Header className="background-transparent">
+          <Navigation />
+        </Header>
         <div className="heading-image d-flex justify-content-center align-items-center">
           <div className="overlay d-flex flex-column">
             <div className="head-1">How IOTA is</div>
@@ -28,9 +31,6 @@ class IntroPage extends Component {
             </Link>
           </div>
         </div>
-        <Header className="background-transparent">
-          <Navigation />
-        </Header>
         <div className="content">
           <div className="extra-padding" id="problem">
             <Row>
@@ -168,7 +168,7 @@ class IntroPage extends Component {
             { anchor: 'tryit', text: 'Try the demo'},
           ]}
         />
-      </React.Fragment>
+      </div>
     );
   }
 }

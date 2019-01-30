@@ -8,12 +8,14 @@ class Disclaimer extends React.Component {
   componentDidMount() {
     const ack = this.props.cookies.get('ack');
     if (!ack) {
+      document.body.classList.add('cookie-bar-top-bar');
       this.setState({ ack: false });
     }
   }
 
   dismiss = () => {
     this.props.cookies.set('ack', true, { path: '/' });
+    document.body.classList.remove('cookie-bar-top-bar');
     this.setState({ ack: true })
   }
 
@@ -33,7 +35,7 @@ class Disclaimer extends React.Component {
           Learn more
           </ReactGA.OutboundLink>
         </span>
-        <button className="button intro-button" onClick={this.dismiss}>Dismiss</button>
+        <button className="button" onClick={this.dismiss}>Dismiss</button>
       </div>
     )
   }

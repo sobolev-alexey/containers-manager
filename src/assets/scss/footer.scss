@@ -46,7 +46,7 @@ footer:not(.footer-mini) {
     }
   }
 
-  #{$a-tags}:not(.disclaimer-link) {
+  #{$a-tags} {
     @include font-size(16px);
     @include media-breakpoint-down(xs) {
       @include font-size(12px);
@@ -132,7 +132,7 @@ footer:not(.footer-mini) {
     color: var(--brown-grey);
   }
 
-  #{$a-tags}:not(.disclaimer-link) {
+  #{$a-tags} {
     color: inherit;
     font-size: inherit;
 

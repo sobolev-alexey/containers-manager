@@ -3,13 +3,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  bottom: 0;
+  top: 0;
   left: 0;
   right: 0;
   background: #eeeeee;
   width: 100vw;
   padding: 8px 20px;
-  z-index: 999;
+  height: 70px;
+  z-index: 99999;
 
   .disclaimer-text {
     font-weight: 600;
@@ -35,6 +36,18 @@
 
     @include media-breakpoint-down(xs) {
       font-size: 90% !important;
+    }
+  }
+
+  .button {
+    @include button();
+    background: #663a9d;
+
+    @include media-breakpoint-down(xs) {
+      line-height: 37px;
+      height: 40px;
+      font-size: 15px;
+      width: 140px;
     }
   }
 }

@@ -1,3 +1,9 @@
+.intro-page, .tour-page {
+  header {
+    position: absolute;
+  }
+}
+
 .heading-image {
   @include media-breakpoint-down(xs) {
     min-height: 550px;

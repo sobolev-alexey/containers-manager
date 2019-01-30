@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Col, Row } from 'reactstrap';
-import Disclaimer from '../Disclaimer';
 
 class Footer extends Component {
 
@@ -67,7 +66,6 @@ class Footer extends Component {
             500027331119-04
           </Col>
         </Row>
-        <Disclaimer />
       </footer>
     );
   }

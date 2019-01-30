@@ -13,7 +13,10 @@ class IntroPage extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <div className="tour-page">
+        <Header className="background-transparent">
+          <Navigation />
+        </Header>
         <div className="heading-image end d-flex justify-content-center align-items-center">
           <div className="overlay d-flex flex-column">
             <div className="head-1">Congratulations</div>
@@ -24,9 +27,6 @@ class IntroPage extends Component {
             </div>
           </div>
         </div>
-        <Header className="background-transparent">
-          <Navigation />
-        </Header>
         <div className="content">
           <div className="extra-padding" id="tour">
             <Row>
@@ -101,7 +101,7 @@ class IntroPage extends Component {
             { anchor: 'contact', text: 'Contact'},
           ]}
         />
-      </React.Fragment>
+      </div>
     );
   }
 }
