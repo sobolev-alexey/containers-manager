@@ -1,6 +1,7 @@
 import React from 'react';
 import { Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import Disclaimer from '../Disclaimer';
 
 export default ({ children }) => (
   <footer className="footer-mini">
@@ -22,5 +23,6 @@ export default ({ children }) => (
         © 2018 <a href="https://iota.org">IOTA Foundation</a> — <a href="https://www.iota.org/research/privacy-policy">Privacy Policy</a>
       </span>
     </Col>
+    <Disclaimer />
   </footer>
 );
