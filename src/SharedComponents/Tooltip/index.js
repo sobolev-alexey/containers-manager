@@ -52,7 +52,6 @@ class Tooltip extends Component {
     const { cookies, customTooltip, fetchComplete, activeTabIndex } = this.props;
     const stepIndex = Number(cookies.get('tourStep') || 0);
     const { showMobileTooltip } = this.state;
-    console.log('Tour step', stepIndex);
 
     if (fetchComplete === false) {
       return null;
