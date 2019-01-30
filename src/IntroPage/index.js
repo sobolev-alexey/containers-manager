@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import Header from '../SharedComponents/Header';
@@ -7,6 +8,10 @@ import Footer from '../SharedComponents/Footer';
 import useCasesPlaceholder from '../assets/images/intro/use-cases-placeholder.png';
 
 class IntroPage extends Component {
+  componentDidMount() {
+    ReactGA.pageview('/intro');
+  }
+
   render() {
     return (
       <React.Fragment>

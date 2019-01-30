@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
 import Autosuggester from 'react-autosuggest';
 import remove from 'lodash/remove';
 import { DataTable, TableBody, TableRow, TableColumn } from 'react-md';
@@ -47,6 +48,12 @@ class Autosuggest extends Component {
 
   onSuggestionSelected = (event, { suggestion }) => {
     this.props.onSelect(suggestion);
+    ReactGA.event({
+      category: 'Search',
+      action: 'Selected search suggestion',
+      label: `Container ID ${suggestion.containerId}`,
+      value: suggestion.containerId
+    });
   };
 
   getSectionSuggestions = section => [section];

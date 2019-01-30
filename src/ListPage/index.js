@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Col } from 'reactstrap';
@@ -25,6 +26,7 @@ class ListPage extends Component {
     if (isEmpty(user) || isEmpty(project)) {
       history.push('/login');
     } else {
+      ReactGA.pageview('/list');
       if (isEmpty(items) && user.previousEvent) {
         this.setState({ showLoader: true });
         this.props.storeItems(user);

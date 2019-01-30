@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { withCookies } from 'react-cookie';
@@ -81,6 +82,7 @@ class DetailsPage extends Component {
         statuses: this.getUniqueStatuses(item),
       });
     }
+    ReactGA.pageview('/details');
   }
 
   notifySuccess = message => toast.success(message);
@@ -96,9 +98,19 @@ class DetailsPage extends Component {
   };
 
   appendToItem = async status => {
-    const { cookies, project } = this.props;
+    const { cookies, project, match: { params: { containerId } } } = this.props;
     const { metadata } = this.state;
     const meta = metadata.length;
+
+    if (status) {
+      ReactGA.event({
+        category: 'Status update',
+        action: `Updated status to "${status}"`,
+        label: `Container ID ${containerId}`,
+        value: containerId
+      });
+    }
+
     this.setState({ showLoader: true, fetchComplete: false, loaderHint: 'Updating Tangle' });
     const response = await appendItemChannel(metadata, this.props, this.documentExists, status);
     if (response) {
@@ -157,14 +169,44 @@ class DetailsPage extends Component {
   };
 
   onTabChange = newActiveTabIndex => {
+    const { match: { params: { containerId } } } = this.props;
     this.setState({ activeTabIndex: newActiveTabIndex });
+
+    const tabs = ['Status', 'Tangle', 'Documents', 'Temperature', 'Location'];
+
+    ReactGA.event({
+      category: 'Tab change',
+      action: `Selected tab "${tabs[newActiveTabIndex]}"`,
+      label: `Container ID ${containerId}`,
+      value: containerId
+    });
   };
 
   onUploadComplete = metadata => {
+    const { match: { params: { containerId } } } = this.props;
+
     this.setState({ metadata, fileUploadEnabled: false, activeTabIndex: 2 }, () => {
       this.notifySuccess('File upload complete!');
       this.appendToItem();
+
+      ReactGA.event({
+        category: 'Document upload',
+        action: 'Uploaded document(s)',
+        label: `Container ID ${containerId}`,
+        value: containerId
+      });
     });
+  };
+
+  onAddTemperature = containerId => {
+    ReactGA.event({
+      category: 'Temperature added',
+      action: 'Temperature added',
+      label: `Container ID ${containerId}`,
+      value: containerId
+    });
+
+    this.retrieveItem(containerId);
   };
 
   render() {
@@ -241,7 +283,7 @@ class DetailsPage extends Component {
               fileUploadEnabled={fileUploadEnabled}
               onTabChange={this.onTabChange}
               onUploadComplete={this.onUploadComplete}
-              onAddTemperatureLocationCallback={containerId => this.retrieveItem(containerId)}
+              onAddTemperatureCallback={this.onAddTemperature}
             />
             <Details item={item} fields={detailsPage} />
           </div>

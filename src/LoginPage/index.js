@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import ReactGA from 'react-ga';
 import { sha256 } from 'js-sha256';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -31,6 +32,7 @@ class LoginPage extends Component {
   async componentDidMount() {
     const { cookies, loadEventMappings, loadProjectSettings } = this.props;
     await loadProjectSettings();
+    ReactGA.pageview('/login');
     loadEventMappings();
     const tourStep = cookies.get('tourStep');
     if (!tourStep) {
@@ -54,6 +56,12 @@ class LoginPage extends Component {
       .then(response => {
         storeCredentials(response.data);
         storeEvents(response.data.role);
+
+        ReactGA.event({
+          category: 'Login',
+          action: `Logged in as ${role}`
+        });
+
         history.push('/list');
       })
       .catch(error => {

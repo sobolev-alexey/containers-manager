@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import Header from '../SharedComponents/Header';
@@ -6,6 +7,10 @@ import Navigation from '../SharedComponents/Navigation';
 import Footer from '../SharedComponents/Footer';
 
 class IntroPage extends Component {
+  componentDidMount() {
+    ReactGA.pageview('/tour');
+  }
+
   render() {
     return (
       <React.Fragment>

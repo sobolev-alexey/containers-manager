@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { withCookies } from 'react-cookie';
@@ -51,16 +52,29 @@ const CallToAction = ({ logout, reset, user }) => (
 
 class Header extends Component {
   logout = () => {
-    const { cookies, history, logout } = this.props;
+    const { cookies, history, logout, user } = this.props;
 
     logout();
     updateStep(cookies, 11);
     updateStep(cookies, 15);
     updateStep(cookies, 21);
 
+    ReactGA.event({
+      category: 'Logout',
+      action: `Logout from ${user.role}`
+    });
+
     if (Number(cookies.get('tourStep')) === 26) {
+      ReactGA.event({
+        category: 'Tour',
+        action: 'Tour completed',
+        label: `Container ID ${cookies.get('containerId')}`,
+        value: cookies.get('containerId')
+      });
+
       cookies.remove('tourStep');
       cookies.remove('containerId');
+
       history.push('/tour');
     } else {
       history.push('/login');
@@ -69,6 +83,18 @@ class Header extends Component {
 
   reset = () => {
     const { cookies, reset } = this.props;
+
+    let containerIdString = ''
+    if (cookies.get('containerId')) {
+      containerIdString = `Container ID ${cookies.get('containerId')}`;
+    }
+    ReactGA.event({
+      category: 'Reset',
+      action: 'Reset tour',
+      label: containerIdString,
+      value: cookies.get('tourStep')
+    });
+
     cookies.remove('tourStep');
     cookies.remove('containerId');
     reset();

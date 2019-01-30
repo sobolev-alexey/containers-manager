@@ -2,10 +2,12 @@ import 'react-app-polyfill/ie9';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import WebFontLoader from 'webfontloader';
+import ReactGA from 'react-ga';
 import Router from './Router';
 import * as serviceWorker from './serviceWorker';
 import { initializeFirebaseApp } from './utils/firebase';
 import './assets/scss/index.scss';
+import { trackingID } from './config.json';
 
 WebFontLoader.load({
   google: {
@@ -14,6 +16,8 @@ WebFontLoader.load({
 });
 
 initializeFirebaseApp();
+
+ReactGA.initialize(trackingID); // (trackingID, { debug: true })
 
 ReactDOM.render(<Router />, document.getElementById('root'));
 

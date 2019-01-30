@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
@@ -43,6 +44,7 @@ class CreateItemPage extends Component {
     if (isEmpty(user)) {
       history.push('/login');
     }
+    ReactGA.pageview('/new');
   }
 
   onBlur = () => {
@@ -81,6 +83,12 @@ class CreateItemPage extends Component {
         .decodeFromInputVideoDevice(firstDeviceId, 'video-area')
         .then(result => {
           this.setState({ id: result.text });
+          ReactGA.event({
+            category: 'QR Code reader',
+            action: 'Read QR code',
+            label: `Container ID ${result.text}`,
+            value: result.text
+          });
         })
         .catch(err => console.error(err));
     } else {
@@ -131,6 +139,13 @@ class CreateItemPage extends Component {
 
         await addItem(containerId);
         await storeItem([eventBody]);
+
+        ReactGA.event({
+          category: 'Create container',
+          action: 'Create container',
+          label: `Container ID ${containerId}`,
+          value: containerId
+        });
 
         history.push(`/details/${containerId}`);
       } else {
